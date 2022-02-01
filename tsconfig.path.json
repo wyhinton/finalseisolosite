@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@dawhooks": ["./dawHooks"],
+      "@pages": ["./pages/*"],
+      "@UI": ["./components/UI/*"],
+      "@store/*": ["./stores/*"],
+      "@model/*": ["./model/*"],
+      "@hooks": ["./hooks.tsx"],
+      "@enums": ["./enums.ts"],
+      "@classes/*": ["./classes/*"],
+      "@components/*": ["./components/*"],
+      "@static/*": ["./static/*"],
+      "@lib/*": ["./lib/*"],
+      "@css/*": ["./css/*"],
+      "@interfaces/*": ["./interfaces/*"],
+      "@canvasLoop": ["./canvasLoop"],
+      "@my-react-select": [
+        "../node_modules/react-select",
+        "../node_modules/@types/react-select"
+      ],
+      "@my-react-select/*": [
+        "../node_modules/react-select/*",
+        "../node_modules/@types/react-select"
+      ],
+      "@utils": ["./utils.ts"]
+    }
+  }
+}

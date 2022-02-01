@@ -1,0 +1,20 @@
+@use 'variables' as v;
+
+
+.sample-tray-container {
+  height: v.$sample-tray-height !important;
+  position: absolute;
+  bottom: 0;
+  width: 100vw; 
+  z-index: 10;
+
+}
+
+.sample-tray-hidden{
+    bottom: -100vh;
+    // transition: bottom .1s ease-in;f
+}
+
+.sample-tray-innter-container{
+  flex-direction: column;
+}

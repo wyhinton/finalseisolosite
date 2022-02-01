@@ -1,0 +1,14 @@
+node_modules
+public/Tracks/*.wav
+public/Videos/Recital
+reactronica-0.4.6
+diagrams
+public/Videos
+public/Videos/720/*.mp4
+*.mp4
+*.mov
+CLIPSMP3/*.mp3
+build/Videos/720/*.mp4
+build
+public/Videos/*.webm
+CLIPSMP3/*.mp3
