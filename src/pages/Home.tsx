@@ -52,7 +52,7 @@ const Home = (): JSX.Element => {
         {/* <AboutButton /> */}
         {/* <TopBar /> */}
         {/* <MediaControls /> */}
-        <ReturnButton />
+        {/* <ReturnButton /> */}
         <InfoPopup />
         <HomeWidgetGrid />
         <Nav />

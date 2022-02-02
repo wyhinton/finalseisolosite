@@ -54,6 +54,8 @@ const AboutModal = (): JSX.Element => {
     fontSize: "large",
     position: "absolute",
     top: 0,
+    paddingBottom: "5em",
+    // height: "750vh",
 
     // overflow: "scroll",
   } as React.CSSProperties;
@@ -66,7 +68,7 @@ const AboutModal = (): JSX.Element => {
       animate={appMode === "projectInfo" ? "visible" : "hidden"}
       style={containerStyle}
     >
-      <FlexColumn style={textStyle} justifyContent="flex-start">
+      <FlexColumn className="about-inner-container" style={textStyle} justifyContent="flex-start">
         {/* <h1
           style={{ fontSize: theme.bigFont, borderBottom: "1px solid black" }}
         >
@@ -89,6 +91,7 @@ const AboutModal = (): JSX.Element => {
         </div>
         <Header>Artists</Header>
         <div>
+
           <FlexRow style={{ flexFlow: "wrap" }}>
             {artists.map((artist, i) => {
               return <ArtistBlock artist={artist} key={i} />;
@@ -124,6 +127,8 @@ const renderText = (txt: string) => {
   );
 };
 
+
+
 const ArtistBlock = ({ artist }: { artist: Artist }): JSX.Element => {
   const { photo, link, name, role, bio } = artist;
   // const imgSize = 300;
@@ -141,10 +146,10 @@ const ArtistBlock = ({ artist }: { artist: Artist }): JSX.Element => {
       {/* <div style={{ height: "fit-content", width: "100%", margin: "1em" }}> */}
       {/* <div style={{ height: "fit-content", width: "50%", backgroundColor: "red", }}> */}
 
-      <FlexBreak break="sm">
+      <FlexBreak break="sm" className="image-break">
         <img
           style={{
-            objectPosition: "top",
+            objectPosition: "center",
             width: "30%",
             maxHeight: 300,
             marginBottom: isSm ? "1em" : "",

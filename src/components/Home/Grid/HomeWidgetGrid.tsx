@@ -56,6 +56,7 @@ const HomeWidgetGrid = (): JSX.Element => {
         width: "100vw",
         maxHeight: "100vh",
         overflowY: isSm ? "scroll" : "hidden",
+        paddingBottom: isSm ? "30em" : "",
       }}
     >
       {/* <section id="home-body" style={{ width: "100vw", paddingTop: "5vw" }}> */}
@@ -69,7 +70,7 @@ const HomeWidgetGrid = (): JSX.Element => {
         <ThreeRemixes key="threeRemixes" />
         <RemixesWidget
           key="remixes"
-          // appMode={appMode}
+        // appMode={appMode}
         />
         {/* <InfoDisplay key="infoDispplay" /> */}
         {/* <TitleWidget key="title" /> */}

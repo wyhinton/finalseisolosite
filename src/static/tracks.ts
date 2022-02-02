@@ -9,6 +9,7 @@ const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.png`;
 
 //REMIX TRACKS
 const anjaliTrack = `${process.env.PUBLIC_URL}/Tracks/Believe.mp3`;
+// const anjaliTrack = `${process.env.PUBLIC_URL}/Tracks/Believe.ogg`;
 const pacificTrack = `${process.env.PUBLIC_URL}/Tracks/overandunder (infinity).mp3`;
 const contourTrack = `${process.env.PUBLIC_URL}/Tracks/Kontour_Remix_16.mp3`;
 
@@ -66,6 +67,8 @@ const contourAbout = `The way i approached the track was finding a melodic secti
 //TODO: FX WHEN VIOLIN PLAYS
 //TODO: NAV FOR GETTING TO ABOUT SCREEN
 //TODO: FIX THE CONTOUR ABOUT
+
+//TODO: D
 
 const bachComposition = "Partita No. 2 in D Minor";
 const bartokComposition = "Sonata for Solo Violin";

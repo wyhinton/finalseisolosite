@@ -38,7 +38,7 @@ const TopBar = (): JSX.Element => {
         // padding: ".5rem",
         // paddingLeft: theme.padding,
         // paddingRight: theme.padding,
-        paddingLeft: theme.navPadding,
+        paddingLeft: isSm ? "10vmin" : "2vmin",
         // height: "fit-content",
         width: isSm ? "100%" : "fit-content",
         fontWeight: "bold",
@@ -70,7 +70,8 @@ const TopBar = (): JSX.Element => {
       }}
     >
       {/* <Logo />  */}
-      Seisolo.io: Remixing the Recital
+      {isSm ? " Seisolo.io" : "Seisolo.io: Remixing the Recital"}
+      {/* Seisolo.io: Remixing the Recital */}
     </div>
   );
 };

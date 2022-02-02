@@ -9,7 +9,7 @@ import timeLoop from "../../../../canvasLoop";
 import theme from "@static/theme";
 import BeatsMetronome from "./BeatsMetronome";
 
-const ChromaticWidget = ({}: {}): JSX.Element => {
+const ChromaticWidget = ({ }: {}): JSX.Element => {
   const { currentTrack, isPlaying } = usePlaylist();
 
   const [frequencyBandArray, setfrequencyBandArray] = useState([
@@ -29,9 +29,16 @@ const ChromaticWidget = ({}: {}): JSX.Element => {
     const audioContext = audioContextRef.current;
     // const audioContext = new AudioContext();
     // console.log(audioElem);
-    const audioElem = document.getElementById(
+
+    let audioElem = document.getElementById(
       "audio_" + currentTrack.title
     ) as HTMLMediaElement;
+
+    // if (currentTrack.category === "recital") {
+    //   audioElem = document.getElementById("recital_video") as HTMLMediaElement
+    // }
+
+
     if (!currentTrack.node) {
       currentTrack.node = audioContext.createMediaElementSource(audioElem);
     }
