@@ -10,7 +10,7 @@ const BubbleShader = Shaders.create({
       uniform vec2 u_mouse;
       uniform vec3 color;
       uniform lowp int activeInd;
-      // uniform lowp int isHover;
+      uniform lowp int isHover;
       // uniform float u_time;
       // uniform lowp int isAnimate;
       // uniform float end_time;
@@ -152,7 +152,12 @@ const BubbleShader = Shaders.create({
             //   } else {
             //       dist += Sphere(pn, testPos, (radius*dd)+-.17);
             //   }
+            if (isHover == 1){
               dist += Sphere(pn, testPos, (radius*dd)+-.17);
+            } else {
+              dist += Sphere(pn, testPos, radius*.17);
+            }
+          
             //   pixel += dist;
           }
           dist*=(sizeMult()+.1);
@@ -160,10 +165,10 @@ const BubbleShader = Shaders.create({
               col2 += vec3(.5);
           }
 
-          pixel = step(1.0, pixel) * pixel;
+          // pixel = step(1.0, pixel) * pixel;
           // pixel*=color;
         //   fragColor = vec4(pixel, .0);
-          fragColor = vec4(col2, .0);
+          // fragColor = vec4(col2, .0);
           dist = step(1.0, dist);
           fragColor = vec4(color*dist, dist);
           // fragColor = vec4(timeDiff/2000.);

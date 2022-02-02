@@ -10,7 +10,7 @@ import PlayPauseControls from "../Grid/GridWidgets/TrackItem/PlayPauseControls";
 const MediaControls = (): JSX.Element => {
   const { currentTrack } = usePlaylist();
 
-  const { isMd } = useQuery();
+  const { isMd, isSm } = useQuery();
 
   return (
     <FlexRow
@@ -40,7 +40,7 @@ const MediaControls = (): JSX.Element => {
       {/* <PauseTrack /> */}
       {/* <RestartTrack /> */}
       {/* <div style={{ height: 50, width: 50 }}> */}
-      <PlayPauseControls track={currentTrack} />
+      {!isSm && <PlayPauseControls track={currentTrack} />}
       {/* </div> */}
 
       {/* <NextTrack /> */}

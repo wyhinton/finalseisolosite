@@ -112,7 +112,7 @@ const GridLayout = ({
     const ratio = height / screen.height;
     const minRatioWindowToScreen = 0.61;
     if (isSm) {
-      setRowHeight(((height - 25 * rows) / 12) * 1.5);
+      setRowHeight(((height - 25 * rows) / 12) * 3.5);
     } else {
       if (ratio > minRatioWindowToScreen) {
         setRowHeight((height - 25 * rows) / 12);
@@ -134,7 +134,7 @@ const GridLayout = ({
         minWidth: "100vw",
         minHeight: "100vh",
         pointerEvents: !isSm ? "none" : "all",
-        height: isSm ? "130vh" : "fit-content",
+        height: isSm ? "150vmax" : "fit-content",
         // overflowY: "scroll",
       }}
       onWidthChange={(e) => {
@@ -158,8 +158,8 @@ const GridLayout = ({
       rowHeight={rowHeight}
       cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
       containerPadding={[padding, padding * 4]}
-      // verticalCompact={false}
-      // onLayoutChange={function () {}}
+    // verticalCompact={false}
+    // onLayoutChange={function () {}}
     >
       {wrappedWidgets}
     </ResponsiveGridLayout>

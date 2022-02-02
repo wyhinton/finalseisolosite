@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 
 import "./styles.scss";
 
-import Audio from "./Audio";
+import TrackAudio from "./TrackAudio";
 
 function App() {
   return (
     <div className="App">
-      <Audio />
+      <TrackAudio />
     </div>
   );
 }

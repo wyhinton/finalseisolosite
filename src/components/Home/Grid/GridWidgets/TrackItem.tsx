@@ -1,4 +1,4 @@
-import Audio from "@components/Home/Player/Audio";
+import TrackAudio from "@components/Home/Player/TrackAudio";
 import React from "react";
 import theme from "@static/theme";
 import { motion, Transition, Variants } from "framer-motion";
@@ -44,7 +44,7 @@ const TrackItem = ({
       className="track-item-container"
       style={{
         // margin: "auto",
-        margin: isSm ? "auto" : "1vmin",
+        margin: isSm ? "0" : "1vmin",
         height: track.category === "remix" ? "100%" : 0,
         width: "33.333%",
         fontSize: "2rem",
@@ -75,7 +75,7 @@ const TrackItem = ({
           // backgroundColor: theme.primaryMedium,
         }
       }
-      //   animat
+    //   animat
     >
       {/* <div
         style={{
@@ -99,7 +99,7 @@ const TrackItem = ({
       {/* <PlayPauseControls track={track} /> */}
       {/* {useBox && <CornerBox />} */}
       {children}
-      <Audio track={track} />
+      <TrackAudio track={track} />
     </motion.div>
   );
 };

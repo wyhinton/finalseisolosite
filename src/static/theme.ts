@@ -4,7 +4,9 @@ export interface Theme {
   primaryDark: string;
   primarDarkGL: [number, number, number];
   secondaryRGBGL: [number, number, number];
+  secondaryRGBCSS: string;
   primaryInactive: string;
+
   primaryMedium: string;
   secondary: string;
   secondaryRGB: number[];
@@ -39,6 +41,7 @@ const theme = {
   primaryDarkGL: primaryDarkGL,
   primaryMedium: "rgba(100, 100, 100, 255)",
   secondary: "#fff200",
+  secondaryRGBCSS: "rgb(255, 242, 0)",
   secondaryRGB: [255, 242, 0],
   secondaryRGBGL: [255 / 255, 242 / 255, 0],
   secondaryHover: "rgba(100, 100, 100, .5)",
@@ -64,7 +67,8 @@ const theme = {
   primaryFont: "OTR type",
   // widgetFontSize: "clamp(, 20px)",
   // widgetFontSize: "min(10vh, 20px)",
-  widgetFontSize: "3vmin",
+  widgetFontSize: "max(20px, 5vmin)",
+  // widgetFontSize: "3vmin",
   // primaryFont: "Nunito",
   // primaryFont: "NeueMetana-Bold",
   // primaryFont: "Aber-Mono",

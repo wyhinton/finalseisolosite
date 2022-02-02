@@ -6,14 +6,14 @@ import theme from "@static/theme";
 import FlexRow from "@components/UI/FlexRow";
 import Time from "@components/Home/Player/Time";
 import MediaControls from "@components/Home/Nav/MediaControls";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import InfoPopup from "./InfoPopup";
 import { useMediaQuery } from "react-responsive";
 
 function formatTrackText(track: Track): string {
   return `${track.artist} - ${track.title}`;
 }
-const AppBar = ({}: {}): JSX.Element => {
+const AppBar = ({ }: {}): JSX.Element => {
   const { setInfoDisplayMode, currentTrack } = usePlaylist();
 
   // const onUiClick = (i: InfoDisplayMode) => {
@@ -71,7 +71,9 @@ const AppBar = ({}: {}): JSX.Element => {
   );
 };
 
-const TrackTitle = ({}: {}): JSX.Element => {
+
+
+const TrackTitle = ({ }: {}): JSX.Element => {
   const { setInfoDisplayMode, currentTrack, infoDisplayMode } = usePlaylist();
   const [innerText, setInnerText] = useState("");
 
@@ -81,8 +83,40 @@ const TrackTitle = ({}: {}): JSX.Element => {
     setInnerText(formatTrackText(currentTrack));
   }, [currentTrack]);
 
+
+
+  const variants: Variants = {
+    normal: { opacity: 1, x: 0 },
+    scrolling: {
+      // opacity: 0,
+      x: -200,
+      //   x: "-100%",
+      // backgroundColor: "rgba(255, 242, 0, 150)",
+      transition: {
+
+        ease: "linear",
+        duration: 10,
+        repeat: Infinity,
+        repeatType: "loop"
+      },
+    },
+    flashing: {
+      color: theme.secondaryRGBCSS,
+      transition: {
+        ease: "linear",
+        duration: .5,
+        repeat: Infinity,
+        repeatType: "loop"
+      },
+    }
+  };
+
+  const { isSm } = useQuery()
+
   return (
     <motion.div
+      variants={variants}
+      animate={currentTrack.title === "overandunder (infinity)" && isSm ? "scrolling" : "flashing"}
       style={{
         justifyContent: "center",
         alignItems: "center",
@@ -90,7 +124,7 @@ const TrackTitle = ({}: {}): JSX.Element => {
         textDecoration: "underline",
         width: "fit-content",
         margin: "auto",
-        color: theme.white,
+        color: "rgb(255, 255, 255)",
         // color: theme.white,
         // backgroundColor: "red",
         paddingLeft: "3vmin",

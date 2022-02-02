@@ -45,7 +45,7 @@ const BubbleDotsNode = ({
       uniforms={{
         // u_time: time,
         // end_time: endtime,
-        // isHover: isHover,
+        isHover: isHover,
         activeInd: activeInd,
         color: col,
         u_resolution: resolution,

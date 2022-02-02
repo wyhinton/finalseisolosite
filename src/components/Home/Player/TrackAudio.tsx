@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "@css/Player/Song.scss";
 import FlexRow from "@components/UI/FlexRow";
 import "@css/Player/PlayBody.scss";
@@ -9,8 +9,12 @@ import PlayPauseControls from "../Grid/GridWidgets/TrackItem/PlayPauseControls";
 import FlexColumn from "@components/UI/FlexColumn";
 import theme from "@static/theme";
 import { motion } from "framer-motion";
+import { usePlaylist, useQuery } from "@hooks";
+import AAShader from "../Grid/GridWidgets/WaveformWidget/shaders/AAShader";
+import ReactAudioPlayer from "react-audio-player";
 
-const Audio = ({ track }: { track: Track }): JSX.Element => {
+
+const TrackAudio = ({ track }: { track: Track }): JSX.Element => {
   const playPauseStyle = {
     height: "100%",
     // margin: "auto",
@@ -77,11 +81,43 @@ const Song = ({ track }: { track: Track }): JSX.Element => {
 
 const AudioPlayer = ({ track }: { track: Track }): JSX.Element => {
   const { src, title } = track;
+  const { currentTrack } = usePlaylist()
+
+
+  const a = useRef(new Audio())
+
+
+  // useEffect(() => {
+  //   if (a.current) {
+  //     a.current.src = src;
+  //     a.current.play()
+  //     a.current.pause()
+  //     a.current.currentTime = 0;
+  //     a.current.muted = false;
+  //   }
+  //   // if (currentTrack.title === track.title && a.current) {
+  //   //   a.current.play()
+  //   // } else {
+  //   //   a.current.pause()
+  //   // }
+  // }, [])
+  // const s = new Audio()
+  // s.autoplay = true;
+  // s.src = src;
+
+
+  const { isSm } = useQuery()
+
   return (
-    <audio id={"audio_" + title}>
-      <source src={src} />
-      Your browser does not support the <code>audio</code> element.
-    </audio>
+    <>
+
+      {/* {isSm && <ReactAudioPlayer src={src} controls style={{ position: "absolute", right: "-100%", top: "50%", width: 100, height: 50, backgroundColor: "red", zIndex: 100000 }} />} */}
+
+      <audio ref={a} id={"audio_" + title} >
+        <source src={src} />
+        Your browser does not support the <code>audio</code> element.
+      </audio>
+    </>
   );
 };
 
@@ -114,4 +150,4 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
   );
 };
 
-export default Audio;
+export default TrackAudio;

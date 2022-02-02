@@ -193,7 +193,7 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
           objectFit: "cover",
         }}
         src={vs}
-        // src={track.visual}
+      // src={track.visual}
       >
         {/* <video id="recital_video" style={{ display: track.category == "recital" ? "block" : "none", width: "100%", height: "100%", objectFit: "cover" }} src={track.visual}> */}
         <source type={"video/mp4"} src={vs} />
@@ -214,6 +214,7 @@ const Section = ({
 
   return (
     <div
+      className="about-info-container"
       style={{
         display: "flex",
         flexDirection: isSm ? "column" : "row",
@@ -227,6 +228,7 @@ const Section = ({
         fontSize: theme.paragraphSize,
         overflowY: "scroll",
         paddingTop: "1em",
+        padding: isSm ? "6vmin" : ""
       }}
     >
       {/* <FlexRow style={{ color: "black", height: "100%", width: "100%", padding: 0 }} className={className}> */}
@@ -249,8 +251,9 @@ const Section = ({
           display: "flex",
           justifyContent: "center",
           color: "black",
-          fontSize: "2vmin",
-          paddingLeft: "7vmin",
+          // fontSize: "2vmin",
+          // paddingLeft: "7vmin",
+          fontSize: theme.paragraphSize,
         }}
       >
         {text}

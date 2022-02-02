@@ -129,6 +129,7 @@ export function usePlaylist(): UsePlaylistProps {
   const setInfoDisplayMode = useHomeActions(
     (actions) => actions.setInfoDisplayMode
   );
+  const { isSm } = useQuery();
   // setInfoDisplayMode("bio")
   // setInfoDisplayMode.
   const handleEnd = (e: Event) => {
@@ -176,11 +177,12 @@ export function usePlaylist(): UsePlaylistProps {
         // playButton.classList.remove("playing");
       }
     }
+    const videoEl = document.getElementById(
+      "recital_video"
+    ) as HTMLVideoElement;
 
     if (track.category === "recital") {
-      const videoEl = document.getElementById(
-        "recital_video"
-      ) as HTMLVideoElement;
+
       // console.log(videoEl);
       // videoEl.play()
       // videoEl.play()
@@ -190,18 +192,24 @@ export function usePlaylist(): UsePlaylistProps {
         videoEl.play();
       });
     }
-    if (allAudioElems.current) {
+    if (allAudioElems.current && !isSm) {
       allAudioElems.current.forEach((element) => {
         if (element.id === "audio_" + track.title) {
           // if (track.)
           // console.log("PLAYING MY TRACK");
           if (track.category === "remix") {
             element.play();
+            // element.play().then((e) => {
+
+            // }).catch((error) => {
+            //   console.log(error);
+            // })
             setCurrentAudio(element);
           }
         } else {
           element.pause();
         }
+        videoEl.pause()
       });
     }
     setCurrentTrack(track.title);
@@ -715,7 +723,7 @@ export function useElementSize<T extends HTMLElement = HTMLDivElement>(): [
 //   return ref.current;
 // }
 
-interface UseMetronomeProps {}
+interface UseMetronomeProps { }
 
 export function useMetronome(bpmStart: number, onBeat: (beat: number) => void) {
   const [bpm, setBpm] = useState(bpmStart);
