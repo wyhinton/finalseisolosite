@@ -4,6 +4,9 @@ import tracks from "@static/tracks";
 import TrackItem from "./TrackItem";
 import BubbleDots from "./RecitalWidgets/BubbleDots";
 import FlexColumn from "@components/UI/FlexColumn";
+import { usePlaylist, useQuery } from "@hooks";
+import ReactAudioPlayer from "react-audio-player";
+import { Track } from "@interfaces/Track";
 
 function getPosition(e: any): [number, number] {
   const rect = e.target.getBoundingClientRect();
@@ -19,6 +22,7 @@ const RecitalWidgets = (): JSX.Element => {
   const [offset, setOffset] = useState<[number, number]>([0, 0]);
 
   const [hoveredElem, setHoveredElem] = useState<number | undefined>(undefined);
+  const { isSm } = useQuery();
 
   return (
     <div
@@ -56,8 +60,12 @@ const RecitalWidgets = (): JSX.Element => {
         //   // posY.set(y, false);
         // }}
       >
-        <BubbleDots />
-        {/* <BubbleDots offset={offset} setHoveredElem={setHoveredElem} /> */}
+        {recitalParts.map((t, i) => {
+          if (isSm) {
+            return <MobileTracks t={t} key={i} />;
+          }
+        })}
+        {!isSm && <BubbleDots />}
       </div>
       {recitalParts.map((track, i) => {
         // let isHovered = false;
@@ -72,6 +80,30 @@ const RecitalWidgets = (): JSX.Element => {
           </TrackItem>
         );
       })}
+    </div>
+  );
+};
+
+const MobileTracks = ({ t }: { t: Track }): JSX.Element => {
+  const { playTrack } = usePlaylist();
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        // flex: 1,
+        flexDirection: "column",
+        fontSize: "max(20px, 15vmin)",
+      }}
+    >
+      <ReactAudioPlayer
+        onPlay={(e) => {
+          playTrack(t);
+        }}
+        controls
+        src={t.audioSrc}
+      />
+      {t.title}
     </div>
   );
 };

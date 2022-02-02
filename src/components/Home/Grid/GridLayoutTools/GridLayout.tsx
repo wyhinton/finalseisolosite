@@ -112,7 +112,7 @@ const GridLayout = ({
     const ratio = height / screen.height;
     const minRatioWindowToScreen = 0.61;
     if (isSm) {
-      setRowHeight(((height - 25 * rows) / 12) * 3.5);
+      setRowHeight(((height - 25 * rows) / 12) * 3.5 - 20);
     } else {
       if (ratio > minRatioWindowToScreen) {
         setRowHeight((height - 25 * rows) / 12);
@@ -158,8 +158,8 @@ const GridLayout = ({
       rowHeight={rowHeight}
       cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
       containerPadding={[padding, padding * 4]}
-    // verticalCompact={false}
-    // onLayoutChange={function () {}}
+      // verticalCompact={false}
+      // onLayoutChange={function () {}}
     >
       {wrappedWidgets}
     </ResponsiveGridLayout>

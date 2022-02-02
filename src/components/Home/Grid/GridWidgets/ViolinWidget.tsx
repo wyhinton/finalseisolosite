@@ -130,12 +130,12 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
 
   const sound = useRef<PositionalAudio>();
 
-  useEffect(() => {
-    // setAudioInd(0);
-    seturl(`${process.env.PUBLIC_URL}/Clips/s (${audioInd}).mp3`);
-  }, [audioInd]);
-  const buffer = useLoader(AudioLoader, url);
-  const { camera } = useThree();
+  // useEffect(() => {
+  //   // setAudioInd(0);
+  //   seturl(`${process.env.PUBLIC_URL}/Clips/s (${audioInd}).mp3`);
+  // }, [audioInd]);
+  // const buffer = useLoader(AudioLoader, url);
+  // const { camera } = useThree();
   // useEffect(() => {
   //   sound.current.setBuffer(buffer);
   //   sound.current.setRefDistance(1);
@@ -149,14 +149,13 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
   // }, []);
   //@ts-ignore
   useEffect(() => {
-    sound.current.setBuffer(buffer);
+    // sound.current.setBuffer(buffer);
     // sound.current.setVolume(1);
     // sound.current.setRefDistance(0);
     // sound.current.setLoop(true);
     // sound.current.play();
-
-    camera.add(listener);
-    return () => camera.remove(listener);
+    // camera.add(listener);
+    // return () => camera.remove(listener);
   }, []);
 
   return (
@@ -169,7 +168,7 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
         volume={1}
         // {...props} // All THREE.PositionalAudio props are valid
       /> */}
-      <positionalAudio ref={sound} args={[listener]} />
+      {/* <positionalAudio ref={sound} args={[listener]} /> */}
       {children.map((c, i) => {
         return (
           <mesh

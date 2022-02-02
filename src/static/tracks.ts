@@ -3,9 +3,12 @@ import { Track } from "@interfaces/Track";
 const src = `${process.env.PUBLIC_URL}/overandunder (infinity).wav`;
 
 //REMIX HEADSHOTS
-const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.png`;
-const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.png`;
-const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.png`;
+const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.webp`;
+const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.webp`;
+const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.webp`;
+// const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.png`;
+// const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.png`;
+// const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.png`;
 
 //REMIX TRACKS
 const anjaliTrack = `${process.env.PUBLIC_URL}/Tracks/Believe.mp3`;
@@ -69,6 +72,9 @@ const contourAbout = `The way i approached the track was finding a melodic secti
 //TODO: FIX THE CONTOUR ABOUT
 
 //TODO: D
+const bachAudio = `${process.env.PUBLIC_URL}/Tracks/BACH.mp3`;
+const bartokAudio = `${process.env.PUBLIC_URL}/Tracks/BARTOK.mp3`;
+const ysayeAudio = `${process.env.PUBLIC_URL}/Tracks/YSAYE.mp3`;
 
 const bachComposition = "Partita No. 2 in D Minor";
 const bartokComposition = "Sonata for Solo Violin";
@@ -153,6 +159,7 @@ const tracks: Track[] = [
     artist: "Vivek Menon",
     title: "Bach",
     src: bachVideo,
+    audioSrc: bachAudio,
     composer: "Johann Sebastian Bach",
     performer: "Vivek Menon",
     // src: bachTrack,
@@ -181,6 +188,7 @@ const tracks: Track[] = [
     composer: "Béla Bartók",
     // src: bartokTrack,
     src: bartokVideo,
+    audioSrc: bartokAudio,
     about: bartokAbout,
     visualType: "video",
     visual: bartokVideo,
@@ -204,6 +212,7 @@ const tracks: Track[] = [
     title: "Ysaÿe",
     composer: "Eugène Ysaÿe",
     src: ysayeVideo,
+    audioSrc: ysayeAudio,
     about: ysaeAbout,
     visualType: "video",
     visual: ysayeVideo,

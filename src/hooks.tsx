@@ -182,7 +182,6 @@ export function usePlaylist(): UsePlaylistProps {
     ) as HTMLVideoElement;
 
     if (track.category === "recital") {
-
       // console.log(videoEl);
       // videoEl.play()
       // videoEl.play()
@@ -191,6 +190,9 @@ export function usePlaylist(): UsePlaylistProps {
       const t = videoEl.play().then((t) => {
         videoEl.play();
       });
+      if (isSm) {
+        setInfoDisplayMode("bio");
+      }
     }
     if (allAudioElems.current && !isSm) {
       allAudioElems.current.forEach((element) => {
@@ -209,7 +211,7 @@ export function usePlaylist(): UsePlaylistProps {
         } else {
           element.pause();
         }
-        videoEl.pause()
+        videoEl.pause();
       });
     }
     setCurrentTrack(track.title);
@@ -723,7 +725,7 @@ export function useElementSize<T extends HTMLElement = HTMLDivElement>(): [
 //   return ref.current;
 // }
 
-interface UseMetronomeProps { }
+interface UseMetronomeProps {}
 
 export function useMetronome(bpmStart: number, onBeat: (beat: number) => void) {
   const [bpm, setBpm] = useState(bpmStart);

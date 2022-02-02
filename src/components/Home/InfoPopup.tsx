@@ -182,21 +182,43 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
           src={track.visual}
         />
       )}
+      {track.category === "recital" &&
+        !isSm &&
+        !(
+          <img
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            src={`${process.env.PUBLIC_URL}/Headshots/VIVEK_HEADSHOT.jpg`}
+          />
+        )}
 
       <video
         id="recital_video"
         controls={true}
         style={{
           display: track.category == "recital" ? "block" : "none",
+          // display: track.category == "recital" ? "block" : "none",
           width: "100%",
           height: "100%",
           objectFit: "cover",
         }}
+        // crossOrigin
+        crossOrigin="anonymous"
+        // src={
+        //   "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Ysaye.webm?alt=media&token=93a122c8-97cf-48ba-8ed2-7fc508575604"
+        // }
         src={vs}
-      // src={track.visual}
+        // src={track.visual}
       >
         {/* <video id="recital_video" style={{ display: track.category == "recital" ? "block" : "none", width: "100%", height: "100%", objectFit: "cover" }} src={track.visual}> */}
+        {/* <source
+          type={"video/mp4"}
+          src={
+            "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Bach.webm?alt=media&token=e9ae04e9-ff83-473a-9173-50dce650608e"
+          }
+          crossOrigin="anonymous"
+        /> */}
         <source type={"video/mp4"} src={vs} />
+        {/* <source type={"video/mp4"} src={vs} /> */}
       </video>
     </div>
   );
@@ -228,7 +250,7 @@ const Section = ({
         fontSize: theme.paragraphSize,
         overflowY: "scroll",
         paddingTop: "1em",
-        padding: isSm ? "6vmin" : ""
+        padding: isSm ? "6vmin" : "",
       }}
     >
       {/* <FlexRow style={{ color: "black", height: "100%", width: "100%", padding: 0 }} className={className}> */}
@@ -247,13 +269,16 @@ const Section = ({
       <div
         style={{
           paddingRight: "1em",
-          alignItems: "center",
+          // alignItems: "center",
           display: "flex",
           justifyContent: "center",
           color: "black",
           // fontSize: "2vmin",
           // paddingLeft: "7vmin",
+          overflowY: "scroll",
+          // marginTop: "40px",
           fontSize: theme.paragraphSize,
+          // paddingTop: "8vmin",
         }}
       >
         {text}
