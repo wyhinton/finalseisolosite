@@ -8,7 +8,9 @@ export interface Track {
   artist?: string;
   title: string;
   src: string;
+
   playing: boolean;
+  audioSrc?: string;
   visualType?: "image" | "video";
   samples?: Composer[];
   visual?: string;

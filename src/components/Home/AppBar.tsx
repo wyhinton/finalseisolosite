@@ -9,11 +9,12 @@ import MediaControls from "@components/Home/Nav/MediaControls";
 import { motion, Variants } from "framer-motion";
 import InfoPopup from "./InfoPopup";
 import { useMediaQuery } from "react-responsive";
+import ReactAudioPlayer from "react-audio-player";
 
 function formatTrackText(track: Track): string {
   return `${track.artist} - ${track.title}`;
 }
-const AppBar = ({ }: {}): JSX.Element => {
+const AppBar = ({}: {}): JSX.Element => {
   const { setInfoDisplayMode, currentTrack } = usePlaylist();
 
   // const onUiClick = (i: InfoDisplayMode) => {
@@ -71,9 +72,7 @@ const AppBar = ({ }: {}): JSX.Element => {
   );
 };
 
-
-
-const TrackTitle = ({ }: {}): JSX.Element => {
+const TrackTitle = ({}: {}): JSX.Element => {
   const { setInfoDisplayMode, currentTrack, infoDisplayMode } = usePlaylist();
   const [innerText, setInnerText] = useState("");
 
@@ -83,8 +82,6 @@ const TrackTitle = ({ }: {}): JSX.Element => {
     setInnerText(formatTrackText(currentTrack));
   }, [currentTrack]);
 
-
-
   const variants: Variants = {
     normal: { opacity: 1, x: 0 },
     scrolling: {
@@ -93,30 +90,33 @@ const TrackTitle = ({ }: {}): JSX.Element => {
       //   x: "-100%",
       // backgroundColor: "rgba(255, 242, 0, 150)",
       transition: {
-
         ease: "linear",
         duration: 10,
         repeat: Infinity,
-        repeatType: "loop"
+        repeatType: "loop",
       },
     },
     flashing: {
       color: theme.secondaryRGBCSS,
       transition: {
         ease: "linear",
-        duration: .5,
+        duration: 0.5,
         repeat: Infinity,
-        repeatType: "loop"
+        repeatType: "loop",
       },
-    }
+    },
   };
 
-  const { isSm } = useQuery()
+  const { isSm } = useQuery();
 
   return (
     <motion.div
       variants={variants}
-      animate={currentTrack.title === "overandunder (infinity)" && isSm ? "scrolling" : "flashing"}
+      animate={
+        currentTrack.title === "overandunder (infinity)" && isSm
+          ? "scrolling"
+          : "flashing"
+      }
       style={{
         justifyContent: "center",
         alignItems: "center",
@@ -147,6 +147,11 @@ const TrackTitle = ({ }: {}): JSX.Element => {
         },
       }}
     >
+      {/* <ReactAudioPlayer
+        controls
+        src={currentTrack.src}
+        style={{ width: "100px", height: "40px" }}
+      /> */}
       <div style={{ height: "fit-content" }}>{innerText}</div>
     </motion.div>
   );

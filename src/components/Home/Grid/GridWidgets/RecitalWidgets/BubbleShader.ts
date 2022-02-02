@@ -157,7 +157,7 @@ const BubbleShader = Shaders.create({
             } else {
               dist += Sphere(pn, testPos, radius*.17);
             }
-          
+                        // dist += Sphere(pn, testPos, radius*.17);
             //   pixel += dist;
           }
           dist*=(sizeMult()+.1);
