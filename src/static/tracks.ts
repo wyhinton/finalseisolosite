@@ -172,6 +172,8 @@ const tracks: Track[] = [
     origin: "Eisenach, Germany",
     year: "1720",
     composition: bachComposition,
+    video:
+      "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Bach.webm?alt=media&token=e9ae04e9-ff83-473a-9173-50dce650608e",
   },
   {
     id: `Recital Part #002`,
@@ -196,6 +198,8 @@ const tracks: Track[] = [
     origin: "Nagyszentmiklós, Kingdom of Hungary",
     year: "1944",
     composition: bartokComposition,
+    video:
+      "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Bartok.webm?alt=media&token=56548d75-8d7b-442c-b0bb-05523583e5b1",
   },
   {
     id: `Recital Part #003`,
@@ -219,6 +223,8 @@ const tracks: Track[] = [
     origin: "Liège, Blegium",
     year: "1923",
     composition: ysayeComposition,
+    video:
+      "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Ysaye.webm?alt=media&token=93a122c8-97cf-48ba-8ed2-7fc508575604",
     // movements: {}
   },
 ];

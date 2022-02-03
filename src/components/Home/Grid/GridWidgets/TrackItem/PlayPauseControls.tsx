@@ -131,7 +131,7 @@ const PauseButton = ({
         alignItems: "center",
         width: w,
         height: w,
-        maxHeight: "90%",
+        maxHeight: "85%",
       }}
     >
       <svg

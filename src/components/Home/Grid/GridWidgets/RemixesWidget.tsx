@@ -3,15 +3,9 @@ import theme from "@static/theme";
 import FlexRow from "@components/UI/FlexRow";
 import tracks from "@static/tracks";
 import {
-  useHomeActions,
-  useHomeState,
-  useIsPlaying,
   usePlaylist,
   useQuery,
 } from "@hooks";
-import PlayPauseControls from "./TrackItem/PlayPauseControls";
-import TrackAudio from "../../Player/TrackAudio";
-import BigText from "./BigText";
 import TrackItem from "./TrackItem";
 import { motion, Variants } from "framer-motion";
 import { Track } from "@interfaces/Track";
@@ -80,7 +74,7 @@ const RemixesWidget = (): JSX.Element => {
                 transition: {
                   // duration: 0.5,
                   delay: i * 0.5,
-                }
+                },
               }}
             >
               {getShape(track)}
@@ -97,7 +91,7 @@ export default RemixesWidget;
 const TrackText = ({ track }: { track: Track }): JSX.Element => {
   const { playTrack, setInfoDisplayMode } = usePlaylist();
 
-  const { isSm } = useQuery()
+  const { isSm } = useQuery();
 
   return (
     <div
@@ -112,7 +106,6 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
         left: isSm ? "" : "50%",
         right: isSm ? "-190%" : "",
 
-
         transform: "translate(-50%,-50%)",
         textAlign: "left",
 
@@ -126,16 +119,26 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
         // fontSize: theme.mediumFont,
         // fontSize: theme.widgetFontSize,
 
-
         // backgroundColor: theme.secondary,
         color: theme.primaryDark,
         // color: "black",
       }}
     >
-      {isSm && <ReactAudioPlayer
-
-        onPlay={(e) => { playTrack(track) }}
-        src={track.src} controls style={{ width: "150%", height: 20, paddingRight: "2vmin", zIndex: 100000 }} />}
+      {isSm && (
+        <ReactAudioPlayer
+          onPlay={(e) => {
+            playTrack(track);
+          }}
+          src={track.src}
+          controls
+          style={{
+            width: "150%",
+            height: 20,
+            paddingRight: "2vmin",
+            zIndex: 100000,
+          }}
+        />
+      )}
       <motion.div
         onClick={(e) => {
           playTrack(track);
@@ -144,7 +147,7 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
         // variants={variants}
 
         style={{
-          width: "250%",
+          width: isSm ? "250%" : "auto",
           // zIndex: 100,
           // width: "100%",
           // height: "10%",
@@ -152,7 +155,6 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
           // top: isSm ? "50%" : "0%",
           // left: isSm ? "" : "50%",
           // right: isSm ? "-190%" : "",
-
 
           // transform: "translate(-50%,-50%)",
           // textAlign: "left",
@@ -167,7 +169,6 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
           // fontSize: theme.mediumFont,
           // fontSize: theme.widgetFontSize,
 
-
           // backgroundColor: theme.secondary,
           color: theme.primaryDark,
           // color: "black",
@@ -178,7 +179,6 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
           // scale: 1.1,
         }}
       >
-
         {track.artist}
       </motion.div>
     </div>
