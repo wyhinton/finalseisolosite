@@ -86,7 +86,7 @@ const theme = {
   navHeight: "max(40px, 7vmin)",
   // navHeight: "max(5vw, 30px)",
   scale: "calc( 0.5333333333px + 0.4666666667 * ( 100vh - 480px ) / 420 )",
-  appBarHeight: "7vmin",
+  appBarHeight: "max(40px, 7vmin)",
   appBarHeightMobile: "14vmin",
   // appBarHeight: "7vmin",
   paragraphSize: "max(12pt, 2vmin)",
