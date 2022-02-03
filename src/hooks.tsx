@@ -174,6 +174,7 @@ export function usePlaylist(): UsePlaylistProps {
         await v.play();
         // playButton.classList.add("playing");
       } catch (err) {
+        console.log(err);
         // playButton.classList.remove("playing");
       }
     }
@@ -187,9 +188,10 @@ export function usePlaylist(): UsePlaylistProps {
       // videoEl.play()
       // videoEl.load();
       playVideo(videoEl);
-      const t = videoEl.play().then((t) => {
-        videoEl.play();
-      });
+      // const t = videoEl.play().then((t) => {
+      //   videoEl.play();
+      // });
+      console.log(videoEl.paused);
       if (isSm) {
         setInfoDisplayMode("bio");
       }
@@ -753,4 +755,28 @@ export function useMetronome(bpmStart: number, onBeat: (beat: number) => void) {
   useEffect(() => {
     onBeat(beat);
   }, [beat]);
+}
+
+const getMobileDetect = (userAgent: string) => {
+  const isAndroid = (): boolean => Boolean(userAgent.match(/Android/i));
+  const isIos = (): boolean => Boolean(userAgent.match(/iPhone|iPad|iPod/i));
+  const isOpera = (): boolean => Boolean(userAgent.match(/Opera Mini/i));
+  const isWindows = (): boolean => Boolean(userAgent.match(/IEMobile/i));
+  const isSSR = (): boolean => Boolean(userAgent.match(/SSR/i));
+
+  const isMobile = (): boolean =>
+    Boolean(isAndroid() || isIos() || isOpera() || isWindows());
+  const isDesktop = (): boolean => Boolean(!isMobile() && !isSSR());
+  return {
+    isMobile,
+    isDesktop,
+    isAndroid,
+    isIos,
+    isSSR,
+  };
+};
+export function useMobileDetect() {
+  const userAgent =
+    typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
+  return getMobileDetect(userAgent);
 }

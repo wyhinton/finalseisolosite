@@ -12,6 +12,9 @@ import SphereSDF from "./SphereSDF";
 import CSS3DDemo from "./Testing/CSS3DDemo";
 import TrackTesting from "@components/Testing/TrackTesting";
 import Particles from "@components/Home/Grid/GridWidgets/ViolinWidget/Particles";
+import DemoAnimatedGL from "./DemoAnimatedGL";
+import ViolinWidget from "@components/Home/Grid/GridWidgets/ViolinWidget";
+import tracks from "@static/tracks";
 
 interface TrackData {
   duration: number;
@@ -27,6 +30,11 @@ interface MyData {
 const Testing = (): JSX.Element => {
   return (
     <section style={{ backgroundColor: "black" }}>
+      <video controls>
+        <source src="https://www.dropbox.com/s/riuoj7pymo9ropf/BACH_600_REDUCED_SIZE.mp4?raw=1" />
+      </video>
+      {/* <DemoAnimatedGL /> */}
+      {/* <ViolinWidget track={tracks[0]} /> */}
       {/* <Particles /> */}
       {/* <CSS3DDemo /> */}
       {/* <TrackTesting /> */}

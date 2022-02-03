@@ -2,16 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import theme from "@static/theme";
 import FlexRow from "@components/UI/FlexRow";
 import tracks from "@static/tracks";
-import {
-  useHomeActions,
-  useHomeState,
-  useIsPlaying,
-  usePlaylist,
-  useQuery,
-} from "@hooks";
-import PlayPauseControls from "./TrackItem/PlayPauseControls";
-import TrackAudio from "../../Player/TrackAudio";
-import BigText from "./BigText";
+import { usePlaylist, useQuery } from "@hooks";
 import TrackItem from "./TrackItem";
 import { motion, Variants } from "framer-motion";
 import { Track } from "@interfaces/Track";
@@ -139,7 +130,7 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
           controls
           style={{
             width: "150%",
-            height: "20px",
+            height: 20,
             paddingRight: "2vmin",
             zIndex: 100000,
           }}
@@ -153,7 +144,7 @@ const TrackText = ({ track }: { track: Track }): JSX.Element => {
         // variants={variants}
 
         style={{
-          width: isSm ? "250%" : "",
+          width: isSm ? "250%" : "auto",
           // zIndex: 100,
           // width: "100%",
           // height: "10%",

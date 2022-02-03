@@ -96,13 +96,10 @@ const Particles = ({ count }: { count: number }): JSX.Element => {
         {/* <dodecahedronGeometry args={[1, 0]} /> */}
         {/* <meshStandardMaterial color="black" /> */}
         <planeBufferGeometry attach="geometry" args={[1, 1]} />
-        <meshPhongMaterial
-          // args={[]}
+        <meshBasicMaterial
           side={DoubleSide}
-          emissive={new Color(...theme.secondaryRGBGL)}
-          emissiveIntensity={2}
           attach="material"
-          color="#272727"
+          color={theme.secondary}
         />
       </instancedMesh>
     </>

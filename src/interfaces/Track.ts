@@ -29,4 +29,6 @@ export interface Track {
   performer?: string;
   year?: string;
   composition?: string;
+  video?: string;
+  iOSVideo?: string;
 }

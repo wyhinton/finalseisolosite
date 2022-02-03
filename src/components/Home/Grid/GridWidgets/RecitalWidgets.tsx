@@ -7,6 +7,7 @@ import FlexColumn from "@components/UI/FlexColumn";
 import { usePlaylist, useQuery } from "@hooks";
 import ReactAudioPlayer from "react-audio-player";
 import { Track } from "@interfaces/Track";
+import PlayPauseControls, { PlayButton } from "./TrackItem/PlayPauseControls";
 
 function getPosition(e: any): [number, number] {
   const rect = e.target.getBoundingClientRect();
@@ -85,7 +86,7 @@ const RecitalWidgets = (): JSX.Element => {
 };
 
 const MobileTracks = ({ t }: { t: Track }): JSX.Element => {
-  const { playTrack } = usePlaylist();
+  const { playTrack, setInfoDisplayMode } = usePlaylist();
 
   return (
     <div
@@ -95,14 +96,21 @@ const MobileTracks = ({ t }: { t: Track }): JSX.Element => {
         flexDirection: "column",
         fontSize: "max(20px, 15vmin)",
       }}
+      onClick={(e) => {
+        setInfoDisplayMode("bio");
+        playTrack(t);
+      }}
     >
-      <ReactAudioPlayer
-        onPlay={(e) => {
-          playTrack(t);
-        }}
+      {/* <ReactAudioPlayer
+        // onPlay={(e) => {
+        //   playTrack(t);
+        // }}
         controls
         src={t.audioSrc}
-      />
+      /> */}
+      <div>
+        <PlayButton handleClick={() => {}} />
+      </div>
       {t.title}
     </div>
   );

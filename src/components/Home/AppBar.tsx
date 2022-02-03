@@ -9,8 +9,9 @@ import MediaControls from "@components/Home/Nav/MediaControls";
 import { motion, Variants } from "framer-motion";
 import InfoPopup from "./InfoPopup";
 import { useMediaQuery } from "react-responsive";
-import ReactAudioPlayer from "react-audio-player";
-
+import timeLoop from "@canvasLoop";
+import { Surface } from "gl-react-dom";
+import { GLSL, Shaders, Uniform, Node } from "gl-react";
 function formatTrackText(track: Track): string {
   return `${track.artist} - ${track.title}`;
 }
@@ -64,11 +65,48 @@ const AppBar = ({}: {}): JSX.Element => {
       }}
     >
       <FlexRow justifycontent="flex-start">
+        {/* <GlowyButton /> */}
         <TrackTitle />
         <MediaControls />
+
         <Time />
       </FlexRow>
     </FlexRow>
+  );
+};
+
+const shaders = Shaders.create({
+  render: {
+    frag: GLSL`
+    precision highp float;
+    varying vec2 uv;
+    uniform float time;
+    void main() {
+      // gl_FragColor = vec4(sin(time));
+    gl_FragColor = vec4(uv.x, uv.y, fract(time*.001), 1.0);
+}
+`,
+  },
+});
+
+export const GlowShader = ({ time }: { time: number }) => (
+  <Node
+    shader={shaders.render}
+    uniforms={{ resolution: Uniform.Resolution, time }}
+  />
+);
+
+const GlowShaderTimed = timeLoop(GlowShader);
+
+const GlowyButton = (): JSX.Element => {
+  return (
+    <div
+      style={{ height: 30, width: 30, borderRadius: "50%", overflow: "hidden" }}
+    >
+      <Surface width={20} height={20}>
+        <GlowShaderTimed />
+      </Surface>
+    </div>
   );
 };
 

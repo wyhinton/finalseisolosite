@@ -179,6 +179,12 @@ const tracks: Track[] = [
     origin: "Eisenach, Germany",
     year: "1720",
     composition: bachComposition,
+    video: "https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?raw=1",
+    // iOSVersion:
+    iOSVideo:
+      "https://www.dropbox.com/s/riuoj7pymo9ropf/BACH_600_REDUCED_SIZE.mp4?raw=1",
+    // "https://uc7129ca374e09f7f04c133dbec7.dl.dropboxusercontent.com/cd/0/inline/BfCvyrxHDU6WW-LBw-fjgUCIuxE8FSg43WX_FPFnmurhZBn0lg8EtVij9mB4C1gtmeJ6I1gAHk54YNj52mojpKQcqfMLXsNuXRf5M88yJ1n8dOImewxvPoplCHTBEo4DDxmL05gkV-DjcqxkUmUIZi9e/file#",
+    // "https://uc7129ca374e09f7f04c133dbec7.dl.dropboxusercontent.com/cd/0/inline/BfCvyrxHDU6WW-LBw-fjgUCIuxE8FSg43WX_FPFnmurhZBn0lg8EtVij9mB4C1gtmeJ6I1gAHk54YNj52mojpKQcqfMLXsNuXRf5M88yJ1n8dOImewxvPoplCHTBEo4DDxmL05gkV-DjcqxkUmUIZi9e/file#",
   },
   {
     id: `Recital Part #002`,
@@ -199,11 +205,18 @@ const tracks: Track[] = [
         description: "Connects in this way",
       },
     ],
+    //some hosting under dj05elantra
     category: "recital",
     duration: bartokLength,
     origin: "Nagyszentmiklós, Kingdom of Hungary",
     year: "1944",
     composition: bartokComposition,
+    video: "https://www.dropbox.com/s/5wxqybeu07x2txt/Bartok.webm?raw=1",
+    iOSVideo:
+      "https://www.dropbox.com/s/pwuk6hdixmjhei3/BARTOK_UNDER_2GB_600.mp4?raw=1",
+    // "https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?dl=0",
+    // https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?raw=1
+    // video:
   },
   {
     id: `Recital Part #003`,
@@ -228,7 +241,11 @@ const tracks: Track[] = [
     origin: "Liège, Blegium",
     year: "1923",
     composition: ysayeComposition,
+    video: "https://www.dropbox.com/s/dmrggrak0jt0hlc/YSAYE.webm?raw=1",
+    // "https://uca5c8be880eee15c473074ef1b4.dl.dropboxusercontent.com/cd/0/inline/Be-U1vUDF_U5U9vST_KbzCO23UdOUGZrtqXcVysMuqHrKOWtLaUqpOpOZ25Le0RCUdoaBcy1gyhg_f8dw36fQ-BGdAdB7kCIgNcgT_JqqLJ2IiHtOnsDxLkfZ25WEInhz74WmIPVXHCrF5bo1kq8LaJH/file#",
     // movements: {}
+    iOSVideo: "https://www.dropbox.com/s/mpo0oieb4r8054p/YSAYE.mp4?raw=1",
+    // "https://ucdae97be4b740f2e52fcfbdceba.dl.dropboxusercontent.com/cd/0/inline/BfCHTvUKtRTlnYO9uduw0NY9fcVJAuABe5_nPmjwgKP6gXCwfzIW14Ll28qR-nmabS9vxX7wg_L5KyK9l4seSXpzXvYysfVh4DNyPIrv55m7Kc_-LrnsfyOaA2iGzHkyd-xUiMNGILs2ac6jrf-pXJNL/file#",
   },
 ];
 
