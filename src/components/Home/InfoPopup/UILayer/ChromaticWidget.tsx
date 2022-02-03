@@ -9,8 +9,20 @@ import timeLoop from "../../../../canvasLoop";
 import theme from "@static/theme";
 import BeatsMetronome from "./BeatsMetronome";
 
-const ChromaticWidget = ({ }: {}): JSX.Element => {
+declare global {
+  interface Window {
+    playlistAudio: AudioContext;
+  }
+}
+
+const ChromaticWidget = ({}: {}): JSX.Element => {
   const { currentTrack, isPlaying } = usePlaylist();
+
+  // const videoSource = useMemo(()=>{
+  //   videoElem = document.getElementById("recital_video") as HTMLMediaElement
+
+  //   return
+  // },[])
 
   const [frequencyBandArray, setfrequencyBandArray] = useState([
     ...Array(25).keys(),
@@ -18,12 +30,25 @@ const ChromaticWidget = ({ }: {}): JSX.Element => {
   const [audioData, setAudioData] = useState<AnalyserNode>();
   const nodeRef = useRef<AnalyserNode>(null);
   const audioContextRef = useRef<AudioContext>(null);
+  const videoNodeRef = useRef<MediaElementAudioSourceNode>();
+
+  useEffect(() => {
+    console.log(window.playlistAudio);
+    // if (audioContextRef.current) {
+    //   const videoElem = document.getElementById(
+    //     "recital_video"
+    //   ) as HTMLMediaElement;
+    //   videoNodeRef.current =
+    //     audioContextRef.current.createMediaElementSource(videoElem);
+    // }
+  }, []);
 
   const initializeAudioAnalyser = () => {
-    // console.log("DID INIT");
+    console.log("DID INIT");
     const audioFile = new Audio();
     if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
+      audioContextRef.current = window.playlistAudio;
+      // audioContextRef.current = new AudioContext();
       nodeRef.current = audioContextRef.current.createAnalyser();
     }
     const audioContext = audioContextRef.current;
@@ -35,9 +60,8 @@ const ChromaticWidget = ({ }: {}): JSX.Element => {
     ) as HTMLMediaElement;
 
     // if (currentTrack.category === "recital") {
-    //   audioElem = document.getElementById("recital_video") as HTMLMediaElement
+    //   // audioElem = document.getElementById("recital_video") as HTMLMediaElement;
     // }
-
 
     if (!currentTrack.node) {
       currentTrack.node = audioContext.createMediaElementSource(audioElem);
@@ -45,11 +69,19 @@ const ChromaticWidget = ({ }: {}): JSX.Element => {
     const source = currentTrack.node;
     const analyser = audioContext.createAnalyser();
     // audioElem.play();
+
     audioFile.src = `${process.env.PUBLIC_URL + currentTrack.src}`;
     analyser.fftSize = 64;
-    source.connect(audioContext.destination);
-    source.connect(analyser);
-    setAudioData(analyser);
+
+    if (currentTrack.category === "remix") {
+      source.connect(audioContext.destination);
+      console.log(audioContext);
+      source.connect(analyser);
+      setAudioData(analyser);
+    }
+    // source.connect(audioContext.destination);
+    // source.connect(analyser);
+    // setAudioData(analyser);
     nodeRef.current = analyser;
   };
 
@@ -65,7 +97,7 @@ const ChromaticWidget = ({ }: {}): JSX.Element => {
 
   const getFrequencyData = (styleAdjuster) => {
     // console.log(nodeRef.current);
-    if (nodeRef.current) {
+    if (nodeRef.current && currentTrack.category === "remix") {
       const bufferLength = nodeRef.current.frequencyBinCount;
       const amplitudeArray = new Uint8Array(bufferLength);
       nodeRef.current.getByteFrequencyData(amplitudeArray);
@@ -106,10 +138,12 @@ const AudioShader = ({
   time,
   audioData,
   resolution,
+  useAudio,
 }: {
   time: number;
   audioData: Uint8Array;
   resolution: [number, number];
+  useAudio: number;
 }): JSX.Element => {
   return (
     <Node
@@ -121,6 +155,7 @@ const AudioShader = ({
         u_resolution: resolution,
         u_time: time,
         audio: audioData,
+        useAudio: useAudio,
       }}
     />
   );
@@ -180,11 +215,26 @@ const Bar = (props: BarProps): JSX.Element => {
     // backgroundColor: "red",
   } as React.CSSProperties;
 
+  const { currentTrack, isPlaying } = usePlaylist();
+  const [useAudio, setUseAudio] = useState(1);
+
+  useEffect(() => {
+    // console.log(currentTrack.);
+    if (currentTrack.category === "remix") {
+      setUseAudio(1);
+    } else {
+      setUseAudio(0);
+    }
+  }, [currentTrack.category]);
   return (
     <div ref={size[0]} style={cStyle} id="surface-container">
       <Surface width={size[1].width} height={height}>
         {/* <Surface width={width} height={height}> */}
-        <SceneLoop audioData={amps} resolution={[size[1].width, height]} />
+        <SceneLoop
+          audioData={amps}
+          resolution={[size[1].width, height]}
+          useAudio={useAudio}
+        />
       </Surface>
     </div>
   );

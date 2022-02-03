@@ -33,7 +33,9 @@ const AboutButton = (): JSX.Element => {
       style={{
         borderRadius: "40px",
         border: `1px solid ${theme.secondary}`,
-        height: "max(17px, 3vmax)",
+        height: "70%",
+        width: "max(10vw, 12vmin)",
+        // height: "max(17px, 3vmax)",
         // height: "5vh",
         textAlign: "center",
         display: "flex",
@@ -62,16 +64,13 @@ const AboutButton = (): JSX.Element => {
 
 export default React.memo(AboutButton);
 
-
-const CloseButton = ({ }: {}): JSX.Element => {
-
+const CloseButton = ({}: {}): JSX.Element => {
   const { appMode, setAppMode } = useApp();
 
   return (
-
     <div
       onMouseUp={(e) => {
-        setAppMode("create")
+        setAppMode("create");
       }}
       style={{
         // display: infoDisplayMode !== undefined ? "block" : "none",
@@ -110,5 +109,5 @@ C15.4-0.5,9-0.5,5.1,3.4c-3.9,3.9-3.9,10.2,0,14.1l20.4,20.4L3.4,60c-3.9,3.9-3.9,1
         />
       </svg>
     </div>
-  )
-}
+  );
+};

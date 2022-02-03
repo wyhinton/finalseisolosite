@@ -14,12 +14,23 @@ const ChromaticShader = Shaders.create({
   uniform float audio[35];
   uniform vec2 u_resolution;
   uniform vec3 bgColor;
+  uniform int useAudio;
+
 
 
   // int Lines = 1;
   int Lines = 4;
   float pi = 3.14;
 
+  float rand(float n){return fract(sin(n) * 43758.5453123);}
+
+  float noise(float p){
+    float fl = floor(p);
+    float fc = fract(p);
+    return mix(rand(fl), rand(fl + 1.0), fc);
+  }
+
+  
   vec3 indexCol(int index){
     vec3 aCol = vec3(1.);
     vec3 cCol = vec3(1., 0., 0.);
@@ -34,7 +45,11 @@ const ChromaticShader = Shaders.create({
   float mask (vec2 uv, int index){
     float w = 4. /u_resolution.x;
     // float amp = audio[1];
-    float amp = audio[index]/350.;
+    float amp = audio[index*3]/350.;
+    if (useAudio==0){
+      float i = float(index);
+      amp = i*.4*rand(i*(sin(u_time*.00000001)));
+    }
     // amp = 1.;
     // float amp = texelFetch(u_texture_3, ivec2(index * 512/Lines,.1), 0).x;
     // float amp = texelFetch(u_texture_3, ivec2(index * 512/Lines,.1), 0).x;
@@ -110,8 +125,8 @@ const ChromaticShader = Shaders.create({
         // fragColor = vec4(bgColor, 1.);
         // fragColor = vec4(sin(u_time));
     }
-      `
-  }
+      `,
+  },
 });
 
-export default ChromaticShader
+export default ChromaticShader;

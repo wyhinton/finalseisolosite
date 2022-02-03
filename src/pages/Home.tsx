@@ -34,6 +34,7 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     pauseCurrent();
     pauseTrack(tracks[0]);
+
     // audio.current = new AudioContext();
   }, []);
 
