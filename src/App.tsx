@@ -1,18 +1,27 @@
 import "@css/App.css";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import Instrument from "./pages/Instrument";
 import Home from "./pages/Home";
 import Testing from "./pages/Testing";
 import { StoreProvider } from "easy-peasy";
 import homeStore from "./stores/homeStore";
-import dawStore from "@components/DAW/state/dawStore"
+import dawStore from "@components/DAW/state/dawStore";
 import FXAADemoPage from "./pages/FXAADemoPage";
 import DAWPage from "./pages/DAWPage";
 
 const App = (): JSX.Element => {
-
+  useEffect(() => {
+    console.log(
+      `____________________________________   _______    ___________
+        7     77     77  77     77     77  7   7     7    7  77     7
+        |  ___!|  ___!|  ||  ___!|  7  ||  |   |  7  |    |  ||  7  |
+        !__   7|  __|_|  |!__   7|  |  ||  !___|  |  |    |  ||  |  |
+        7     ||     7|  |7     ||  !  ||     7|  !  |____|  ||  !  |
+        !_____!!_____!!__!!_____!!_____!!_____!!_____!7__7!__!!_____!`
+    );
+  }, []);
 
   return (
     <Router>
@@ -33,32 +42,31 @@ const App = (): JSX.Element => {
 
 export default App;
 
-
 // const fetchCardDataGoogleSheetThunk = useStoreActions(
-  //   (actions) => actions.googleSheetsModel.fetchAppGoogleSheet
-  // );
-  // const processCompositions = useStoreActions(
-  //   (actions) => actions.compositionsModel.processCompositions
-  // );
-  // const fetchCompositionSheet = useStoreActions(
-  //   (actions) => actions.googleSheetsModel.fetchCompositionsSheet
-  // );
-  // const fetchSamples = useStoreActions(
-  //   (actions) => actions.googleSheetsModel.fetchSamplesSheet
-  // );
-  // const [isSampleTrayActive, toggleSampleTrayIsActive] = useToggle(false);
+//   (actions) => actions.googleSheetsModel.fetchAppGoogleSheet
+// );
+// const processCompositions = useStoreActions(
+//   (actions) => actions.compositionsModel.processCompositions
+// );
+// const fetchCompositionSheet = useStoreActions(
+//   (actions) => actions.googleSheetsModel.fetchCompositionsSheet
+// );
+// const fetchSamples = useStoreActions(
+//   (actions) => actions.googleSheetsModel.fetchSamplesSheet
+// );
+// const [isSampleTrayActive, toggleSampleTrayIsActive] = useToggle(false);
 
-  // useKeyboardShortcut({
-  //   keyCode: 70, //f
-  //   action: () => {
-  //     toggleSampleTrayIsActive();
-  //   },
-  //   disabled: false, // This key is not required
-  // });
+// useKeyboardShortcut({
+//   keyCode: 70, //f
+//   action: () => {
+//     toggleSampleTrayIsActive();
+//   },
+//   disabled: false, // This key is not required
+// });
 
-  // useEffect(() => {
-  //   // fetchCardDataGoogleSheetThunk();
-  //   // processCompositions();
-  //   // fetchCompositionSheet();
-  //   // fetchSamples();
-  // }, [fetchCardDataGoogleSheetThunk]);
+// useEffect(() => {
+//   // fetchCardDataGoogleSheetThunk();
+//   // processCompositions();
+//   // fetchCompositionSheet();
+//   // fetchSamples();
+// }, [fetchCardDataGoogleSheetThunk]);

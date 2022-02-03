@@ -1,21 +1,15 @@
 import { Vector2 } from "three";
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { extend, useThree, useFrame } from "@react-three/fiber";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import { FilmPass } from "three/examples/jsm/postprocessing/FilmPass";
 import { CrtShader } from "./TransitionShader";
-import { a, useSpring, animated } from "@react-spring/three";
+import { useSpring } from "@react-spring/three";
 import { useProgress } from "@react-three/drei";
 import lerp from "lerp";
 import { Glitch } from "@react-three/postprocessing";
-// import { GlitchMode } from "@react-three/postprocessing";
-
-// https://codesandbox.io/s/react-three-fiber-crt-effect-forked-i3znm?file=/src/App.tsx:1947-1966
 extend({ EffectComposer, ShaderPass, RenderPass });
-// applySpring({ EffectComposer, RenderPass, ShaderPass });
 
 const ViolinWidgetEffects = (): JSX.Element => {
   const composer = useRef<EffectComposer>();

@@ -9,11 +9,13 @@ import MediaControls from "@components/Home/Nav/MediaControls";
 import { motion, Variants } from "framer-motion";
 import InfoPopup from "./InfoPopup";
 import { useMediaQuery } from "react-responsive";
-
+import timeLoop from "@canvasLoop";
+import { Surface } from "gl-react-dom";
+import { GLSL, Shaders, Uniform, Node } from "gl-react";
 function formatTrackText(track: Track): string {
   return `${track.artist} - ${track.title}`;
 }
-const AppBar = ({ }: {}): JSX.Element => {
+const AppBar = ({}: {}): JSX.Element => {
   const { setInfoDisplayMode, currentTrack } = usePlaylist();
 
   // const onUiClick = (i: InfoDisplayMode) => {
@@ -63,17 +65,52 @@ const AppBar = ({ }: {}): JSX.Element => {
       }}
     >
       <FlexRow justifycontent="flex-start">
+        {/* <GlowyButton /> */}
         <TrackTitle />
         <MediaControls />
+
         <Time />
       </FlexRow>
     </FlexRow>
   );
 };
 
+const shaders = Shaders.create({
+  render: {
+    frag: GLSL`
+    precision highp float;
+    varying vec2 uv;
+    uniform float time;
+    void main() {
+      // gl_FragColor = vec4(sin(time));
+    gl_FragColor = vec4(uv.x, uv.y, fract(time*.001), 1.0);
+}
+`,
+  },
+});
 
+export const GlowShader = ({ time }: { time: number }) => (
+  <Node
+    shader={shaders.render}
+    uniforms={{ resolution: Uniform.Resolution, time }}
+  />
+);
 
-const TrackTitle = ({ }: {}): JSX.Element => {
+const GlowShaderTimed = timeLoop(GlowShader);
+
+const GlowyButton = (): JSX.Element => {
+  return (
+    <div
+      style={{ height: 30, width: 30, borderRadius: "50%", overflow: "hidden" }}
+    >
+      <Surface width={20} height={20}>
+        <GlowShaderTimed />
+      </Surface>
+    </div>
+  );
+};
+
+const TrackTitle = ({}: {}): JSX.Element => {
   const { setInfoDisplayMode, currentTrack, infoDisplayMode } = usePlaylist();
   const [innerText, setInnerText] = useState("");
 
@@ -83,8 +120,6 @@ const TrackTitle = ({ }: {}): JSX.Element => {
     setInnerText(formatTrackText(currentTrack));
   }, [currentTrack]);
 
-
-
   const variants: Variants = {
     normal: { opacity: 1, x: 0 },
     scrolling: {
@@ -93,30 +128,33 @@ const TrackTitle = ({ }: {}): JSX.Element => {
       //   x: "-100%",
       // backgroundColor: "rgba(255, 242, 0, 150)",
       transition: {
-
         ease: "linear",
         duration: 10,
         repeat: Infinity,
-        repeatType: "loop"
+        repeatType: "loop",
       },
     },
     flashing: {
       color: theme.secondaryRGBCSS,
       transition: {
         ease: "linear",
-        duration: .5,
+        duration: 0.5,
         repeat: Infinity,
-        repeatType: "loop"
+        repeatType: "loop",
       },
-    }
+    },
   };
 
-  const { isSm } = useQuery()
+  const { isSm } = useQuery();
 
   return (
     <motion.div
       variants={variants}
-      animate={currentTrack.title === "overandunder (infinity)" && isSm ? "scrolling" : "flashing"}
+      animate={
+        currentTrack.title === "overandunder (infinity)" && isSm
+          ? "scrolling"
+          : "flashing"
+      }
       style={{
         justifyContent: "center",
         alignItems: "center",

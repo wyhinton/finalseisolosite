@@ -157,7 +157,7 @@ const TextDisplay = ({ track }: { track: Track }): JSX.Element => {
 
 const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
   const { isSm, isMd, isLg } = useQuery();
-  const [vs, setVs] = useState(undefined);
+  const [vs, setVs] = useState(track.video);
   const { infoDisplayMode, currentTrack, setInfoDisplayMode } = usePlaylist();
 
   useEffect(() => {
@@ -165,10 +165,14 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
     //   myVal.current = item
 
     if (currentTrack.category === "recital") {
-      setVs(currentTrack.visual);
+      setVs(currentTrack.video);
+      console.log(currentTrack);
+      console.log(currentTrack.video);
+      console.log(vs);
+      // setVs(currentTrack.visual);
       // console.log(vs);
     }
-  }, [currentTrack.title]);
+  }, [currentTrack.title, vs]);
 
   return (
     // <div id="artist-image-contaienr" style={{ width: "30%", height: isSm ? "50%" : "100%" }}>
@@ -193,14 +197,13 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
           objectFit: "cover",
         }}
         src={vs}
-      // src={track.visual}
       >
-        {/* <video id="recital_video" style={{ display: track.category == "recital" ? "block" : "none", width: "100%", height: "100%", objectFit: "cover" }} src={track.visual}> */}
-        <source type={"video/mp4"} src={vs} />
+        <source src={vs} />
       </video>
     </div>
   );
 };
+
 const Section = ({
   header,
   text,
@@ -228,7 +231,7 @@ const Section = ({
         fontSize: theme.paragraphSize,
         overflowY: "scroll",
         paddingTop: "1em",
-        padding: isSm ? "6vmin" : ""
+        padding: isSm ? "6vmin" : "",
       }}
     >
       {/* <FlexRow style={{ color: "black", height: "100%", width: "100%", padding: 0 }} className={className}> */}
@@ -245,12 +248,15 @@ const Section = ({
         </h1>
       )}
       <div
+        id="about-text-body-container"
         style={{
           paddingRight: "1em",
-          alignItems: "center",
+          // alignItems: "center",
           display: "flex",
           justifyContent: "center",
           color: "black",
+          marginTop: "1em",
+          marginBottom: "1em",
           // fontSize: "2vmin",
           // paddingLeft: "7vmin",
           fontSize: theme.paragraphSize,

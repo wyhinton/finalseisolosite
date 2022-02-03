@@ -9,8 +9,14 @@ import timeLoop from "../../../../canvasLoop";
 import theme from "@static/theme";
 import BeatsMetronome from "./BeatsMetronome";
 
-const ChromaticWidget = ({ }: {}): JSX.Element => {
+const ChromaticWidget = ({}: {}): JSX.Element => {
   const { currentTrack, isPlaying } = usePlaylist();
+
+  // const videoSource = useMemo(()=>{
+  //   videoElem = document.getElementById("recital_video") as HTMLMediaElement
+
+  //   return
+  // },[])
 
   const [frequencyBandArray, setfrequencyBandArray] = useState([
     ...Array(25).keys(),
@@ -18,6 +24,17 @@ const ChromaticWidget = ({ }: {}): JSX.Element => {
   const [audioData, setAudioData] = useState<AnalyserNode>();
   const nodeRef = useRef<AnalyserNode>(null);
   const audioContextRef = useRef<AudioContext>(null);
+  const videoNodeRef = useRef<MediaElementAudioSourceNode>();
+
+  useEffect(() => {
+    if (audioContextRef.current) {
+      const videoElem = document.getElementById(
+        "recital_video"
+      ) as HTMLMediaElement;
+      videoNodeRef.current =
+        audioContextRef.current.createMediaElementSource(videoElem);
+    }
+  }, []);
 
   const initializeAudioAnalyser = () => {
     // console.log("DID INIT");
@@ -35,21 +52,36 @@ const ChromaticWidget = ({ }: {}): JSX.Element => {
     ) as HTMLMediaElement;
 
     // if (currentTrack.category === "recital") {
-    //   audioElem = document.getElementById("recital_video") as HTMLMediaElement
+    //   audioElem = document.getElementById("recital_video") as HTMLMediaElement;
+    //   // console.log(audioElem);
+    //   // console.log()
     // }
-
+    // let node = "";
 
     if (!currentTrack.node) {
+      // console.log(currentTrack.node);
+      // try{
       currentTrack.node = audioContext.createMediaElementSource(audioElem);
+      // const node = audioContext.createMediaElementSource(audioElem);
+      // } catch{
+      // currentTrack.node  = currentTrack.node
+      // }
+      // currentTrack.node = audioContext.createMediaElementSource(audioElem);
     }
     const source = currentTrack.node;
     const analyser = audioContext.createAnalyser();
     // audioElem.play();
     audioFile.src = `${process.env.PUBLIC_URL + currentTrack.src}`;
     analyser.fftSize = 64;
-    source.connect(audioContext.destination);
-    source.connect(analyser);
-    setAudioData(analyser);
+
+    if (currentTrack.category === "remix") {
+      source.connect(audioContext.destination);
+      source.connect(analyser);
+      setAudioData(analyser);
+    }
+    // source.connect(audioContext.destination);
+    // source.connect(analyser);
+    // setAudioData(analyser);
     nodeRef.current = analyser;
   };
 
@@ -135,7 +167,7 @@ const Bar = (props: BarProps): JSX.Element => {
   // const
   function adjustFreqBandStyle(newAmplitudeData) {
     amplitudeValues.current = newAmplitudeData;
-    // console.log(amplitudeValues.current);
+    console.log(amplitudeValues.current);
     setAmps(newAmplitudeData);
   }
 

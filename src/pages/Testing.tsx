@@ -12,6 +12,7 @@ import SphereSDF from "./SphereSDF";
 import CSS3DDemo from "./Testing/CSS3DDemo";
 import TrackTesting from "@components/Testing/TrackTesting";
 import Particles from "@components/Home/Grid/GridWidgets/ViolinWidget/Particles";
+import DemoAnimatedGL from "./DemoAnimatedGL";
 
 interface TrackData {
   duration: number;
@@ -27,6 +28,10 @@ interface MyData {
 const Testing = (): JSX.Element => {
   return (
     <section style={{ backgroundColor: "black" }}>
+      {/* <video controls>
+        <source src="https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Bach.webm?alt=media&token=e9ae04e9-ff83-473a-9173-50dce650608e" />
+      </video> */}
+      <DemoAnimatedGL />
       {/* <Particles /> */}
       {/* <CSS3DDemo /> */}
       {/* <TrackTesting /> */}
