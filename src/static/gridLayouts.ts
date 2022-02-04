@@ -21,6 +21,8 @@ const layoutv2: Layout[] = [
   { i: "recitalTracks", x: 0, y: 3, w: 8, h: 4, static: s },
   { i: "threeRemixes", x: 6, y: 0, w: 6, h: 2, static: s },
   { i: "remixes", x: 6, y: 3, w: 5, h: 6, static: s },
+  // { i: "threeRemixes", x: 6, y: 0, w: 6, h: 2, static: s },
+  // { i: "remixes", x: 6, y: 3, w: 5, h: 6, static: s },
   // { i: "infoDisplay", x: 6, y: 0, w: 6, h: 4, static: true },
   //
 
@@ -44,8 +46,8 @@ const modifyBase = (toReplace: Layout[]) => {
 };
 
 export const layoutLg = modifyBase([
-  { i: "threeRemixes", x: 6, y: 9, w: 6, h: 1, static: s },
-  { i: "oneRecitalText", x: 9, y: 2, w: 6, h: 1, static: s },
+  { i: "threeRemixes", x: 6, y: 9, w: 6, h: 2, static: s },
+  { i: "oneRecitalText", x: 7, y: 2, w: 2, h: 1, static: s },
   { i: "recitalTracks", x: 0, y: 0, w: 6, h: 6, static: s },
   { i: "remixes", x: 0, y: 6, w: 6, h: 7, static: s },
 ]);

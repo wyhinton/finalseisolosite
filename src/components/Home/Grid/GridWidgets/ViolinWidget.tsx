@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useThree, useFrame, useLoader } from "@react-three/fiber";
 // import { useGLTF } from "drei";
+import { DepthOfFieldEffect } from "postprocessing";
 import {
   CubeTextureLoader,
   CubeCamera,
@@ -31,16 +32,22 @@ import {
   useProgress,
 } from "@react-three/drei";
 import { GLTF as GLTFThree } from "three/examples/jsm/loaders/GLTFLoader";
-import { usePlaylist, useTrackCategory, useWindowSize } from "@hooks";
+import { usePlaylist, useQuery, useTrackCategory, useWindowSize } from "@hooks";
 import { Track } from "@interfaces/Track";
 import { useSpring } from "framer-motion";
 import ViolinWidgetEffects from "./ViolinWidget/ViolinWidgetEffects";
 import Particles from "./ViolinWidget/Particles";
-import { EffectComposer, Glitch } from "@react-three/postprocessing";
+import {
+  EffectComposer,
+  Glitch,
+  DepthOfField,
+} from "@react-three/postprocessing";
 import bravias from "./ViolinWidget/bravias";
 import s1 from "./ViolinWidget/s1.wav";
 import { getRandomIntInclusive } from "@utils";
-import { MeshSurfaceSampler } from "three-stdlib";
+import { HorizontalBlurShader, MeshSurfaceSampler } from "three-stdlib";
+import { lerp } from "three/src/math/MathUtils";
+// import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 
 declare module "three-stdlib" {
   export interface GLTF extends GLTFThree {
@@ -315,7 +322,8 @@ const ViolinWidget = ({ track }: { track: Track }): JSX.Element => {
 
   const zoom = Math.min(width, height) * 0.02;
   const { isPlaying } = usePlaylist();
-
+  const depthOfFieldRef = useRef<DepthOfFieldEffect>();
+  const { isSm } = useQuery();
   return (
     <Suspense fallback={<Loader />}>
       <Canvas className="canvas">
@@ -327,12 +335,67 @@ const ViolinWidget = ({ track }: { track: Track }): JSX.Element => {
         <Particles count={200} />
         {/* <SkyBox /> */}
         <ViolinWidgetEffects />
-        <EffectComposer>
-          {/* <Glitch strength={new Vector2(0.1, 0.1)} /> */}
-        </EffectComposer>
+        {!isSm && <Composer />}
+        {/* <EffectComposer> */}
+        {/* <HorizontalBlurShader /> */}
+        {/* <DepthOfField
+            ref={depthOfFieldRef}
+            focusDistance={100} // it doesn't change no matter what is passed here
+            focalLength={0.5}
+            bokehScale={0}
+          /> */}
+        {/* <Glitch strength={new Vector2(0.1, 0.1)} /> */}
+        {/* </EffectComposer> */}
+
         {/* <Glitch /> */}
       </Canvas>
     </Suspense>
+  );
+};
+
+const Composer = (): JSX.Element => {
+  const depthOfFieldRef = useRef<DepthOfFieldEffect>();
+
+  const targ = new Vector2(0);
+  const end = new Vector2(4);
+  const start = new Vector2(0);
+  useFrame((s) => {
+    // console.log(s.mouse);
+    let t = depthOfFieldRef.current.uniforms.get("scale").value;
+    if (s.mouse.x > -0.9) {
+      // depthOfFieldRef.current.
+      // console.log(depthOfFieldRef.current);
+      // console.log();
+
+      // depthOfFieldRef.current.uniforms.get("scale").value = 0;
+
+      // let val = depthOfFieldRef.current.uniforms.get("scale").value;
+      // t = lerp(t, 3, 0.1);
+      targ.lerp(start, 0.1);
+      // t = t = lerp(t, 1, 0.1);
+    } else {
+      targ.lerp(end, 0.1);
+
+      // t = lerp(t, 0, 0.1);
+      // t = t = lerp(t, 0, 0.1);
+    }
+    depthOfFieldRef.current.uniforms.get("scale").value = targ.x;
+    // console.log(targ);
+    // console.log(s);
+    // if (s.mouse)
+  });
+
+  return (
+    <EffectComposer>
+      {/* <HorizontalBlurShader /> */}
+      <DepthOfField
+        ref={depthOfFieldRef}
+        focusDistance={100} // it doesn't change no matter what is passed here
+        focalLength={0.5}
+        bokehScale={2}
+      />
+      {/* <Glitch strength={new Vector2(0.1, 0.1)} /> */}
+    </EffectComposer>
   );
 };
 

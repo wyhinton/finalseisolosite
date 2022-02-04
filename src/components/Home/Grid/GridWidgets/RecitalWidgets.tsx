@@ -8,6 +8,7 @@ import { usePlaylist, useQuery } from "@hooks";
 import ReactAudioPlayer from "react-audio-player";
 import { Track } from "@interfaces/Track";
 import PlayPauseControls, { PlayButton } from "./TrackItem/PlayPauseControls";
+import TrackControl from "../TrackControl/TrackControl";
 
 function getPosition(e: any): [number, number] {
   const rect = e.target.getBoundingClientRect();
@@ -42,7 +43,10 @@ const RecitalWidgets = (): JSX.Element => {
           width: "100%",
           height: "100%",
           // border: "1px solid blue",
-          zIndex: 0,
+          // zIndex: 0,
+          display: "flex",
+          flexDirection: "column",
+          zIndex: 100000000,
         }}
         // onMouseMove={(e: React.MouseEvent<HTMLElement>) => {
         //   const val = getPosition(e);
@@ -61,12 +65,30 @@ const RecitalWidgets = (): JSX.Element => {
         //   // posY.set(y, false);
         // }}
       >
-        {recitalParts.map((t, i) => {
+        {/* {recitalParts.map((t, i) => {
           if (isSm) {
             return <MobileTracks t={t} key={i} />;
           }
+        })} */}
+        {recitalParts.map((t, i) => {
+          // if (isSm) {
+          return (
+            <div
+              key={i}
+              style={{
+                pointerEvents: "all",
+                zIndex: 100000000,
+                position: "absolute",
+                left: !isSm ? `${i * 33}%` : 0,
+                top: isSm ? `${i * 33}%` : 9,
+              }}
+            >
+              <TrackControl track={t} />
+            </div>
+          );
         })}
-        {!isSm && <BubbleDots />}
+
+        {<BubbleDots />}
       </div>
       {recitalParts.map((track, i) => {
         // let isHovered = false;

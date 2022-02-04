@@ -9,6 +9,7 @@ import WaveformView from "./InfoPopup/WaveformView";
 import UILayer from "./InfoPopup/UILayer/UILayer";
 import CloseInfoPopupButton from "./InfoPopup/CloseInfoPopupButton";
 import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
+import tracks from "@static/tracks";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -74,7 +75,7 @@ const InfoPopup = () => {
   return (
     <>
       <CloseInfoPopupButton />
-      <UILayer />
+      {!isSm && <UILayer />}
       <motion.div
         id="waveform-view-motion-container"
         initial={false}
@@ -91,7 +92,7 @@ const InfoPopup = () => {
           overflow: "visible",
 
           width: "100vw",
-          height: isSm ? "0vh" : middleheight,
+          height: isSm ? "0vh" : "63vh",
           // top: "20%",
           bottom: addVh(theme.appBarHeight, bottomHeight),
           zIndex: 110,
@@ -158,10 +159,12 @@ const TextDisplay = ({ track }: { track: Track }): JSX.Element => {
         width: "100vw",
         height: "100%",
         backgroundColor: "yellow",
+        color: "black",
       }}
     >
       {isSm ? (
-        <Parallax pages={1.6} style={{ overflow: "hidden", top: 0, left: 0 }}>
+        <Parallax pages={1 + about.split(" ").length / 98}>
+          {/* <Parallax pages={1.6} style={{ top: 0, left: 0 }}> */}
           <ParallaxLayer
             offset={0}
             speed={0.1}
@@ -233,13 +236,15 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
   const { isSm, isMd, isLg } = useQuery();
   const [vs, setVs] = useState(track.video);
   const { infoDisplayMode, currentTrack, setInfoDisplayMode } = usePlaylist();
+  const recitalTracks = tracks.filter((t) => t.category === "recital");
+  const { isIos } = useMobileDetect();
 
   useEffect(() => {
     //   console.log(myVal)
     //   myVal.current = item
 
     if (currentTrack.category === "recital") {
-      const { isIos } = useMobileDetect();
+      // const { isIos } = useMobileDetect();
       if (isIos) {
         setVs(currentTrack.iOSVideo);
       } else {
@@ -274,28 +279,68 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
             src={`${process.env.PUBLIC_URL}/Headshots/VIVEK_HEADSHOT.jpg`}
           />
         )} */}
-
-      <video
-        id="recital_video"
-        controls={true}
+      <div
         style={{
           display: track.category == "recital" ? "block" : "none",
           // display: track.category == "recital" ? "block" : "none",
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          position: "relative",
         }}
-        autoPlay
-        muted={false}
-        // crossOrigin
-        // crossOrigin="anonymous"
-        // src={
-        //   "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Ysaye.webm?alt=media&token=93a122c8-97cf-48ba-8ed2-7fc508575604"
-        // }
-        src={vs}
       >
-        <source src={vs} />
-      </video>
+        {recitalTracks.map((t, i) => {
+          // const [active, setactive] = useState(false)
+          const isActive = t.title === track.title;
+          const { isIos } = useMobileDetect();
+          return (
+            <video
+              controls={true}
+              id={"video_" + t.title}
+              key={i}
+              style={{
+                // border: "1px solid red",
+                // zIndex: isActive
+                position: "absolute",
+                zIndex: isActive ? "1" : 0,
+                display:
+                  track.category == "recital" && isActive ? "block" : "block",
+                // track.category == "recital" && isActive ? "block" : "none",
+                // display: track.category == "recital" ? "block" : "none",
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            >
+              <source src={isIos ? t.iOSVideo : t.video} />
+            </video>
+          );
+        })}
+
+        {/* <video
+          id="recital_video"
+          controls={true}
+          style={{
+            position: "absolute",
+            display: track.category == "recital" ? "block" : "none",
+            // display: track.category == "recital" ? "block" : "none",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+          autoPlay
+          muted={false}
+          // crossOrigin
+          // crossOrigin="anonymous"
+          // src={
+          //   "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Ysaye.webm?alt=media&token=93a122c8-97cf-48ba-8ed2-7fc508575604"
+          // }
+          src={vs}
+        >
+          {" "}
+          <source src={vs} />
+        </video> */}
+      </div>
     </div>
   );
 };
