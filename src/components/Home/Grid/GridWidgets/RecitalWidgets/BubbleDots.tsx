@@ -157,7 +157,7 @@ const BubbleDots = ({
         pointerEvents: "all",
       }}
     >
-      <ComposerNames activeTrack={activeInd} activeIndex={activeHoverInd} />
+      {/* <ComposerNames activeTrack={activeInd} activeIndex={activeHoverInd} /> */}
       <Surface
         onClick={onClick}
         onMouseMove={onMouseMove}

@@ -115,7 +115,7 @@ const GridLayout = ({
       setRowHeight(((height - 25 * rows) / 12) * 3.5 - 20);
     } else {
       if (ratio > minRatioWindowToScreen) {
-        setRowHeight((height - 25 * rows) / 12);
+        setRowHeight((height - 25 * rows) / 13);
       }
     }
   }, [height]);
@@ -150,6 +150,7 @@ const GridLayout = ({
       // layouts={ll}
       useCSSTransforms={false}
       // useCSSTransforms={animate}
+      // margin={[10, 10]}
       margin={[padding / 2, padding / 2]}
       // margin={[padding, padding]}
       // compactType={undefined}

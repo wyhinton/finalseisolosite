@@ -62,7 +62,7 @@ const RemixesWidget = (): JSX.Element => {
         return (
           <TrackItem key={i} track={track} useBox={false}>
             <TrackControl track={track} />
-            <TrackText track={track} />
+            {/* <TrackText track={track} /> */}
             <motion.div
               // scale={0}
               // y={10}

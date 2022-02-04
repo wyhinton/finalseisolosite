@@ -10,6 +10,9 @@ const PlayPauseSwitch = ({
   onPause: () => void;
   onPlay: () => void;
 }): JSX.Element => {
+  // useEffect(() => {
+  //   console.log(paused);
+  // }, [paused]);
   return (
     <>
       {paused ? (
@@ -21,7 +24,8 @@ const PlayPauseSwitch = ({
   );
 };
 
-const w = "max(20px, 8vmin)";
+const w = "100%";
+// const w = "max(20px, 8vmin)";
 
 export default PlayPauseSwitch;
 
@@ -80,18 +84,22 @@ const PauseButton = ({
     <div
       className={"play-button-item"}
       onClick={() => {
+        console.log("got pause click");
         handleClick();
       }}
       style={{
         // width: "50%",
         // height: "100%",
         // backgroundColor: "red",
+        width: w,
+        height: w,
+        padding: 5,
+        // backgroundColor: "red",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        width: w,
-        height: w,
-        maxHeight: "85%",
+        opacity: 1,
+        maxHeight: "90%",
       }}
     >
       <svg

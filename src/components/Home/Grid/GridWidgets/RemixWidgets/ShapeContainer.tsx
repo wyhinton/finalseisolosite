@@ -25,6 +25,25 @@ const ShapeContainer = ({
       },
     },
   };
+
+  const containerVari = {
+    rest: { scale: 1 },
+    hover: { scale: 2 },
+  };
+
+  const blockDotVari = {
+    rest: {
+      height: "200px",
+      width: "200px",
+    },
+    hover: {
+      height: "50px",
+      width: "50px",
+      transition: {
+        // duration: duration,
+      },
+    },
+  };
   const { isPlaying, currentTrack } = usePlaylist();
 
   const [animate, setAnimate] = useState(false);
@@ -47,16 +66,26 @@ const ShapeContainer = ({
         borderRadius: theme.borderRadius,
         overflow: "visible",
       }}
-      whileHover={{
-        backgroundColor: theme.secondaryHover,
-        scale: 1.1,
+      // whileHover={{
+      //   backgroundColor: theme.secondaryHover,
+      //   scale: 1.1,
 
-        transition: {
-          duration: 0.1,
-          ease: "circOut",
-        },
-      }}
+      //   transition: {
+      //     duration: 0.1,
+      //     ease: "circOut",
+      //   },
+      // }}
+      whileHover="hover"
     >
+      {/* <motion.div
+        style={{
+          position:"absolute",
+          width: 10,
+          height: 10,
+          backgroundColor: "red",
+        }}
+        variants= {blockDotVari}
+      ></motion.div> */}
       <motion.svg
         variants={variants}
         viewBox={viewBox}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import FlexRow from "@components/UI/FlexRow";
 import theme from "@static/theme";
 import { motion } from "framer-motion";
+import "@css/Body.scss";
 
 const BigText = ({
   children,
@@ -12,7 +13,7 @@ const BigText = ({
 }): JSX.Element => {
   const variants = {
     normal: {
-      opacity: .5,
+      opacity: 0.5,
       // color: "rba(0,0,0,0)",
       // backgroundColor: theme.primary,
     },
@@ -30,10 +31,11 @@ const BigText = ({
 
   return (
     <FlexRow height="100%">
+      {/* <FlexRow height="100%" className="dot-fill-2"> */}
       {/* <FlexRow height="100%" style={{ backdropFilter: "blur(1px)" }}> */}
       <motion.div
         style={{
-          width: "100%",
+          width: "50%",
           height: "100%",
           // borderLeft: "1px solid black",
           // width: "max-content",
@@ -48,7 +50,7 @@ const BigText = ({
           // WebkitTextStrokeColor: active?"":"black",
           textTransform: "uppercase",
           overflow: "visible",
-          backdropFilter: "blur 5px",
+          // backdropFilter: "blur 5px",
         }}
         variants={variants}
         animate={active ? "highlight" : "normal"}

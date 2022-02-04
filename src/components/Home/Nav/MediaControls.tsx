@@ -39,7 +39,7 @@ const MediaControls = (): JSX.Element => {
       }}
     >
       {/* <PauseTrack /> */}
-      <RestartTrack />
+      <PreviousTrack />
       {/* <div style={{ height: 50, width: 50 }}> */}
       {<PlayPauseControls track={currentTrack} />}
       {/* </div> */}
@@ -78,8 +78,8 @@ const IconWrapper = ({
   );
 };
 
-const RestartTrack = (): JSX.Element => {
-  const { restartCurrent, currentTrack } = usePlaylist();
+const PreviousTrack = (): JSX.Element => {
+  const { restartCurrent, currentTrack, playPrevious } = usePlaylist();
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -93,7 +93,10 @@ const RestartTrack = (): JSX.Element => {
   }, [currentTrack.title]);
 
   return (
-    <IconWrapper onClick={restartCurrent} viewBox="0 0 141 101">
+    <IconWrapper
+      onClick={isActive ? playPrevious : () => {}}
+      viewBox="0 0 141 101"
+    >
       <path
         opacity={isActive ? 1 : 0.1}
         fill={theme.secondary}
@@ -117,11 +120,11 @@ const NextTrack = (): JSX.Element => {
     } else {
       setIsActive(true);
     }
-  }, [currentTrack.title]);
+  }, [currentTrack.position]);
 
   // const trackIndex
   return (
-    <IconWrapper onClick={playNext} viewBox="0 0 141 101">
+    <IconWrapper onClick={isActive ? playNext : () => {}} viewBox="0 0 141 101">
       <path
         opacity={isActive ? 1 : 0.1}
         fill={theme.secondary}

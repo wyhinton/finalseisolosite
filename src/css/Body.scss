@@ -11,6 +11,10 @@ $dot-size: 1px;
 $dot-space: 22px;
 $bg-color: v.$primary;
 $dot-color: black;
+
+$bg-color2: v.$primary;
+$dot-color2: v.$secondary;
+
 .dot-fill {
   background: linear-gradient(
         90deg,
@@ -20,6 +24,18 @@ $dot-color: black;
       center,
     linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
     $dot-color;
+  background-size: $dot-space $dot-space;
+}
+
+.dot-fill-2 {
+  background: linear-gradient(
+        90deg,
+        $bg-color2 ($dot-space - $dot-size),
+        transparent 1%
+      )
+      center,
+    linear-gradient($bg-color2 ($dot-space - $dot-size), transparent 1%) center,
+    $dot-color2;
   background-size: $dot-space $dot-space;
 }
 //

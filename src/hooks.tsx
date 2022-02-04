@@ -104,6 +104,7 @@ interface UsePlaylistProps {
   playTrack: (t: Track) => void;
   pauseTrack: (t: Track) => void;
   playNext: () => void;
+  playPrevious: () => void;
   // nextTrack: () => void;
   restartCurrent: () => void;
   pauseCurrent: () => void;
@@ -123,6 +124,7 @@ export function usePlaylist(): UsePlaylistProps {
   const currentTrackState = useHomeState((state) => state.currentTrack);
   const setCurrentTrack = useHomeActions((actions) => actions.setCurrentTrack);
   const allAudioElems = useRef<HTMLAudioElement[]>();
+  const allVideoElems = useRef<HTMLVideoElement[]>();
   const setIsPlayingAction = useHomeActions((actions) => actions.setIsPlaying);
   const isPlayingState = useHomeState((state) => state.isPlaying);
   const currentAudioRef = useRef<HTMLAudioElement>(null);
@@ -164,10 +166,27 @@ export function usePlaylist(): UsePlaylistProps {
     };
   }, []);
 
+  function fix(item) {
+    var thePromise = item.play();
+
+    if (thePromise != undefined) {
+      thePromise.then(function (_) {
+        item.pause();
+        item.currentTime = 0;
+      });
+    }
+  }
+
   const playTrack = (track: Track) => {
     allAudioElems.current = tracks
       .map((t) => "audio_" + t.title)
       .map((id) => document.getElementById(id) as HTMLAudioElement)
+      .filter((e) => e !== null);
+
+    allVideoElems.current = tracks
+      .filter((t) => t.category === "recital")
+      .map((t) => "video_" + t.title)
+      .map((id) => document.getElementById(id) as HTMLVideoElement)
       .filter((e) => e !== null);
 
     async function playVideo(v: HTMLVideoElement) {
@@ -179,51 +198,83 @@ export function usePlaylist(): UsePlaylistProps {
         // playButton.classList.remove("playing");
       }
     }
-    const videoEl = document.getElementById(
-      "recital_video"
-    ) as HTMLVideoElement;
+    // const videoEl = document.getElementById(
+    //   "recital_video"
+    // ) as HTMLVideoElement;
 
     if (track.category === "recital") {
-      // console.log(videoEl);
-      // videoEl.play()
-      // videoEl.play()
-      // videoEl.load();
-      playVideo(videoEl);
-      // const t = videoEl.play().then((t) => {
-      //   videoEl.play();
-      // });
-      console.log(videoEl.paused);
-      if (isSm) {
-        setInfoDisplayMode("bio");
-      }
-    }
-    if (allAudioElems.current && !isSm) {
-      allAudioElems.current.forEach((element) => {
-        if (element.id === "audio_" + track.title) {
-          // if (track.)
-          // console.log("PLAYING MY TRACK");
-          if (track.category === "remix") {
-            element.play();
-            // element.play().then((e) => {
-
-            // }).catch((error) => {
-            //   console.log(error);
-            // })
-            setCurrentAudio(element);
-          }
+      allVideoElems.current.forEach((element) => {
+        if (element.id === "video_" + track.title) {
+          // element.play();
+          playVideo(element);
+          // fix(element);
+          // setCurrentAudio(element);
         } else {
           element.pause();
         }
-        videoEl.pause();
       });
+      // playVideo(videoEl);
+      // console.log(videoEl.paused);
+      allAudioElems.current.forEach((element) => {
+        element.pause();
+      });
+      if (isSm) {
+        setInfoDisplayMode("bio");
+      }
+    } else {
+      if (allAudioElems.current && !isSm) {
+        allAudioElems.current.forEach((element) => {
+          if (element.id === "audio_" + track.title) {
+            // if (track.)
+            // console.log("PLAYING MY TRACK");
+            if (track.category === "remix") {
+              element.play();
+              // element.play().then((e) => {
+
+              // }).catch((error) => {
+              //   console.log(error);
+              // })
+              setCurrentAudio(element);
+            }
+          } else {
+            element.pause();
+          }
+          // videoEl.pause();
+        });
+        allVideoElems.current.forEach((element) => {
+          element.pause();
+        });
+      }
     }
+
     setCurrentTrack(track.title);
     setIsPlayingAction(true);
     setIsPlaying(true);
   };
 
   const pauseTrack = (track: Track) => {
-    // console.log(allAudioElems.current);
+    console.log(allAudioElems.current);
+    allVideoElems.current = tracks
+      .filter((t) => t.category === "recital")
+      .map((t) => "video_" + t.title)
+      .map((id) => document.getElementById(id) as HTMLVideoElement)
+      .filter((e) => e !== null);
+
+    allAudioElems.current = tracks
+      .filter((t) => t.category === "remix")
+      .map((t) => "audio_" + t.title)
+      .map((id) => document.getElementById(id) as HTMLAudioElement)
+      .filter((e) => e !== null);
+
+    // if (track.category === "remix") {
+    if (allVideoElems.current) {
+      allVideoElems.current.forEach((element) => {
+        if (element.id === "video_" + track.title) {
+          element.pause();
+        }
+      });
+    }
+    // } else {
     if (allAudioElems.current) {
       allAudioElems.current.forEach((element) => {
         if (element.id === "audio_" + track.title) {
@@ -231,6 +282,8 @@ export function usePlaylist(): UsePlaylistProps {
         }
       });
     }
+    // }
+
     // setCurrentTrack(track.title);
     setIsPlayingAction(false);
     setIsPlaying(false);
@@ -257,16 +310,25 @@ export function usePlaylist(): UsePlaylistProps {
       .map((t) => "audio_" + t.title)
       .map((id) => document.getElementById(id) as HTMLAudioElement)
       .filter((e) => e !== null);
+
+    allVideoElems.current = tracks
+      .filter((t) => t.category === "recital")
+      .map((t) => "video_" + t.title)
+      .map((id) => document.getElementById(id) as HTMLVideoElement)
+      .filter((e) => e !== null);
     if (allAudioElems.current) {
       allAudioElems.current.forEach((element) => {
-        if (category === "remix") {
-          if (element.id === "audio_" + title) {
-            element.pause();
-            console.log("got my audio!");
-          }
-        } else {
-          const el = document.getElementById(videoId) as HTMLMediaElement;
-          el.pause();
+        if (element.id === "audio_" + title) {
+          element.pause();
+          console.log("got my audio!");
+        }
+      });
+    }
+    if (allVideoElems.current) {
+      allVideoElems.current.forEach((element) => {
+        if (element.id === "video_" + title) {
+          element.pause();
+          // console.log("got my audio!");
         }
       });
     }
@@ -326,10 +388,19 @@ export function usePlaylist(): UsePlaylistProps {
   }, [infoDisplayModeState]);
 
   const playNext = () => {
-    const endedIndex = tracks.indexOf(
-      tracks.filter((t) => t.title === currentTrack.title)[0]
-    );
-    playTrack(tracks[endedIndex + 1]);
+    // const endedIndex = tracks.indexOf(
+    //   tracks.filter((t) => t.title === currentTrack.title)[0]
+    // );
+    const curPos = currentTrack.position;
+    playTrack(tracks.filter((t) => t.position == curPos + 1)[0]);
+  };
+
+  const playPrevious = () => {
+    // const endedIndex = tracks.indexOf(
+    //   tracks.filter((t) => t.title === currentTrack.title)[0]
+    // );
+    const curPos = currentTrack.position;
+    playTrack(tracks.filter((t) => t.position == curPos - 1)[0]);
   };
 
   const startingTrack = tracks[0];
@@ -343,6 +414,7 @@ export function usePlaylist(): UsePlaylistProps {
     restartCurrent,
     pauseCurrent,
     playNext,
+    playPrevious,
     trackIndex,
     isPlaying,
     currentAudioRef,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import tracks from "@static/tracks";
-import { useApp, usePlaylist } from "@hooks";
+import { useApp, usePlaylist, useQuery } from "@hooks";
 import "@css/blockquote.scss";
 import { Layout } from "react-grid-layout";
 import "@css/Layout.scss";
@@ -44,6 +44,7 @@ const Home = (): JSX.Element => {
     setCurLayout(defaultLayout);
   }, []);
 
+  const { isSm } = useQuery();
   return (
     // <StoreProvider store={homeStore}>
     // <
@@ -70,6 +71,7 @@ const Home = (): JSX.Element => {
             // top: "0%",
             right: "0%",
             zIndex: infoDisplayMode !== undefined ? -1 : 0,
+            pointerEvents: isSm ? "none" : "all",
             // zIndex: infoDisplayMode !== undefined ? -1 : 10,
             // border: "1px solid red",
           }}
