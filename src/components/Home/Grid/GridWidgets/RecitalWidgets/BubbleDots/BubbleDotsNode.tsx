@@ -11,6 +11,7 @@ import { Shaders, Node, GLSL, connectSize } from "gl-react";
 import BubbleShader from "../BubbleShader";
 import canvasLoop from "../../../../../../canvasLoop";
 import { animated, AnimatedComponent, useSpring } from "@react-spring/three";
+import { useQuery } from "@hooks";
 // import canvasLoop from "@canvasLoop";
 
 const BubbleDotsNode = ({
@@ -30,6 +31,7 @@ const BubbleDotsNode = ({
 }): JSX.Element => {
   const col = theme.secondaryRGB.map((c) => c / 255);
   const [endtime, setEndTime] = useState(500);
+  const isSm = useQuery();
 
   useEffect(() => {
     // console.log(isAnimate);
@@ -50,6 +52,7 @@ const BubbleDotsNode = ({
         color: col,
         u_resolution: resolution,
         u_mouse: offset,
+        isMobile: isSm ? 1 : 0,
         // isAnimate: isAnimate,
       }}
     />

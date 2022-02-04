@@ -11,6 +11,7 @@ const BubbleShader = Shaders.create({
       uniform vec3 color;
       uniform lowp int activeInd;
       uniform lowp int isHover;
+      uniform lowp int isMobile;
       // uniform float u_time;
       // uniform lowp int isAnimate;
       // uniform float end_time;
@@ -107,8 +108,12 @@ const BubbleShader = Shaders.create({
           float inc = 1.;
           
           float smult =4.;
+ 
           float dd = .1/min(0.0,1.-length((mt*smult)-p*smult));
           dd*=dd;
+          if (isMobile == 1){
+            dd=0.;
+          }
           float scaleX = 2.3;
   
           // float mb = 0.;
@@ -152,11 +157,12 @@ const BubbleShader = Shaders.create({
             //   } else {
             //       dist += Sphere(pn, testPos, (radius*dd)+-.17);
             //   }
-            if (isHover == 1){
-              dist += Sphere(pn, testPos, (radius*dd)+-.17);
-            } else {
-              dist += Sphere(pn, testPos, radius*.17);
-            }
+            dist += Sphere(pn, testPos, (radius*dd)+-.17);
+            // if (isHover == 1){
+            //   dist += Sphere(pn, testPos, (radius*dd)+-.17);
+            // } else {
+            //   dist += Sphere(pn, testPos, radius*.17);
+            // }
           
             //   pixel += dist;
           }
