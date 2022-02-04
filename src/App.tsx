@@ -29,13 +29,13 @@ const App = (): JSX.Element => {
       {/* <Route path="/daw" component={DAWApp}/> */}
       <StoreProvider store={homeStore}>
         <Route path="/" exact component={Home} />
+        <Route path="/testing" component={Testing} />
       </StoreProvider>
 
-      <Route path="/testing" component={Testing} />
-      <Route path="/fxaa" component={FXAADemoPage} />
+      {/* <Route path="/fxaa" component={FXAADemoPage} />
       <StoreProvider store={dawStore}>
         <Route path="/daw" component={DAWPage} />
-      </StoreProvider>
+      </StoreProvider> */}
     </Router>
   );
 };

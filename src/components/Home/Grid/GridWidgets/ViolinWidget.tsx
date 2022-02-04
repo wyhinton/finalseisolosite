@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useThree, useFrame, useLoader } from "@react-three/fiber";
 // import { useGLTF } from "drei";
 import {
@@ -17,6 +17,10 @@ import {
   PositionalAudio,
   AudioListener,
   Vector2,
+  InstancedMesh,
+  Vector3,
+  Matrix4,
+  Object3D,
 } from "three";
 import {
   Effects,
@@ -36,6 +40,7 @@ import { EffectComposer, Glitch } from "@react-three/postprocessing";
 import bravias from "./ViolinWidget/bravias";
 import s1 from "./ViolinWidget/s1.wav";
 import { getRandomIntInclusive } from "@utils";
+import { MeshSurfaceSampler } from "three-stdlib";
 
 declare module "three-stdlib" {
   export interface GLTF extends GLTFThree {
@@ -43,6 +48,10 @@ declare module "three-stdlib" {
     materials: Record<string, Material>;
   }
 }
+
+const Bubbles = ({ children }: { children: Group }): JSX.Element => {
+  return;
+};
 
 function playAudio() {
   // function playAudio(audio, volume = 1, loop = false) {
@@ -57,6 +66,8 @@ function playAudio() {
 }
 
 const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
+  const { active, progress, errors, item, loaded, total } = useProgress();
+
   const { nodes } = useGLTF(
     `${process.env.PUBLIC_URL}/Models/realistic-violin.glb`
   );
@@ -87,18 +98,6 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
     group.current.position.x = last;
   });
 
-  // useTrackCategory(
-  //   () => {
-  //     if (group.current) {
-  //       // group.current.position.x = 0;
-  //     }
-  //   },
-  //   () => {
-  //     if (group.current) {
-  //       group.current.position.x = 100;
-  //     }
-  //   }
-  // );
   const shaderRef = useRef<ShaderMaterial>();
   useFrame((state) => {
     group.current.rotation.y += 0.01;
@@ -127,15 +126,20 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
   const [audioInd, setAudioInd] = useState(1);
   const surl = `${process.env.PUBLIC_URL}/Clips/s (1).mp3`;
   const [url, seturl] = useState(surl);
+  const samplerRef = useRef<MeshSurfaceSampler>();
 
   const sound = useRef<PositionalAudio>();
+  useMemo(() => {
+    samplerRef.current = new MeshSurfaceSampler(children[0]).build();
+    console.log(samplerRef.current);
+  }, [children.length]);
 
-  useEffect(() => {
-    // setAudioInd(0);
-    seturl(`${process.env.PUBLIC_URL}/Clips/s (${audioInd}).mp3`);
-  }, [audioInd]);
-  const buffer = useLoader(AudioLoader, url);
-  const { camera } = useThree();
+  // useEffect(() => {
+  //   // setAudioInd(0);
+  //   seturl(`${process.env.PUBLIC_URL}/Clips/s (${audioInd}).mp3`);
+  // }, [audioInd]);
+  // const buffer = useLoader(AudioLoader, url);
+  // const { camera } = useThree();
   // useEffect(() => {
   //   sound.current.setBuffer(buffer);
   //   sound.current.setRefDistance(1);
@@ -148,28 +152,130 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
   //   return () => camera.remove(listener);
   // }, []);
   //@ts-ignore
+  const instancedMeshRef = useRef<InstancedMesh>();
+
+  const _position = new Vector3();
+  const _matrix = new Matrix4();
+  const _scale = new Vector3();
+  const tempObject = new Object3D();
+  const pointsRef = useRef<Vector3[]>();
+
   useEffect(() => {
-    sound.current.setBuffer(buffer);
+    const r = Array.from(Array(101).keys());
+    const points = r.map((r) => {
+      return new Vector3(0, 0, 0);
+    });
+    console.log(points);
+    if (samplerRef.current) {
+      points.forEach((p) => {
+        samplerRef.current.sample(p);
+      });
+    }
+
+    pointsRef.current = points;
+    // return points;
+  }, [loaded]);
+
+  useFrame((state) => {
+    // const time = state.clock.getElapsedTime();
+    // instancedMeshRef.current.rotation.x = Math.sin(time / 4);
+    // instancedMeshRef.current.rotation.y = Math.sin(time / 2);
+    let i = 0;
+    // if (state.clock.elapsedTime > 10) {
+    if (instancedMeshRef.current && pointsRef.current) {
+      for (let x = 0; x < 10; x++)
+        for (let y = 0; y < 10; y++) {
+          // if (state.clock.elapsedTime < 2) {
+          //   samplerRef.current.sample(_position);
+          //   tempObject.position.set(_position.x, _position.y, _position.z);
+          //   tempObject.updateMatrix();
+          // }
+          const id = i++;
+          const p = pointsRef.current[i];
+          _scale.set(
+            Math.sin(state.clock.elapsedTime * i * 0.1) * i * 0.015,
+            0,
+            0
+          );
+          p.add(_scale);
+
+          tempObject.position.set(p.x, p.y, p.z);
+          // tempObject.scale.setScalar(2);
+          tempObject.scale.setScalar(
+            (Math.sin(state.clock.elapsedTime * i * 0.1) + 1) * i * 0.02
+          );
+          // tempObject.scale.setScalar(Math.random());
+          tempObject.updateMatrix();
+          instancedMeshRef.current.setMatrixAt(id, tempObject.matrix);
+          // if (state.clock.elapsedTime < 10) {
+          //   samplerRef.current.sample(_position);
+          //   _matrix.makeTranslation(_position.x, _position.y, _position.z);
+          //   // instancedMeshRef.current.setMatrixAt(id, _matrix);
+          // // }
+
+          // const s = Math.random();
+          // // _position.addScalar()
+          // tempObject.scale.setScalar(s);
+          // tempObject.updateMatrix();
+
+          // _scale.setScalar(2);
+          // _matrix.makeScale(_scale.x, _scale.y, _scale.z);
+          // // _matrix(new Vector3(s, s, s));
+          // // samplerRef.current.sample(_position);
+          // // _matrix.makeTranslation(_position.x, _position.y, _position.z);
+          // // instancedMeshRef.current.setMatrixAt()
+          // instancedMeshRef.current.setMatrixAt(id, _matrix);
+          //   Math.sin(z / 4 + time);
+          // tempObject.rotation.z = tempObject.rotation.y * 2;
+          // if (hovered !== prevRef.Current) {
+          //   tempColor
+          //     .set(id === hovered ? "white" : data[id].color)
+          //     .toArray(colorArray, id * 3);
+          //   meshRef.current.geometry.attributes.color.needsUpdate = true;
+          // }
+          // const scale = (data[id].scale = THREE.MathUtils.lerp(
+          //   data[id].scale,
+          //   id === hovered ? 3 : 1,
+          //   0.1
+          // ));
+          // tempObject.scale.setScalar(scale);
+          // tempObject.updateMatrix();
+
+          // }
+          instancedMeshRef.current.instanceMatrix.needsUpdate = true;
+        }
+    }
+    // }
+
+    // for (let z = 0; z < 10; z++) {
+  });
+
+  useEffect(() => {
+    // sound.current.setBuffer(buffer);
     // sound.current.setVolume(1);
     // sound.current.setRefDistance(0);
     // sound.current.setLoop(true);
     // sound.current.play();
-
-    camera.add(listener);
-    return () => camera.remove(listener);
+    // camera.add(listener);
+    // return () => camera.remove(listener);
   }, []);
+
+  // const sampler =
 
   return (
     <group ref={group}>
-      {/* <PositionalAudio
-        url={}
-        // url="/sound.mp3"
-        distance={1}
-        loop
-        volume={1}
-        // {...props} // All THREE.PositionalAudio props are valid
-      /> */}
-      <positionalAudio ref={sound} args={[listener]} />
+      {/* <instancedMesh
+        ref={instancedMeshRef}
+        args={[null, null, 100]}
+      >
+        <sphereGeometry args={[1, 5, 5]}>
+        </sphereGeometry>
+        <meshMatcapMaterial
+          opacity={0.1}
+          attach="material"
+          matcap={matcapTexture}
+        />
+      </instancedMesh> */}
       {children.map((c, i) => {
         return (
           <mesh
@@ -193,7 +299,7 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
               // color="yellow"
               matcap={matcapTexture}
             />
-            {isRemix && <shaderMaterial ref={shaderRef} args={[bravias]} />}
+            {isRemix || <shaderMaterial ref={shaderRef} args={[bravias]} />}
           </mesh>
         );
       })}
@@ -217,12 +323,12 @@ const ViolinWidget = ({ track }: { track: Track }): JSX.Element => {
         {/* <OrthographicCamera makeDefault zoom={15.1} position={[0, 0, 20]} /> */}
         <OrbitControls />
         {/* <Sphere /> */}
-        <Violin track={track} isPlaying={isPlaying} />
+        <Violin track={track} isPlaying={isPlaying ?? false} />
         <Particles count={200} />
         {/* <SkyBox /> */}
         <ViolinWidgetEffects />
         <EffectComposer>
-          <Glitch strength={new Vector2(0.1, 0.1)} />
+          {/* <Glitch strength={new Vector2(0.1, 0.1)} /> */}
         </EffectComposer>
         {/* <Glitch /> */}
       </Canvas>

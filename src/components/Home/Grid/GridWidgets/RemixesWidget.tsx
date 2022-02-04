@@ -2,10 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import theme from "@static/theme";
 import FlexRow from "@components/UI/FlexRow";
 import tracks from "@static/tracks";
-import {
-  usePlaylist,
-  useQuery,
-} from "@hooks";
+import { usePlaylist, useQuery } from "@hooks";
 import TrackItem from "./TrackItem";
 import { motion, Variants } from "framer-motion";
 import { Track } from "@interfaces/Track";
@@ -15,6 +12,7 @@ import MirrorShape from "./RemixWidgets/MirrorShape";
 import ShapeContainer from "./RemixWidgets/ShapeContainer";
 import FlexBreak from "@components/UI/FlexBreak";
 import ReactAudioPlayer from "react-audio-player";
+import TrackControl from "../TrackControl/TrackControl";
 
 const RemixesWidget = (): JSX.Element => {
   const remixParts = tracks.filter((track) => track.category === "remix");
@@ -63,6 +61,7 @@ const RemixesWidget = (): JSX.Element => {
       {remixParts.map((track, i) => {
         return (
           <TrackItem key={i} track={track} useBox={false}>
+            <TrackControl track={track} />
             <TrackText track={track} />
             <motion.div
               // scale={0}

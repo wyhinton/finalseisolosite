@@ -11,7 +11,13 @@ import "@css/SvgButton.scss";
 const w = "max(20px, 8vmin)";
 // const w = "max(20px, 8vmin)";
 
-const PlayPauseControls = ({ track }: { track: Track }): JSX.Element => {
+const PlayPauseControls = ({
+  track,
+  active,
+}: {
+  track: Track;
+  active?: boolean;
+}): JSX.Element => {
   const { playTrack, pauseTrack, pauseCurrent, isPlaying, currentTrack } =
     usePlaylist();
 
@@ -52,6 +58,7 @@ const PlayPauseControls = ({ track }: { track: Track }): JSX.Element => {
         <PauseButton
           handleClick={() => {
             console.log("FIRING PAUSE BUTTON HANDLER");
+
             pauseCurrent();
             // pauseTrack(track);
           }}
@@ -70,7 +77,7 @@ const PlayPauseControls = ({ track }: { track: Track }): JSX.Element => {
 
 export default PlayPauseControls;
 
-const PlayButton = ({
+export const PlayButton = ({
   handleClick,
 }: {
   handleClick: () => void;

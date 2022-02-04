@@ -6,6 +6,7 @@ import NavLinks from "./NavLinks";
 import AboutButton from "../AboutButton";
 import { usePlaylist, useQuery } from "@hooks";
 import PlayPauseControls from "../Grid/GridWidgets/TrackItem/PlayPauseControls";
+import tracks from "@static/tracks";
 
 const MediaControls = (): JSX.Element => {
   const { currentTrack } = usePlaylist();
@@ -38,12 +39,12 @@ const MediaControls = (): JSX.Element => {
       }}
     >
       {/* <PauseTrack /> */}
-      {/* <RestartTrack /> */}
+      <RestartTrack />
       {/* <div style={{ height: 50, width: 50 }}> */}
-      {!isSm && <PlayPauseControls track={currentTrack} />}
+      {<PlayPauseControls track={currentTrack} />}
       {/* </div> */}
 
-      {/* <NextTrack /> */}
+      <NextTrack />
     </FlexRow>
   );
 };
@@ -78,10 +79,23 @@ const IconWrapper = ({
 };
 
 const RestartTrack = (): JSX.Element => {
-  const { restartCurrent } = usePlaylist();
+  const { restartCurrent, currentTrack } = usePlaylist();
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    // console.log(trackIndex);
+    // console.log(currentTrack);
+    if (currentTrack.position == 0) {
+      setIsActive(false);
+    } else {
+      setIsActive(true);
+    }
+  }, [currentTrack.title]);
+
   return (
     <IconWrapper onClick={restartCurrent} viewBox="0 0 141 101">
       <path
+        opacity={isActive ? 1 : 0.1}
         fill={theme.secondary}
         d="M1.8,45.8c0.8-1.4,2-2.6,3.4-3.4L75.6,1.8c4.5-2.6,10.2-1,12.7,3.4c0.8,1.4,1.2,3,1.2,4.7V23l36.9-21.3
 	c4.5-2.6,10.2-1,12.7,3.4c0.8,1.4,1.2,3,1.2,4.7v81.4c0,5.1-4.2,9.3-9.3,9.3c-1.6,0-3.2-0.4-4.6-1.2L89.6,78v13.2
@@ -92,11 +106,26 @@ const RestartTrack = (): JSX.Element => {
 };
 
 const NextTrack = (): JSX.Element => {
-  const { playNext } = usePlaylist();
+  const { playNext, currentTrack } = usePlaylist();
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    // console.log(trackIndex);
+    // console.log(currentTrack);
+    if (currentTrack.position == 5) {
+      setIsActive(false);
+    } else {
+      setIsActive(true);
+    }
+  }, [currentTrack.title]);
+
+  // const trackIndex
   return (
     <IconWrapper onClick={playNext} viewBox="0 0 141 101">
       <path
+        opacity={isActive ? 1 : 0.1}
         fill={theme.secondary}
+        // fill="red"
         d="M139.2,45.8c-0.8-1.4-2-2.6-3.4-3.4L65.4,1.8c-4.5-2.6-10.2-1-12.7,3.4c-0.8,1.4-1.2,3-1.2,4.7V23L14.5,1.8
 	C10-0.8,4.3,0.7,1.7,5.2c-0.8,1.4-1.2,3-1.2,4.7v81.4c0,5.1,4.2,9.3,9.3,9.3c1.6,0,3.2-0.4,4.6-1.2L51.4,78v13.2
 	c0,5.1,4.2,9.3,9.3,9.3c1.6,0,3.2-0.4,4.6-1.2l70.5-40.7C140.3,56,141.8,50.3,139.2,45.8z"
