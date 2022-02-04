@@ -5,6 +5,7 @@ const TitleWidget = (): JSX.Element => {
   return (
     <div
       style={{
+        cursor: "grab",
         padding: ".5rem",
         height: "100%",
         fontSize: theme.titleFont,

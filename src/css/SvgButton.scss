@@ -1,0 +1,8 @@
+@use "variables" as v;
+
+.svg-button {
+  fill: v.$secondary;
+}
+.svg-button:hover {
+  fill: v.$secondaryHover;
+}

@@ -6,6 +6,7 @@ import "@css/PlayButton.scss";
 import { useIsPlaying, usePlaylist } from "@hooks";
 import theme from "@static/theme";
 import { motion } from "framer-motion";
+import "@css/SvgButton.scss";
 
 const w = "max(20px, 8vmin)";
 // const w = "max(20px, 8vmin)";
@@ -74,12 +75,15 @@ const PlayButton = ({
 }: {
   handleClick: () => void;
 }): JSX.Element => {
+  // const [hovered, sethovered] = useState(initialState)
+
   return (
     <motion.div
       className={"play-button-item"}
       onClick={(e) => {
         handleClick();
       }}
+      whileHover={{}}
       style={{
         // width: "50%",
         // width: "50%",
@@ -103,7 +107,8 @@ const PlayButton = ({
         style={{ margin: "auto" }}
       >
         <path
-          fill={theme.secondary}
+          className="svg-button"
+          // fill={theme.secondary}
           d="M170.45,173l-53.71-31a7.1,7.1,0,0,0-10.65,6.15v62a7.1,7.1,0,0,0,10.65,6.14l53.71-31A7.1,7.1,0,0,0,170.45,173Z"
           transform="translate(-106.09 -141)"
         />
