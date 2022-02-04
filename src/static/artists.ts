@@ -1,10 +1,10 @@
 import Artist from "@interfaces/Artist";
 
-const vivekPhoto = `${process.env.PUBLIC_URL}/Headshots/VIVEK_HEADSHOT.jpg`;
-const anjaliPhoto = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.png`;
-const pacificPhoto = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.png`;
-const countourPhoto = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.png`;
-const webbPhoto = `${process.env.PUBLIC_URL}/Headshots/WEBB_HEADSHOT.jpg`;
+const vivekPhoto = `${process.env.PUBLIC_URL}/Headshots/VIVEK_HS.webp`;
+const anjaliPhoto = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.webp`;
+const pacificPhoto = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.webp`;
+const countourPhoto = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.webp`;
+const webbPhoto = `${process.env.PUBLIC_URL}/Headshots/WEBB_HS.webp`;
 
 const webbLink = "https://webbhinton.co";
 const vivekLink = "https://violinbyvivek.com/";

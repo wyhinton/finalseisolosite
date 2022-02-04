@@ -108,6 +108,7 @@ interface UsePlaylistProps {
   restartCurrent: () => void;
   pauseCurrent: () => void;
   isPlaying: boolean;
+  trackIndex: number;
   currentAudioRef: React.MutableRefObject<HTMLAudioElement>;
   currentAudio: HTMLAudioElement;
   currentDuration: number;
@@ -174,6 +175,7 @@ export function usePlaylist(): UsePlaylistProps {
         await v.play();
         // playButton.classList.add("playing");
       } catch (err) {
+        console.log(err);
         // playButton.classList.remove("playing");
       }
     }
@@ -182,15 +184,18 @@ export function usePlaylist(): UsePlaylistProps {
     ) as HTMLVideoElement;
 
     if (track.category === "recital") {
-
       // console.log(videoEl);
       // videoEl.play()
       // videoEl.play()
       // videoEl.load();
       playVideo(videoEl);
-      const t = videoEl.play().then((t) => {
-        videoEl.play();
-      });
+      // const t = videoEl.play().then((t) => {
+      //   videoEl.play();
+      // });
+      console.log(videoEl.paused);
+      if (isSm) {
+        setInfoDisplayMode("bio");
+      }
     }
     if (allAudioElems.current && !isSm) {
       allAudioElems.current.forEach((element) => {
@@ -209,7 +214,7 @@ export function usePlaylist(): UsePlaylistProps {
         } else {
           element.pause();
         }
-        videoEl.pause()
+        videoEl.pause();
       });
     }
     setCurrentTrack(track.title);
@@ -272,7 +277,7 @@ export function usePlaylist(): UsePlaylistProps {
   const [currentTrack, setCurrentTrackLocal] = useState(currentTrackState);
   const [infoDisplayMode, setInfoDisplayModeLocal] =
     useState(infoDisplayModeState);
-
+  const [trackIndex, setTrackIndex] = useState(0);
   const previousTrack = usePrevious<Track | undefined>(currentTrack, undefined);
   const [trackCategory, setTrackCategory] = useState(
     currentTrackState.category
@@ -301,6 +306,7 @@ export function usePlaylist(): UsePlaylistProps {
     setCurrentTrackLocal(currentTrackState);
     setTrackCategory(currentTrackState.category);
     setIsRecital(currentTrack.category === "recital");
+    setTrackIndex(currentTrack.position);
     // setCurrentAudio(getTrackAudio(currentTrackState))
     const curAuidoGet = getTrackAudio(currentTrack);
     setCurrentAudio(curAuidoGet);
@@ -337,7 +343,7 @@ export function usePlaylist(): UsePlaylistProps {
     restartCurrent,
     pauseCurrent,
     playNext,
-
+    trackIndex,
     isPlaying,
     currentAudioRef,
     currentAudio,
@@ -723,7 +729,7 @@ export function useElementSize<T extends HTMLElement = HTMLDivElement>(): [
 //   return ref.current;
 // }
 
-interface UseMetronomeProps { }
+interface UseMetronomeProps {}
 
 export function useMetronome(bpmStart: number, onBeat: (beat: number) => void) {
   const [bpm, setBpm] = useState(bpmStart);
@@ -751,4 +757,28 @@ export function useMetronome(bpmStart: number, onBeat: (beat: number) => void) {
   useEffect(() => {
     onBeat(beat);
   }, [beat]);
+}
+
+const getMobileDetect = (userAgent: string) => {
+  const isAndroid = (): boolean => Boolean(userAgent.match(/Android/i));
+  const isIos = (): boolean => Boolean(userAgent.match(/iPhone|iPad|iPod/i));
+  const isOpera = (): boolean => Boolean(userAgent.match(/Opera Mini/i));
+  const isWindows = (): boolean => Boolean(userAgent.match(/IEMobile/i));
+  const isSSR = (): boolean => Boolean(userAgent.match(/SSR/i));
+
+  const isMobile = (): boolean =>
+    Boolean(isAndroid() || isIos() || isOpera() || isWindows());
+  const isDesktop = (): boolean => Boolean(!isMobile() && !isSSR());
+  return {
+    isMobile,
+    isDesktop,
+    isAndroid,
+    isIos,
+    isSSR,
+  };
+};
+export function useMobileDetect() {
+  const userAgent =
+    typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
+  return getMobileDetect(userAgent);
 }

@@ -158,11 +158,11 @@ const BubbleShader = Shaders.create({
             //       dist += Sphere(pn, testPos, (radius*dd)+-.17);
             //   }
             dist += Sphere(pn, testPos, (radius*dd)+-.17);
-            // if (isHover == 1){
-            //   dist += Sphere(pn, testPos, (radius*dd)+-.17);
-            // } else {
-            //   dist += Sphere(pn, testPos, radius*.17);
-            // }
+            if (isHover == 1){
+              // dist += Sphere(pn, testPos, (radius*dd)+-.17);
+            } else {
+              // dist += Sphere(pn, testPos, radius*.17);
+            }
           
             //   pixel += dist;
           }

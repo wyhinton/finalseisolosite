@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import theme from "@static/theme";
+import ReactAudioPlayer from "react-audio-player";
 
 const ComposerNames = ({
   activeIndex,
@@ -34,6 +35,7 @@ const ComposerNames = ({
         // border: "1px solid red",
       }}
     >
+      <ReactAudioPlayer src={`${process.env.PUBLIC_URL}/Tracks/BACH.mp3`} />
       <ComposerTitle
         activeTrack={activeTrack}
         hovered={activeIndex == 0}
@@ -41,6 +43,7 @@ const ComposerNames = ({
       >
         Bach
       </ComposerTitle>
+      <ReactAudioPlayer src={`${process.env.PUBLIC_URL}/Tracks/BARTOK.mp3`} />
       <ComposerTitle
         activeTrack={activeTrack}
         hovered={activeIndex == 1}
@@ -48,6 +51,7 @@ const ComposerNames = ({
       >
         Bartók
       </ComposerTitle>
+      <ReactAudioPlayer src={`${process.env.PUBLIC_URL}/Tracks/YSAYE.mp3`} />
       <ComposerTitle
         activeTrack={activeTrack}
         hovered={activeIndex == 2}

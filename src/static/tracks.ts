@@ -3,9 +3,12 @@ import { Track } from "@interfaces/Track";
 const src = `${process.env.PUBLIC_URL}/overandunder (infinity).wav`;
 
 //REMIX HEADSHOTS
-const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.png`;
-const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.png`;
-const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.png`;
+const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.webp`;
+const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.webp`;
+const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.webp`;
+// const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.png`;
+// const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.png`;
+// const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.png`;
 
 //REMIX TRACKS
 const anjaliTrack = `${process.env.PUBLIC_URL}/Tracks/Believe.mp3`;
@@ -69,6 +72,9 @@ const contourAbout = `The way i approached the track was finding a melodic secti
 //TODO: FIX THE CONTOUR ABOUT
 
 //TODO: D
+const bachAudio = `${process.env.PUBLIC_URL}/Tracks/BACH.mp3`;
+const bartokAudio = `${process.env.PUBLIC_URL}/Tracks/BARTOK.mp3`;
+const ysayeAudio = `${process.env.PUBLIC_URL}/Tracks/YSAYE.mp3`;
 
 const bachComposition = "Partita No. 2 in D Minor";
 const bartokComposition = "Sonata for Solo Violin";
@@ -76,6 +82,7 @@ const ysayeComposition = `Sonata No. 3 in D Minor "Ballade"`;
 
 const tracks: Track[] = [
   {
+    position: 3,
     id: `Commission #001`,
     artist: "Contour",
     title: "Revolving Melody",
@@ -100,6 +107,7 @@ const tracks: Track[] = [
     year: "2022",
   },
   {
+    position: 4,
     id: `Commission #002`,
     artist: "Pacific Yew",
     title: "overandunder (infinity)",
@@ -121,9 +129,11 @@ const tracks: Track[] = [
     duration: 198,
     bpm: 80,
     origin: "Oakland, CA",
+
     year: "2022",
   },
   {
+    position: 5,
     id: `Commission #003`,
     artist: "Diaspoura",
     title: "Believe",
@@ -149,10 +159,12 @@ const tracks: Track[] = [
   },
   //RECITAL
   {
+    position: 0,
     id: `Recital Part #001`,
     artist: "Vivek Menon",
     title: "Bach",
     src: bachVideo,
+    audioSrc: bachAudio,
     composer: "Johann Sebastian Bach",
     performer: "Vivek Menon",
     // src: bachTrack,
@@ -172,10 +184,15 @@ const tracks: Track[] = [
     origin: "Eisenach, Germany",
     year: "1720",
     composition: bachComposition,
-    video:
-      "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Bach.webm?alt=media&token=e9ae04e9-ff83-473a-9173-50dce650608e",
+    video: "https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?raw=1",
+    // iOSVersion:
+    iOSVideo:
+      "https://www.dropbox.com/s/riuoj7pymo9ropf/BACH_600_REDUCED_SIZE.mp4?raw=1",
+    // "https://uc7129ca374e09f7f04c133dbec7.dl.dropboxusercontent.com/cd/0/inline/BfCvyrxHDU6WW-LBw-fjgUCIuxE8FSg43WX_FPFnmurhZBn0lg8EtVij9mB4C1gtmeJ6I1gAHk54YNj52mojpKQcqfMLXsNuXRf5M88yJ1n8dOImewxvPoplCHTBEo4DDxmL05gkV-DjcqxkUmUIZi9e/file#",
+    // "https://uc7129ca374e09f7f04c133dbec7.dl.dropboxusercontent.com/cd/0/inline/BfCvyrxHDU6WW-LBw-fjgUCIuxE8FSg43WX_FPFnmurhZBn0lg8EtVij9mB4C1gtmeJ6I1gAHk54YNj52mojpKQcqfMLXsNuXRf5M88yJ1n8dOImewxvPoplCHTBEo4DDxmL05gkV-DjcqxkUmUIZi9e/file#",
   },
   {
+    position: 1,
     id: `Recital Part #002`,
     artist: "Vivek Menon",
     performer: "Vivek Menon",
@@ -183,6 +200,7 @@ const tracks: Track[] = [
     composer: "Béla Bartók",
     // src: bartokTrack,
     src: bartokVideo,
+    audioSrc: bartokAudio,
     about: bartokAbout,
     visualType: "video",
     visual: bartokVideo,
@@ -193,21 +211,28 @@ const tracks: Track[] = [
         description: "Connects in this way",
       },
     ],
+    //some hosting under dj05elantra
     category: "recital",
     duration: bartokLength,
     origin: "Nagyszentmiklós, Kingdom of Hungary",
     year: "1944",
     composition: bartokComposition,
-    video:
-      "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Bartok.webm?alt=media&token=56548d75-8d7b-442c-b0bb-05523583e5b1",
+    video: "https://www.dropbox.com/s/5wxqybeu07x2txt/Bartok.webm?raw=1",
+    iOSVideo:
+      "https://www.dropbox.com/s/pwuk6hdixmjhei3/BARTOK_UNDER_2GB_600.mp4?raw=1",
+    // "https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?dl=0",
+    // https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?raw=1
+    // video:
   },
   {
+    position: 2,
     id: `Recital Part #003`,
     artist: "Vivek Menon",
     performer: "Vivek Menon",
     title: "Ysaÿe",
     composer: "Eugène Ysaÿe",
     src: ysayeVideo,
+    audioSrc: ysayeAudio,
     about: ysaeAbout,
     visualType: "video",
     visual: ysayeVideo,
@@ -223,9 +248,11 @@ const tracks: Track[] = [
     origin: "Liège, Blegium",
     year: "1923",
     composition: ysayeComposition,
-    video:
-      "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Ysaye.webm?alt=media&token=93a122c8-97cf-48ba-8ed2-7fc508575604",
+    video: "https://www.dropbox.com/s/dmrggrak0jt0hlc/YSAYE.webm?raw=1",
+    // "https://uca5c8be880eee15c473074ef1b4.dl.dropboxusercontent.com/cd/0/inline/Be-U1vUDF_U5U9vST_KbzCO23UdOUGZrtqXcVysMuqHrKOWtLaUqpOpOZ25Le0RCUdoaBcy1gyhg_f8dw36fQ-BGdAdB7kCIgNcgT_JqqLJ2IiHtOnsDxLkfZ25WEInhz74WmIPVXHCrF5bo1kq8LaJH/file#",
     // movements: {}
+    iOSVideo: "https://www.dropbox.com/s/mpo0oieb4r8054p/YSAYE.mp4?raw=1",
+    // "https://ucdae97be4b740f2e52fcfbdceba.dl.dropboxusercontent.com/cd/0/inline/BfCHTvUKtRTlnYO9uduw0NY9fcVJAuABe5_nPmjwgKP6gXCwfzIW14Ll28qR-nmabS9vxX7wg_L5KyK9l4seSXpzXvYysfVh4DNyPIrv55m7Kc_-LrnsfyOaA2iGzHkyd-xUiMNGILs2ac6jrf-pXJNL/file#",
   },
 ];
 

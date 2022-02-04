@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import theme from "@static/theme";
-import { usePlaylist, useQuery } from "@hooks";
+import { useMobileDetect, usePlaylist, useQuery } from "@hooks";
 import { motion, Variants } from "framer-motion";
 import { Track } from "@interfaces/Track";
 import FlexRow from "@components/UI/FlexRow";
@@ -8,6 +8,7 @@ import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import WaveformView from "./InfoPopup/WaveformView";
 import UILayer from "./InfoPopup/UILayer/UILayer";
 import CloseInfoPopupButton from "./InfoPopup/CloseInfoPopupButton";
+import { Parallax, ParallaxLayer, IParallax } from "@react-spring/parallax";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -75,6 +76,7 @@ const InfoPopup = () => {
       <CloseInfoPopupButton />
       <UILayer />
       <motion.div
+        id="waveform-view-motion-container"
         initial={false}
         variants={variantsGrid}
         animate={infoDisplayMode == undefined || isSm ? "hidden" : "visible"}
@@ -102,6 +104,7 @@ const InfoPopup = () => {
       </motion.div>
       {/* {about} */}
       <motion.div
+        id="text-display-motion-container"
         initial={false}
         variants={variantsAbout}
         animate={infoDisplayMode == undefined ? "hidden" : "visible"}
@@ -118,6 +121,7 @@ const InfoPopup = () => {
           height: isMd ? bottomHeight : "93vh",
           // height: bottomHeight,
           backgroundColor: "yellow",
+          top: isSm ? theme.navHeight : "",
           //   border: "1px solid red",
         }}
       >
@@ -133,6 +137,13 @@ const TextDisplay = ({ track }: { track: Track }): JSX.Element => {
   const { about } = track;
 
   const { isSm, isMd, isLg } = useQuery();
+  // const parallax = useRef<IParallax>(null);
+
+  // const scroll = (to: number) => {
+  //   if (parallax.current) {
+  //     parallax.current.scrollTo(to);
+  //   }
+  // };
 
   return (
     <div
@@ -149,8 +160,71 @@ const TextDisplay = ({ track }: { track: Track }): JSX.Element => {
         backgroundColor: "yellow",
       }}
     >
-      <ArtistImage key="artist-image" track={track} />
-      <Section key="about" className="aboutClass" text={about} header="About" />
+      {isSm ? (
+        <Parallax pages={1.6} style={{ overflow: "hidden", top: 0, left: 0 }}>
+          <ParallaxLayer
+            offset={0}
+            speed={0.1}
+            style={{ justifyContent: "center" }}
+          >
+            <ArtistImage key="artist-image" track={track} />
+          </ParallaxLayer>
+          <ParallaxLayer
+            offset={0.5}
+            speed={0.4}
+            factor={0.1}
+            style={{ justifyContent: "center" }}
+          >
+            <Section
+              key="about"
+              className="aboutClass"
+              text={about}
+              header="About"
+            />
+          </ParallaxLayer>
+        </Parallax>
+      ) : (
+        <>
+          <ArtistImage key="artist-image" track={track} />
+          {/* <Parallax pages={2} /> */}
+          {/* <ParallaxLayer
+            offset={0.5}
+            speed={0.4}
+            factor={0.1}
+            style={{ justifyContent: "center" }} */}
+          {/* > */}
+          <Section
+            key="about"
+            className="aboutClass"
+            text={about}
+            header="About"
+          />
+          {/* </ParallaxLayer> */}
+        </>
+      )}
+
+      {/* <Parallax pages={1}>
+        <ParallaxLayer
+          offset={0}
+          speed={0.1}
+          style={{ justifyContent: "center" }}
+        >
+          <ArtistImage key="artist-image" track={track} />
+        </ParallaxLayer>
+        <ParallaxLayer
+          offset={0.5}
+          speed={0.4}
+          // factor={0.1}
+          style={{ justifyContent: "center" }}
+        >
+          <Section
+            key="about"
+            className="aboutClass"
+            text={about}
+            header="About"
+          />
+        </ParallaxLayer>
+      </Parallax> */}
     </div>
   );
 };
@@ -165,10 +239,17 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
     //   myVal.current = item
 
     if (currentTrack.category === "recital") {
-      setVs(currentTrack.video);
+      const { isIos } = useMobileDetect();
+      if (isIos) {
+        setVs(currentTrack.iOSVideo);
+      } else {
+        setVs(currentTrack.video);
+      }
+
       console.log(currentTrack);
       console.log(currentTrack.video);
       console.log(vs);
+
       // setVs(currentTrack.visual);
       // console.log(vs);
     }
@@ -186,16 +267,31 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
           src={track.visual}
         />
       )}
+      {/* {track.category === "recital" &&
+        !isSm &&(
+          <img
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            src={`${process.env.PUBLIC_URL}/Headshots/VIVEK_HEADSHOT.jpg`}
+          />
+        )} */}
 
       <video
         id="recital_video"
         controls={true}
         style={{
           display: track.category == "recital" ? "block" : "none",
+          // display: track.category == "recital" ? "block" : "none",
           width: "100%",
           height: "100%",
           objectFit: "cover",
         }}
+        autoPlay
+        muted={false}
+        // crossOrigin
+        // crossOrigin="anonymous"
+        // src={
+        //   "https://firebasestorage.googleapis.com/v0/b/seisolo.appspot.com/o/Ysaye.webm?alt=media&token=93a122c8-97cf-48ba-8ed2-7fc508575604"
+        // }
         src={vs}
       >
         <source src={vs} />
@@ -229,7 +325,7 @@ const Section = ({
         // height: "100%",
         backgroundColor: "yellow",
         fontSize: theme.paragraphSize,
-        overflowY: "scroll",
+        overflowY: "visible",
         paddingTop: "1em",
         padding: isSm ? "6vmin" : "",
       }}
@@ -259,7 +355,10 @@ const Section = ({
           marginBottom: "1em",
           // fontSize: "2vmin",
           // paddingLeft: "7vmin",
+          overflowY: !isSm ? "scroll" : "visible",
+          // marginTop: "40px",
           fontSize: theme.paragraphSize,
+          // paddingTop: "8vmin",
         }}
       >
         {text}

@@ -185,6 +185,11 @@ const TrackTitle = ({}: {}): JSX.Element => {
         },
       }}
     >
+      {/* <ReactAudioPlayer
+        controls
+        src={currentTrack.src}
+        style={{ width: "100px", height: "40px" }}
+      /> */}
       <div style={{ height: "fit-content" }}>{innerText}</div>
     </motion.div>
   );
