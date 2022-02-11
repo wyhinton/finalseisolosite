@@ -16,7 +16,7 @@
       "@css/*": ["./css/*"],
       "@interfaces/*": ["./interfaces/*"],
       "@canvasLoop": ["./canvasLoop"],
-      "@my-react-select": [
+      "@my-react-select": [ 
         "../node_modules/react-select",
         "../node_modules/@types/react-select"
       ],

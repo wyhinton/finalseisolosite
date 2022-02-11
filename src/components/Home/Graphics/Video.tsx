@@ -18,7 +18,7 @@ const Video = (): JSX.Element => {
   //   scene.background = new THREE.Color(0xff0000);
   //   const camera = new THREE.PerspectiveCamera(
   //     75,
-  //     window.innerWidth / window.innerHeight,
+  //     window.innerWidth / window.innerHeight,ttempted import error: 'FramebufferTexture' is not exported from 'three'.
   //     0.1,
   //     1000
   //   );
