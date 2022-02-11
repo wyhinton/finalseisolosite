@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from "react";
 
+interface FlexColumnProps
+  extends Omit<React.HTMLProps<HTMLDivElement>, "as" | "ref"> {
+  // children: JSX.Element | JSX.Element[] | Element[];
+  padding?: string;
+  break: "xs" | "sm" | "md" | "lg";
+  // className?: string;
+  // style?: React.CSSProperties;
+  width?: string;
+  height?: string;
+  justifyContent?: string;
+}
+
 const FlexColumn = ({
   children,
   padding,

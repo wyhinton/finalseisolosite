@@ -70,24 +70,30 @@ const RecitalWidgets = (): JSX.Element => {
             return <MobileTracks t={t} key={i} />;
           }
         })} */}
-        {recitalParts.map((t, i) => {
-          // if (isSm) {
-          return (
-            <div
-              key={i}
-              style={{
-                pointerEvents: "all",
-                zIndex: 100000000,
-                position: "absolute",
-                left: !isSm ? `${i * 33}%` : 0,
-                top: isSm ? `${i * 33}%` : 9,
-              }}
-            >
-              <TrackControl track={t} />
-            </div>
-          );
-        })}
 
+        <FlexColumn>
+          {recitalParts.map((t, i) => {
+            // if (isSm) {
+            return (
+              <div
+                className="recital-track-control-container"
+                key={i}
+                style={{
+                  pointerEvents: "all",
+                  zIndex: 100000000,
+                  // position: "absolute",
+                  // left: !isSm ? `${i * 33}%` : 0,
+                  // top: isSm ? `${i * 33}%` : 9,
+                  bottom: 0,
+                  height: "100%",
+                  width: "100%",
+                }}
+              >
+                <TrackControl key={i} track={t} />{" "}
+              </div>
+            );
+          })}
+        </FlexColumn>
         {<BubbleDots />}
       </div>
       {recitalParts.map((track, i) => {

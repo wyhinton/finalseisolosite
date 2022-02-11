@@ -48,8 +48,10 @@ const AppBar = ({}: {}): JSX.Element => {
         // bottom: "0%",
         // width: "fit-content",
         // height: "fit-content",
+        borderTop: `1px solid ${theme.secondary}`,
         height: isSm ? theme.appBarHeightMobile : theme.appBarHeight,
-        backgroundColor: theme.primaryDark,
+        backgroundColor: theme.primary,
+        // backgroundColor: theme.primaryDark,
         borderBottom: "1px solid black",
         width: "100vw",
 
@@ -66,8 +68,8 @@ const AppBar = ({}: {}): JSX.Element => {
     >
       <FlexRow justifycontent="flex-start">
         {/* <GlowyButton /> */}
-        <TrackTitle />
         <MediaControls />
+        <TrackTitle />
 
         <Time />
       </FlexRow>

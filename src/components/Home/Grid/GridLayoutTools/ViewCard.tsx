@@ -18,7 +18,7 @@ const ViewCard = ({
   const containerStyle = {
     width: "100%",
     height: "100%",
-    border: border ? "2px solid black" : "",
+    // border: border ? "2px solid black" : "",
     // backgroundColor: theme.primary,
     overflow: overflowHidden ? "hidden" : "visible",
     // borderRadius: theme.borderRadius,

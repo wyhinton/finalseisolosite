@@ -39,3 +39,8 @@ $dot-color2: v.$secondary;
   background-size: $dot-space $dot-space;
 }
 //
+
+.lines {
+  background: linear-gradient(to right, rgb(0, 255, 55) 1px, transparent 1px);
+  background-size: 20px;
+}

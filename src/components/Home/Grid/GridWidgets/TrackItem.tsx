@@ -44,7 +44,7 @@ const TrackItem = ({
       className="track-item-container"
       style={{
         // margin: "auto",
-        margin: isSm ? "0" : "1vmin",
+        // margin: isSm ? "0" : "1vmin",
         height: track.category === "remix" ? "100%" : 0,
         width: "33.333%",
         fontSize: "2rem",
@@ -60,13 +60,13 @@ const TrackItem = ({
 
         // border: "1px solid blue",
       }}
-      onClick={(e) => {
-        if (isPlaying) {
-          pauseTrack(track);
-        } else {
-          playTrack(track);
-        }
-      }}
+      // onClick={(e) => {
+      //   if (isPlaying) {
+      //     pauseTrack(track);
+      //   } else {
+      //     playTrack(track);
+      //   }
+      // }}
       // onMouseEnter={(e) => console.log(e)}
       animate={isPlaying ? "active" : "paused"}
       variants={variants}
@@ -75,7 +75,7 @@ const TrackItem = ({
           // backgroundColor: theme.primaryMedium,
         }
       }
-    //   animat
+      //   animat
     >
       {/* <div
         style={{

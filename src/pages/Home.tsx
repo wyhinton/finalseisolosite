@@ -72,6 +72,7 @@ const Home = (): JSX.Element => {
             right: "0%",
             zIndex: infoDisplayMode !== undefined ? -1 : 0,
             pointerEvents: isSm ? "none" : "all",
+
             // zIndex: infoDisplayMode !== undefined ? -1 : 10,
             // border: "1px solid red",
           }}

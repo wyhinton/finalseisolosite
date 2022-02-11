@@ -49,8 +49,9 @@ const FlowerShape = ({ track }: { track: Track }): JSX.Element => {
     <>
       <path
         // fill={theme.primary}
-        fill={theme.secondary}
-        // stroke={theme.secondary}
+        fill={theme.primary}
+        // fill={theme.secondary}
+        stroke={theme.secondary}
         d="M230.5,160.5c16.6,0,30-13.4,30-30s-13.4-30-30-30c-1.5,0-3,0.1-4.5,0.3c-1.8-5.9-4.2-11.5-7-16.9
             c1.2-0.9,2.3-1.9,3.4-2.9c11.7-11.7,11.7-30.7,0-42.4c-11.7-11.7-30.7-11.7-42.4,0c-1.1,1.1-2.1,2.2-2.9,3.4c-5.4-2.8-11-5.2-16.9-7
             c0.2-1.5,0.3-3,0.3-4.5c0-16.6-13.4-30-30-30s-30,13.4-30,30c0,1.5,0.1,3,0.3,4.5c-5.9,1.8-11.5,4.2-16.9,7

@@ -15,6 +15,7 @@ import Particles from "@components/Home/Grid/GridWidgets/ViolinWidget/Particles"
 import DemoAnimatedGL from "./DemoAnimatedGL";
 import ViolinWidget from "@components/Home/Grid/GridWidgets/ViolinWidget";
 import tracks from "@static/tracks";
+import MetaballsScene from "@components/Home/Grid/GridWidgets/RecitalWidgets/MetaballsScene";
 
 interface TrackData {
   duration: number;
@@ -29,13 +30,14 @@ interface MyData {
 
 const Testing = (): JSX.Element => {
   return (
-    <section style={{ backgroundColor: "black" }}>
-      <video controls>
+    <section>
+      {/* <video controls>
         <source src="https://www.dropbox.com/s/riuoj7pymo9ropf/BACH_600_REDUCED_SIZE.mp4?raw=1" />
-      </video>
-      <audio controls>
+      </video> */}
+      {/* <audio controls>
         <source src={`${process.env.PUBLIC_URL}/Tracks/BACH.mp3`} />
-      </audio>
+      </audio> */}
+      <MetaballsScene />
       {/* <DemoAnimatedGL /> */}
       {/* <ViolinWidget track={tracks[0]} /> */}
       {/* <Particles /> */}

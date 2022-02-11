@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import React, { useState, useEffect, useRef } from "react";
 import PlayPauseSwitch from "./PlayPauseSwitch";
 import { Range } from "react-range";
+import theme from "@static/theme";
+
+const fontSize = "max(12pt, 2vmin)";
 
 const TrackControl = ({ track }: { track: Track }): JSX.Element => {
   const audioRef = useRef<HTMLMediaElement>();
@@ -30,6 +33,7 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
         "audio_" + track.title
       ) as HTMLMediaElement;
       audioRef.current.addEventListener("play", () => {
+        console.log("PUASED", track.title);
         setPaused(false);
       });
       audioRef.current.addEventListener("timeupdate", (e) => {
@@ -40,6 +44,7 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
       });
 
       audioRef.current.addEventListener("pause", (e) => {
+        console.log("PUASED", track.title);
         setPaused(true);
       });
       //   console.log(audioRef.current);
@@ -58,7 +63,6 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
 
       audioRef.current.addEventListener("play", () => {
         setPaused(false);
-
         // if (track.title === currentTrack.title) {
         //   setPaused(false);
         // } else {
@@ -90,40 +94,56 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
 
   const bodyStyle = {
     width: "100%",
-    padding: ".1em",
+
+    // padding: ".1em",
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
+    // paddingRight: "2vmin",
+    height: "max(4vmin, 50px)",
   } as React.CSSProperties;
 
   const containerStyle = {
-    width: "max(20vmin, 180px)",
-    position: "absolute",
-    backgroundColor: "#4b4b4bdb",
-    backdropFilter: "blur(1px)",
+    width: "100%",
+    height: "100%",
+    // height: "fit-content",
+    // width: "fit-content",
+    // width: "max(20vmin, 180px)",
+    // position: "absolute",
+    backgroundColor: `${theme.primary}`,
+    // backgroundColor: "#4b4b4bdb",
+    // backdropFilter: "blur(1px)",
     display: "flex",
     flexDirection: "column",
     borderRadius: 5,
+    // border: `1px solid ${theme.secondary}`,
     top: "50%",
     left: "30%",
     zIndex: 100,
     alignItems: "center",
     overflow: "hidden",
+    justifyContent: "space-between",
+    // padding: "1vmin",
   } as React.CSSProperties;
 
   const cStyle = {
-    width: 50,
+    // width: 50,
     height: "100%",
+
+    width: "100%",
     // padding: "20%",
     // stbg
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
+    borderRight: `1px solid ${theme.secondary}`,
     // backgroundColor: "blue",
   };
 
   const bStyle = {
-    width: 20,
-    height: 30,
+    // width: 20,
+    // height: 30,
+    display: "flex",
 
     // flexDirection: "column",
 
@@ -146,11 +166,8 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
       // animate={paused ? "rest" : "jump"}
       variants={bodyVariants}
       style={containerStyle}
+      whileHover={{ backgroundColor: "#231f20", transition: { duration: 0.1 } }}
     >
-      <div style={{ fontSize: "12pt" }}>
-        {" "}
-        {track.category == "remix" ? track.artist : track.title}
-      </div>
       <motion.div
         style={{
           position: "absolute",
@@ -172,12 +189,30 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
             <PlayPauseSwitch
               onPlay={() => {
                 playTrack(track);
+                // setPaused(false);
               }}
               onPause={() => {
                 pauseTrack(track);
               }}
               paused={paused}
             />
+            <div
+              style={{
+                fontSize: fontSize,
+                position: "absolute",
+                zIndex: 1,
+                pointerEvents: "none",
+                width: "50%",
+                textAlign: "left",
+              }}
+            >
+              {/* <div style={{ fontSize: theme.widgetFontSize }}> */}{" "}
+            </div>
+          </div>
+          <div>
+            {`${track.position + 1}. ${
+              track.category == "remix" ? track.artist : track.title
+            }`}
           </div>
         </motion.div>
         <Range
@@ -195,10 +230,19 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
               {...props}
               style={{
                 ...props.style,
-                height: "6px",
-                width: "60%",
+                height: "max(100%, 40px)",
+                width: "inherit",
                 // paddingLeft: "1em",
-                backgroundColor: "black",
+                // border: `1px solid ${theme.secondary}`,
+                // backgroundColor: theme.secondary,
+                // background: `repeating-linear-gradient(
+                //   45deg,
+                //   rgba(0, 0, 0, 0.2),
+                //   rgba(0, 0, 0, 0.2) 10px,
+                //   rgba(0, 0, 0, 0.3) 10px,
+                //   rgba(0, 0, 0, 0.3) 20px
+                // )`,
+                // backgroundColor: theme.secondary,
               }}
             >
               {children}
@@ -209,18 +253,29 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
               {...props}
               style={{
                 ...props.style,
-                height: 15,
+                height: "100%",
                 width: 15,
-                borderRadius: "50%",
 
-                backgroundColor: "#999",
+                // borderRadius: "50%",
+                backgroundColor: `${theme.primary}`,
+                border: `1px ${theme.secondary}`,
+                // backgroundColor: "#999",
               }}
             />
           )}
         />
-        <div style={{ paddingLeft: "1em", fontSize: "12pt" }}>{`${formatTime(
-          track.duration
-        )}`}</div>
+        {/* <div
+          className={"track-duration-container"}
+          style={{
+            // paddingLeft: ".5em",
+            minWidth: "6vmin",
+            margin: "auto",
+            // fontSize: "12pt",
+            fontSize: fontSize,
+            textAlign: "right",
+            // padding: "1vmin",
+          }}
+        >{`${formatTime(track.duration)}`}</div> */}
       </motion.div>
     </motion.div>
   );

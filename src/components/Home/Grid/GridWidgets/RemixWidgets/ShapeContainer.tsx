@@ -57,7 +57,8 @@ const ShapeContainer = ({
       style={{
         // backgroundColor: "red",
         // height: "100%",
-        height: "fit-content",
+        height: "100%",
+        // height: "fit-content",
         // height: "min-content",
         display: "flex",
         flexDirection: "column",

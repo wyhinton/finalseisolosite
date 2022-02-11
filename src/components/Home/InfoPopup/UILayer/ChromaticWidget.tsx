@@ -4,7 +4,7 @@ import { Track } from "@interfaces/Track";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Shaders, Node, GLSL, connectSize } from "gl-react";
 import { Surface } from "gl-react-dom";
-import ChromaticShader from "../../ChromaticShader/ChromaticShader";
+import ChromaticShader from "./ChromaticShader/ChromaticShader";
 import timeLoop from "../../../../canvasLoop";
 import theme from "@static/theme";
 import BeatsMetronome from "./BeatsMetronome";

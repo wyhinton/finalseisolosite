@@ -229,6 +229,7 @@ export function usePlaylist(): UsePlaylistProps {
             // console.log("PLAYING MY TRACK");
             if (track.category === "remix") {
               element.play();
+
               // element.play().then((e) => {
 
               // }).catch((error) => {
@@ -253,7 +254,7 @@ export function usePlaylist(): UsePlaylistProps {
   };
 
   const pauseTrack = (track: Track) => {
-    console.log(allAudioElems.current);
+    console.log("pausing", allAudioElems.current);
     allVideoElems.current = tracks
       .filter((t) => t.category === "recital")
       .map((t) => "video_" + t.title)
@@ -853,4 +854,16 @@ export function useMobileDetect() {
   const userAgent =
     typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
   return getMobileDetect(userAgent);
+}
+
+interface useProcessProps {
+  isDevelopment: boolean;
+}
+export function useProcess() {
+  // if process.env.NODE_ENV === "development"
+
+  const isDevelopment = process.env.NODE_ENV === "development";
+  return {
+    isDevelopment,
+  };
 }

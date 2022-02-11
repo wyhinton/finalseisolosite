@@ -10,9 +10,10 @@ const PlayPauseSwitch = ({
   onPause: () => void;
   onPlay: () => void;
 }): JSX.Element => {
-  // useEffect(() => {
-  //   console.log(paused);
-  // }, [paused]);
+  useEffect(() => {
+    console.log(paused);
+  }, [paused]);
+
   return (
     <>
       {paused ? (
@@ -41,6 +42,7 @@ export const PlayButton = ({
       className={"play-button-item"}
       onClick={(e) => {
         handleClick();
+        console.log("got play click");
       }}
       whileHover={{}}
       style={{
@@ -49,7 +51,7 @@ export const PlayButton = ({
         // height: "100%",
         width: w,
         height: w,
-        padding: 5,
+        // padding: 5,
         // backgroundColor: "red",
         display: "flex",
         flexDirection: "column",
@@ -93,7 +95,7 @@ const PauseButton = ({
         // backgroundColor: "red",
         width: w,
         height: w,
-        padding: 5,
+        // padding: 5,
         // backgroundColor: "red",
         display: "flex",
         flexDirection: "column",

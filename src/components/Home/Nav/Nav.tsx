@@ -15,7 +15,7 @@ const Nav = (): JSX.Element => {
       <AboutButton />
       <AboutModal />
       {/* <HeaderLink /> */}
-      <TopBar />
+      {/* <TopBar /> */}
       {/* <NavLinks /> */}
     </>
   );
@@ -49,11 +49,16 @@ const TopBar = (): JSX.Element => {
         // width: "100%",
         textAlign: "left",
         // border: `1px solid ${theme.secondary}`,
+        borderRight: `1px solid ${theme.secondary}`,
+        borderBottom: `1px solid ${theme.secondary}`,
         // borderRadius: 10,
         fontFamily: theme.titleFontFamily,
-        color: "black",
+        color: theme.secondary,
+        // color: "black",
         // backgroundColor: theme.secondary,
-        backgroundColor: theme.primaryDark,
+        backgroundColor: theme.primary,
+        // border:
+        // backgroundColor: theme.primaryDark,
         // fontSize: 100,
         // fontSize: 30,
         fontSize: "max(15px, 3vmin)",
