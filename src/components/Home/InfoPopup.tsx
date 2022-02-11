@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import theme from "@static/theme";
-import { useMobileDetect, usePlaylist, useQuery } from "@hooks";
+import { useMobileDetect, usePlaylist, useProcess, useQuery } from "@hooks";
 import { motion, Variants } from "framer-motion";
 import { Track } from "@interfaces/Track";
 import FlexRow from "@components/UI/FlexRow";
@@ -82,7 +82,8 @@ const InfoPopup = () => {
         variants={variantsGrid}
         animate={infoDisplayMode == undefined || isSm ? "hidden" : "visible"}
         style={{
-          pointerEvents: "all",
+          // pointerEvents: "all",
+          // pointerEvents: infoDisplayMode == undefined ? "none" : "all",
           // border: `1px solid ${theme.secondary}`,
           color: "black",
           // zIndex: 0,
@@ -138,6 +139,7 @@ const TextDisplay = ({ track }: { track: Track }): JSX.Element => {
   const { about } = track;
 
   const { isSm, isMd, isLg } = useQuery();
+  // const {};
   // const parallax = useRef<IParallax>(null);
 
   // const scroll = (to: number) => {
@@ -238,6 +240,7 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
   const { infoDisplayMode, currentTrack, setInfoDisplayMode } = usePlaylist();
   const recitalTracks = tracks.filter((t) => t.category === "recital");
   const { isIos } = useMobileDetect();
+  const { isDevelopment } = useProcess();
 
   useEffect(() => {
     //   console.log(myVal)
@@ -293,6 +296,22 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
           // const [active, setactive] = useState(false)
           const isActive = t.title === track.title;
           const { isIos } = useMobileDetect();
+          const { isDevelopment } = useProcess();
+
+          const [recitalTrackVideo, setRecitalTrackVideo] = useState("");
+
+          useEffect(() => {
+            console.log();
+            if (isDevelopment) {
+              // return t.localVideo
+              setRecitalTrackVideo(t.localVideo);
+            } else if (isIos) {
+              setRecitalTrackVideo(t.iOSVideo);
+            } else {
+              setRecitalTrackVideo(t.video);
+            }
+          }, []);
+
           return (
             <video
               controls={true}
@@ -312,7 +331,7 @@ const ArtistImage = ({ track }: { track: Track }): JSX.Element => {
                 objectFit: "cover",
               }}
             >
-              <source src={isIos ? t.iOSVideo : t.video} />
+              <source src={recitalTrackVideo} />
             </video>
           );
         })}

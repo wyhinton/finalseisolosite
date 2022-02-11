@@ -16,6 +16,7 @@ let layoutBase = [
 const s = true;
 
 const layoutv2: Layout[] = [
+  { i: "title", x: 0, y: 0, w: 12, h: 2, static: s },
   // { i: "about", x: 6, y: 5, w: 3, h: 6 },
   { i: "oneRecitalText", x: 0, y: 0, w: 6, h: 2, static: s },
   { i: "recitalTracks", x: 0, y: 3, w: 8, h: 4, static: s },
@@ -46,17 +47,17 @@ const modifyBase = (toReplace: Layout[]) => {
 };
 
 export const layoutLg = modifyBase([
-  { i: "threeRemixes", x: 6, y: 9, w: 6, h: 2, static: s },
-  { i: "oneRecitalText", x: 7, y: 2, w: 2, h: 1, static: s },
+  { i: "threeRemixes", x: 6, y: 9, w: 12, h: 2, static: s },
+  { i: "oneRecitalText", x: 7, y: 2, w: 12, h: 1, static: s },
   { i: "recitalTracks", x: 0, y: 0, w: 6, h: 6, static: s },
   { i: "remixes", x: 0, y: 6, w: 6, h: 7, static: s },
 ]);
 
 export const layoutSm = modifyBase([
-  { i: "oneRecitalText", x: 0, y: 0, w: 6, h: 1, static: s },
-  { i: "recitalTracks", x: 6, y: 1, w: 12, h: 4, static: s },
-  { i: "threeRemixes", x: 0, y: 5, w: 6, h: 1, static: s },
-  { i: "remixes", x: 0, y: 6, w: 12, h: 6, static: s },
+  { i: "oneRecitalText", x: 0, y: 2, w: 12, h: 1, static: s },
+  { i: "recitalTracks", x: 6, y: 3, w: 12, h: 4, static: s },
+  { i: "threeRemixes", x: 0, y: 7, w: 12, h: 1, static: s },
+  { i: "remixes", x: 0, y: 9, w: 12, h: 6, static: s },
 ]);
 
 layoutBase = layoutv2;

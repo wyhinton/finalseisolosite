@@ -8,7 +8,7 @@ export interface Track {
   artist?: string;
   title: string;
   src: string;
-
+  position: number;
   playing: boolean;
   audioSrc?: string;
   visualType?: "image" | "video";
@@ -30,6 +30,8 @@ export interface Track {
   year?: string;
   composition?: string;
   video?: string;
+  localVideo?: string;
   iOSVideo?: string;
-  position: number;
+  movements?: number[];
+
 }

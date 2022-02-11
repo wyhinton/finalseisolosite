@@ -13,6 +13,7 @@ import ShapeContainer from "./RemixWidgets/ShapeContainer";
 import FlexBreak from "@components/UI/FlexBreak";
 import ReactAudioPlayer from "react-audio-player";
 import TrackControl from "../TrackControl/TrackControl";
+import FlexColumn from "@components/UI/FlexColumn";
 
 const RemixesWidget = (): JSX.Element => {
   const remixParts = tracks.filter((track) => track.category === "remix");
@@ -58,29 +59,80 @@ const RemixesWidget = (): JSX.Element => {
       }}
       break={"sm"}
     >
-      {remixParts.map((track, i) => {
-        return (
-          <TrackItem key={i} track={track} useBox={false}>
-            <TrackControl track={track} />
-            {/* <TrackText track={track} /> */}
-            <motion.div
-              // scale={0}
-              // y={10}
-              initial={false}
-              animate={{
-                scale: [0, 1],
-                rotateZ: [0, 90],
-                transition: {
-                  // duration: 0.5,
-                  delay: i * 0.5,
-                },
-              }}
-            >
-              {getShape(track)}
-            </motion.div>
-          </TrackItem>
-        );
-      })}
+      <div style={{ display: "flex", width: "100%", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "40%",
+            border: "1px solid red",
+            flexDirection: "row",
+          }}
+        >
+          {remixParts.map((track, i) => {
+            const { currentTrack } = usePlaylist();
+            const [isActive, setIsActive] = useState(
+              track.title === currentTrack.title
+            );
+            const variants = {
+              normal: {
+                scale: 1,
+                zIndex: 0,
+              },
+              active: {
+                scale: 1.5,
+                zIndex: 1,
+              },
+            };
+
+            useEffect(() => {
+              console.log(isActive);
+              // if (     track.title === currentTrack.title){}
+              setIsActive(track.title === currentTrack.title);
+            }, [currentTrack]);
+
+            return (
+              <TrackItem key={i} track={track} useBox={false}>
+                {/* <TrackText track={track} /> */}
+                {/* <motion.div
+                  // scale={0}
+                  // y={10}
+                  initial={false}
+                  animate={isActive ? "active" : "normal"}
+                  // animate={{
+                  //   scale: [0, 1],
+                  //   rotateZ: [0, 90],
+                  //   transition: {
+                  //     // duration: 0.5,
+                  //     delay: i * 0.5,
+                  //   },
+                  // }}
+                  variants={variants}
+                > */}
+                {getShape(track)}
+                {/* </motion.div> */}
+                {/* <TrackControl track={track} /> */}
+              </TrackItem>
+            );
+          })}
+        </div>
+        <FlexColumn style={{ width: "100%" }}>
+          {remixParts.map((track, i) => {
+            const { currentTrack } = usePlaylist();
+            const [isActive, setIsActive] = useState(
+              track.title === currentTrack.title
+            );
+
+            useEffect(() => {
+              console.log(isActive);
+              // if (     track.title === currentTrack.title){}
+              setIsActive(track.title === currentTrack.title);
+            }, [currentTrack]);
+
+            return <TrackControl track={track} />;
+          })}
+        </FlexColumn>
+      </div>
     </FlexBreak>
   );
 };

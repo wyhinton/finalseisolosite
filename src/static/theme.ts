@@ -35,12 +35,15 @@ const primaryDarkGL = [75, 75, 75].map((v) => v / 255);
 
 const theme = {
   padding: 20,
-  primary: "#9e9e9e",
+  // primary: "#9e9e9e",
+  primary: "#3d3d3d",
   // primaryDark: "#1f1f1f",
   primaryDark: "rgba(75, 75, 75, 255)",
   primaryDarkGL: primaryDarkGL,
   primaryMedium: "rgba(100, 100, 100, 255)",
-  secondary: "#fff200",
+  // secondary: "#fff200",
+  secondary: "#fee300",
+  // secondary: "#fff200",
   secondaryRGBCSS: "rgb(255, 242, 0)",
   secondaryRGB: [255, 242, 0],
   secondaryRGBGL: [255 / 255, 242 / 255, 0],

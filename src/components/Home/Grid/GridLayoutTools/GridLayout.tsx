@@ -131,7 +131,7 @@ const GridLayout = ({
   return (
     <ResponsiveGridLayout
       style={{
-        minWidth: "100vw",
+        // minWidth: "100vw",
         minHeight: "100vh",
         pointerEvents: !isSm ? "none" : "all",
         height: isSm ? "150vmax" : "fit-content",
@@ -154,11 +154,12 @@ const GridLayout = ({
       margin={[padding / 2, padding / 2]}
       // margin={[padding, padding]}
       // compactType={undefined}
-      width={window.innerWidth}
+      // width={window.innerWidth}
       // rowHeight={200}
       rowHeight={rowHeight}
       cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
-      containerPadding={[padding, padding * 4]}
+      containerPadding={[padding, padding]}
+      // containerPadding={[padding, padding * 4]}
       // verticalCompact={false}
       // onLayoutChange={function () {}}
     >

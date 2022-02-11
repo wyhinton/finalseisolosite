@@ -6,6 +6,9 @@ const src = `${process.env.PUBLIC_URL}/overandunder (infinity).wav`;
 const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.webp`;
 const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.webp`;
 const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.webp`;
+// const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.webp`;
+// const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.webp`;
+// const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.webp`;
 // const anjaliImage = `${process.env.PUBLIC_URL}/Headshots/DIASPOURA_HS.png`;
 // const pacificImage = `${process.env.PUBLIC_URL}/Headshots/PACIFIC_YEW_HS.png`;
 // const contourImage = `${process.env.PUBLIC_URL}/Headshots/CONTOUR_HS.png`;
@@ -35,12 +38,12 @@ const ysaeAbout = `Sonata No. 3 "Ballade" was composed by Eugène Ysaÿe, a Belg
 // Béla Bartók's Sonata for Solo Violin is directly inspired by the tradition of solo violin music started by Bach. In fact, the title of its first movement, "Tempo di Ciaconna", is a direct reference to Bach's Ciaconna, and its second Fuga movement sounds like a maddening and spicy rendition of the many fugal fantasies that Bach composed during his life. In addition to his adoration for Bach, Bartók was also very proud of his native Hungarian and Eastern European culture, and his music often quotes Hungarian folk melodies and dance rhythms. This Sonata, written in 1944 for British virtuoso violinist Yehudi Menhuin, is one of the most challenging pieces I've ever learned, filled with nasty chords and asymmetric grooves.`;
 // const ysaeAbout = `Sonata No. 3 "Ballade" was composed by Eugène Ysaÿe, a Belgian violin virtuoso who is considered to be one of the greatest violinists of all time. It is one of six sonatas that Ysaÿe wrote for solo violin, yet another reference Bach's six sonatas and partitas. Ysaÿe wrote this single-movement sonata for his close friend and fellow violinist George Enescu, and it features Romanian folk music melodies and rhythms that shout out Enescu's Romanian heritage. Like the rest of his sonatas, Ysaÿe's Ballade is above all a love letter to the violin, full of passion and technical fireworks that push the instrument to its limits.`;
 
-// const bachVideo = `${process.env.PUBLIC_URL}/Videos/720/BACH.mp4`;
+const bachLocalVideo = `${process.env.PUBLIC_URL}/Videos/720/Bach.webm`;
 const bachVideo = `${process.env.PUBLIC_URL}/Videos/720/Bach.webm`;
 // const bachVideo = `${process.env.PUBLIC_URL}/Videos/Recital/Vivek Menon - JS Bach Partita n2_rev01.mp4`;
 const ysayeVideo = `${process.env.PUBLIC_URL}/Videos/720/Ysaye.webm`;
 // const ysayeVideo = `${process.env.PUBLIC_URL}/Videos/720/YSAYE.mp4`;3
-// const bartokVideo = `${process.env.PUBLIC_URL}/Videos/Recital/Vivek Menon - Bartok Sonata for Violin Solo_rev01.mp4`;
+const bartokLocalVideo = `${process.env.PUBLIC_URL}/Videos/720/Bartok.webm`;
 const bartokVideo = `${process.env.PUBLIC_URL}/Videos/720/Bartok.webm`;
 
 // Eugène Ysaÿe
@@ -79,6 +82,8 @@ const ysayeAudio = `${process.env.PUBLIC_URL}/Tracks/YSAYE.mp3`;
 const bachComposition = "Partita No. 2 in D Minor";
 const bartokComposition = "Sonata for Solo Violin";
 const ysayeComposition = `Sonata No. 3 in D Minor "Ballade"`;
+
+const bachMovements = [500, 1000, 1200];
 
 const tracks: Track[] = [
   {
@@ -129,7 +134,6 @@ const tracks: Track[] = [
     duration: 198,
     bpm: 80,
     origin: "Oakland, CA",
-
     year: "2022",
   },
   {
@@ -184,9 +188,12 @@ const tracks: Track[] = [
     origin: "Eisenach, Germany",
     year: "1720",
     composition: bachComposition,
+    localVideo: bachLocalVideo,
     video: "https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?raw=1",
+    movements: bachMovements,
     // iOSVersion:
     iOSVideo:
+      // https://www.dropbox.com/s/riuoj7pymo9ropf/BACH_600_REDUCED_SIZE.mp4?dl=0
       "https://www.dropbox.com/s/riuoj7pymo9ropf/BACH_600_REDUCED_SIZE.mp4?raw=1",
     // "https://uc7129ca374e09f7f04c133dbec7.dl.dropboxusercontent.com/cd/0/inline/BfCvyrxHDU6WW-LBw-fjgUCIuxE8FSg43WX_FPFnmurhZBn0lg8EtVij9mB4C1gtmeJ6I1gAHk54YNj52mojpKQcqfMLXsNuXRf5M88yJ1n8dOImewxvPoplCHTBEo4DDxmL05gkV-DjcqxkUmUIZi9e/file#",
     // "https://uc7129ca374e09f7f04c133dbec7.dl.dropboxusercontent.com/cd/0/inline/BfCvyrxHDU6WW-LBw-fjgUCIuxE8FSg43WX_FPFnmurhZBn0lg8EtVij9mB4C1gtmeJ6I1gAHk54YNj52mojpKQcqfMLXsNuXRf5M88yJ1n8dOImewxvPoplCHTBEo4DDxmL05gkV-DjcqxkUmUIZi9e/file#",
@@ -217,12 +224,14 @@ const tracks: Track[] = [
     origin: "Nagyszentmiklós, Kingdom of Hungary",
     year: "1944",
     composition: bartokComposition,
+    localVideo: bartokLocalVideo,
     video: "https://www.dropbox.com/s/5wxqybeu07x2txt/Bartok.webm?raw=1",
     iOSVideo:
       "https://www.dropbox.com/s/pwuk6hdixmjhei3/BARTOK_UNDER_2GB_600.mp4?raw=1",
     // "https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?dl=0",
     // https://www.dropbox.com/s/go80ye8nszi7zbq/BACH.webm?raw=1
     // video:
+    movements: bachMovements,
   },
   {
     position: 2,
@@ -248,10 +257,13 @@ const tracks: Track[] = [
     origin: "Liège, Blegium",
     year: "1923",
     composition: ysayeComposition,
+    localVideo: ysayeVideo,
+    // https://www.dropbox.com/s/riuoj7pymo9ropf/BACH_600_REDUCED_SIZE.mp4?dl=0
     video: "https://www.dropbox.com/s/dmrggrak0jt0hlc/YSAYE.webm?raw=1",
     // "https://uca5c8be880eee15c473074ef1b4.dl.dropboxusercontent.com/cd/0/inline/Be-U1vUDF_U5U9vST_KbzCO23UdOUGZrtqXcVysMuqHrKOWtLaUqpOpOZ25Le0RCUdoaBcy1gyhg_f8dw36fQ-BGdAdB7kCIgNcgT_JqqLJ2IiHtOnsDxLkfZ25WEInhz74WmIPVXHCrF5bo1kq8LaJH/file#",
     // movements: {}
     iOSVideo: "https://www.dropbox.com/s/mpo0oieb4r8054p/YSAYE.mp4?raw=1",
+    movements: bachMovements,
     // "https://ucdae97be4b740f2e52fcfbdceba.dl.dropboxusercontent.com/cd/0/inline/BfCHTvUKtRTlnYO9uduw0NY9fcVJAuABe5_nPmjwgKP6gXCwfzIW14Ll28qR-nmabS9vxX7wg_L5KyK9l4seSXpzXvYysfVh4DNyPIrv55m7Kc_-LrnsfyOaA2iGzHkyd-xUiMNGILs2ac6jrf-pXJNL/file#",
   },
 ];
