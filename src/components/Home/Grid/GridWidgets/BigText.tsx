@@ -30,13 +30,18 @@ const BigText = ({
   };
 
   return (
-    <FlexRow height="100%">
+    <FlexRow
+      height="auto"
+      // height="100%"
+      id={`${(children as string) + "-big-text-container"}`}
+    >
       {/* <FlexRow height="100%" className="dot-fill-2"> */}
       {/* <FlexRow height="100%" style={{ backdropFilter: "blur(1px)" }}> */}
       <motion.div
         style={{
           width: "100%",
-          height: "100%",
+          height: "fit-content",
+          // height: "100%",
           letterSpacing: "1vmin",
           // borderLeft: "1px solid black",
           // width: "max-content",
