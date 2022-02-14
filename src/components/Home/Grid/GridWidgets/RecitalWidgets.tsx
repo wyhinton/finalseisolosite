@@ -29,17 +29,20 @@ const RecitalWidgets = (): JSX.Element => {
   return (
     <div
       style={{
-        height: "100%",
+        height: "fit-content",
+        // height: "100%",
         width: "100%",
         fontFamily: theme.primaryFont,
         fontSize: "6rem",
         display: "flex",
         position: "relative",
+        flexDirection: "column",
       }}
+      id="recital-widgets-container"
     >
       <div
         style={{
-          position: "absolute",
+          // position: "absolute",
           width: "100%",
           height: "100%",
           // border: "1px solid blue",

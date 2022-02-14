@@ -6,7 +6,7 @@ import PlayPauseSwitch from "./PlayPauseSwitch";
 import { Range } from "react-range";
 import theme from "@static/theme";
 
-const fontSize = "max(12pt, 2vmin)";
+const fontSize = "max(12pt, 6vmin)";
 
 const TrackControl = ({ track }: { track: Track }): JSX.Element => {
   const audioRef = useRef<HTMLMediaElement>();
@@ -99,6 +99,7 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    flexDirection: "column",
     // paddingRight: "2vmin",
     height: "max(4vmin, 50px)",
   } as React.CSSProperties;
@@ -134,9 +135,10 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
     // padding: "20%",
     // stbg
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     display: "flex",
     borderRight: `1px solid ${theme.secondary}`,
+    border: "1px solid red",
     // backgroundColor: "blue",
   };
 
@@ -144,6 +146,8 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
     // width: 20,
     // height: 30,
     display: "flex",
+    // width: "40%",
+    height: "40%",
 
     // flexDirection: "column",
 
@@ -168,22 +172,7 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
       style={containerStyle}
       whileHover={{ backgroundColor: "#231f20", transition: { duration: 0.1 } }}
     >
-      <motion.div
-        style={{
-          position: "absolute",
-          width: 10,
-          height: 10,
-          top: 0,
-          left: 0,
-          // backgroundColor: "red",
-        }}
-      ></motion.div>
-
-      <motion.div
-        // animate={paused ? "rest" : "jump"}
-        // variants={bodyVariants}
-        style={bodyStyle}
-      >
+      <motion.div style={bodyStyle}>
         <motion.div style={cStyle}>
           <div style={bStyle}>
             <PlayPauseSwitch
@@ -209,7 +198,7 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
               {/* <div style={{ fontSize: theme.widgetFontSize }}> */}{" "}
             </div>
           </div>
-          <div>
+          <div style={{ fontSize: fontSize }}>
             {`${track.position + 1}. ${
               track.category == "remix" ? track.artist : track.title
             }`}

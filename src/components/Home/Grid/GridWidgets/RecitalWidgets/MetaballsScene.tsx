@@ -172,9 +172,9 @@ const RSection = ({
       const c = track.movements.map((t, i) => {
         return { cx: i * 100, cy: 100, r: 50 };
       });
-      setCircles(c);
+      // setCircles(c);
     } else {
-      setCircles([{ cx: 100, cy: 100, r: 50 }]);
+      // setCircles([{ cx: 100, cy: 100, r: 50 }]);
     }
   }, []);
   const [circles, setCircles] = useState();
