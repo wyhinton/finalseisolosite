@@ -14,6 +14,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
         justifyContent: "center",
         height: "100vh",
         width: "100vw",
+        alignItems: "center",
         // border: "5px solid black",
         padding: "5em",
         border: `5px solid ${theme.secondary}`,
@@ -39,40 +40,10 @@ function ErrorFallback({ error, resetErrorBoundary }) {
           }}
         >
           Something went wrong :(
-          <br></br>
           <div style={{ fontSize: `min(40px, 10vmin)` }}>
             (Maybe try refreshing the page?)
           </div>
         </motion.div>
-
-        {/* <p
-          style={{
-            fontSize: "10vmin",
-            textAlign: "center",
-            whiteSpace: "break-spaces",
-            width: "50%",
-            margin: "auto",
-          }}
-        >
-          We're sorry!
-        </p>
-        <p
-          style={{
-            fontSize: "10vmin",
-            textAlign: "center",
-            whiteSpace: "break-spaces",
-            width: "50%",
-            margin: "auto",
-          }}
-        >
-          Something went wrong :(
-        </p> */}
-        <br />
-        {/* <pre>{error.message}</pre>
-        <br />
-        <div>Please come back later!</div>
-        <br /> */}
-        {/* <button onClick={resetErrorBoundary}>Try again</button> */}
       </FlexColumn>
     </motion.section>
   );

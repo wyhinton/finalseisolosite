@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Track } from "@interfaces/Track";
 // import Canvas from 'react-responsive-canvas';
 import { usePlaylist, useQuery } from "@hooks";
@@ -12,11 +12,14 @@ import { useMediaQuery } from "react-responsive";
 import timeLoop from "@canvasLoop";
 import { Surface } from "gl-react-dom";
 import { GLSL, Shaders, Uniform, Node } from "gl-react";
+import { HomeContext } from "../../pages/Home";
+
 function formatTrackText(track: Track): string {
   return `${track.artist} - ${track.title}`;
 }
 const AppBar = ({}: {}): JSX.Element => {
   const { setInfoDisplayMode, currentTrack } = usePlaylist();
+  const { isLoaded } = useContext(HomeContext);
 
   // const onUiClick = (i: InfoDisplayMode) => {
   //   console.log("DOING ON UI CLICK");
@@ -32,38 +35,37 @@ const AppBar = ({}: {}): JSX.Element => {
 
   const { isSm } = useQuery();
 
+  const variants = {
+    in: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: 0.5,
+      },
+    },
+  };
+
   return (
-    <FlexRow
-      // onClick={(e) => {
-      //     setInfoDisplayMode("bio")
-      // }}
+    <motion.div
+      variants={variants}
+      animate={isLoaded ? "in" : ""}
       style={{
-        // position: "absolute",
         position: "fixed",
         zIndex: 10000,
-        // top: "100%",
-        // bottom: 0,
+        display: "flex",
         bottom: "0",
         left: "0%",
-        // bottom: "0%",
-        // width: "fit-content",
-        // height: "fit-content",
         borderTop: `1px solid ${theme.secondary}`,
         height: isSm ? theme.appBarHeightMobile : theme.appBarHeight,
         backgroundColor: theme.primary,
-        // backgroundColor: theme.primaryDark,
         borderBottom: "1px solid black",
         width: "100vw",
-
-        // transform: "translate(0%, 50%)",
-        // zIndex: 1,
         fontSize: "6vmin",
-        // fontSize: theme.titleFont,
-        // fontSize: theme.widgetFontSize,
         overflow: "visible",
         justifyContent: "left",
-
-        // border: `1px solid blue`,
+        opacity: 0,
+        y: 100,
       }}
     >
       <FlexRow justifycontent="flex-start">
@@ -73,7 +75,7 @@ const AppBar = ({}: {}): JSX.Element => {
 
         <Time />
       </FlexRow>
-    </FlexRow>
+    </motion.div>
   );
 };
 

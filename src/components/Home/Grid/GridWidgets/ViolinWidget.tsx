@@ -1,12 +1,15 @@
-import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  Suspense,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Canvas, useThree, useFrame, useLoader } from "@react-three/fiber";
 // import { useGLTF } from "drei";
 import { DepthOfFieldEffect } from "postprocessing";
 import {
-  CubeTextureLoader,
-  CubeCamera,
-  WebGLCubeRenderTarget,
-  RGBFormat,
   LinearMipmapLinearFilter,
   Mesh,
   Material,
@@ -27,6 +30,7 @@ import {
   Effects,
   OrbitControls,
   OrthographicCamera,
+  useContextBridge,
   // PositionalAudio,
   useGLTF,
   useProgress,
@@ -34,7 +38,6 @@ import {
 import { GLTF as GLTFThree } from "three/examples/jsm/loaders/GLTFLoader";
 import { usePlaylist, useQuery, useTrackCategory, useWindowSize } from "@hooks";
 import { Track } from "@interfaces/Track";
-import { useSpring } from "framer-motion";
 import ViolinWidgetEffects from "./ViolinWidget/ViolinWidgetEffects";
 import Particles from "./ViolinWidget/Particles";
 import {
@@ -44,12 +47,14 @@ import {
   Outline,
   // Resizer,
 } from "@react-three/postprocessing";
+import { a, useSpring, config } from "@react-spring/three";
 import bravias from "./ViolinWidget/bravias";
 import s1 from "./ViolinWidget/s1.wav";
 import { getRandomIntInclusive } from "@utils";
 import { MeshSurfaceSampler } from "three-stdlib";
 import { lerp } from "three/src/math/MathUtils";
 import BubbleParticles from "./ViolinWidget/BubbleParticles";
+import { HomeContext } from "../../../../pages/Home";
 // import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 
 declare module "three-stdlib" {
@@ -77,6 +82,7 @@ function playAudio() {
 
 const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
   const { active, progress, errors, item, loaded, total } = useProgress();
+  const { isLoaded } = React.useContext(HomeContext);
 
   const { nodes } = useGLTF(
     `${process.env.PUBLIC_URL}/Models/realistic-violin.glb`
@@ -84,29 +90,11 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
   const matcapTexture = useLoader(
     TextureLoader,
     `${process.env.PUBLIC_URL}/Textures/matpurple.png`
-    // `${process.env.PUBLIC_URL}/Textures/matcapdarkpurple.png`
-    // `${process.env.PUBLIC_URL}/Textures/matcapred.jpg`
   );
 
   const group = useRef<Group>();
   const target = nodes.V as unknown as Group;
   const children = target.children as Mesh[];
-
-  const xPos = useSpring(0, { damping: 10, stiffness: 10 });
-
-  useEffect(() => {
-    if (group.current) {
-      if (track.category === "remix") {
-        xPos.set(0);
-      } else {
-        xPos.set(0);
-      }
-    }
-  }, [track.category]);
-
-  xPos.onChange((last) => {
-    group.current.position.x = last;
-  });
 
   const shaderRef = useRef<ShaderMaterial>();
   useFrame((state) => {
@@ -268,7 +256,7 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
     // sound.current.play();
     // camera.add(listener);
     // return () => camera.remove(listener);
-  }, []);
+  }, [isLoaded]);
 
   // const sampler =
 
@@ -283,8 +271,49 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
         />
       </instancedMesh> */}
       {children.map((c, i) => {
+        // const q = useSpring({
+        //   // const { pos } = useSpring({
+        //   from: { position: isLoaded?[2, 0, 0]:[0,0,0] },
+        //   to: { position: [5, 0, 0] },
+        // });
+        // const q = useSpring({
+        //   // const { pos } = useSpring({
+        //   position: isLoaded ? [-100, 100, -100] : [-500, 0, 0],
+        //   // position: isLoaded ? [-100, 100, -100] : [0, 0, 0],
+        // });
+        const start = getRandomIntInclusive(10, 100);
+        useEffect(() => {
+          console.log(isLoaded);
+        }, [isLoaded]);
+        const { spring } = useSpring({
+          spring: isLoaded ? 0 : 10,
+          config: config.stiff,
+          // config: {
+          //   mass: 1,
+          //   tension: 500,
+          //   friction: 0,
+          //   // precision: 0.0001,
+          //   // duration: 0,
+          //   clamp: true,
+          //   frequency: 1,
+          // },
+          // config: {
+          //   mass: 1,
+          //   tension: 500,
+          //   friction: 0,
+          //   // precision: 0.0001,
+          //   // duration: 0,
+          //   clamp: true,
+          //   frequency: 1,
+          // },
+        });
+
+        // const start = getRandomIntInclusive(50, 100);
+        // const xPos = spring.to([0, 1], [start, 0]);
+
+        // console.log(q.position);
         return (
-          <mesh
+          <a.mesh
             onPointerDown={(e) => {
               // console.log(e);
               // if (sound.current) {
@@ -297,6 +326,16 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
             key={i}
             geometry={c.geometry}
             material={c.material}
+            position-x={spring}
+            // position-x={spring}
+            // position-x={xPos}
+            // position-x={q.position[0]}
+            // position-y={q.position[1]}
+            // position-z={q.position[2]}
+            // position-x={q.position[0]}
+            // position-y={q.position[1]}
+            // position-z={q.position[2]}
+            // position={q.position}
           >
             <meshMatcapMaterial
               attach="material"
@@ -306,7 +345,7 @@ const Violin = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
               matcap={matcapTexture}
             />
             {isRemix || <shaderMaterial ref={shaderRef} args={[bravias]} />}
-          </mesh>
+          </a.mesh>
         );
       })}
     </group>
@@ -323,39 +362,46 @@ const ViolinWidget = ({ track }: { track: Track }): JSX.Element => {
   const { isPlaying } = usePlaylist();
   const depthOfFieldRef = useRef<DepthOfFieldEffect>();
   const { isSm } = useQuery();
+  const ContextBridge = useContextBridge(HomeContext);
+  // const [name, setName] = React.useState("hello");
+  // const greeting = React.useContext(GreetingContext);
+  // console.log(greeting);
   return (
+    // <GreetingContext.Provider value={{ name: name, setName }}>
     <Suspense fallback={<Loader />}>
       <Canvas className="canvas">
-        <OrthographicCamera makeDefault zoom={zoom} position={[0, 0, 20]} />
-        {/* <OrthographicCamera makeDefault zoom={15.1} position={[0, 0, 20]} /> */}
-        <OrbitControls />
-        {/* <Sphere /> */}
-        <Violin track={track} isPlaying={isPlaying ?? false} />
-        {/* <BubbleParticles /> */}
-        <Particles count={200} />
-        {/* <SkyBox /> */}
-        {/* <ViolinWidgetEffects /> */}
-        {!isSm && <Composer />}
-        {/* <EffectComposer> */}
-        {/* <HorizontalBlurShader /> */}
-        {/* <DepthOfField
+        <ContextBridge>
+          <OrthographicCamera makeDefault zoom={zoom} position={[0, 0, 20]} />
+          {/* <OrthographicCamera makeDefault zoom={15.1} position={[0, 0, 20]} /> */}
+          <OrbitControls />
+          {/* <Sphere /> */}
+          <Violin track={track} isPlaying={isPlaying ?? false} />
+          {/* <BubbleParticles /> */}
+          <Particles count={200} />
+          {/* <SkyBox /> */}
+          {/* <ViolinWidgetEffects /> */}
+          {!isSm && <Composer />}
+          {/* <EffectComposer> */}
+          {/* <HorizontalBlurShader /> */}
+          {/* <DepthOfField
             ref={depthOfFieldRef}
             focusDistance={100} // it doesn't change no matter what is passed here
             focalLength={0.5}
             bokehScale={0}
           /> */}
-        {/* <Glitch strength={new Vector2(0.1, 0.1)} /> */}
-        {/* </EffectComposer> */}
+          {/* <Glitch strength={new Vector2(0.1, 0.1)} /> */}
+          {/* </EffectComposer> */}
 
-        {/* <Glitch /> */}
+          {/* <Glitch /> */}
+        </ContextBridge>
       </Canvas>
     </Suspense>
+    // </GreetingContext.Provider>
   );
 };
 
 const Composer = (): JSX.Element => {
   const depthOfFieldRef = useRef<DepthOfFieldEffect>();
-
   const targ = new Vector2(0);
   const end = new Vector2(4);
   const start = new Vector2(0);
@@ -432,6 +478,9 @@ export default React.memo(ViolinWidget);
 
 function Loader() {
   const { active, progress, errors, item, loaded, total } = useProgress();
+
+  const greeting = useContext(HomeContext);
+  greeting.setProgress(progress);
   return <section></section>;
   // return <section>{progress} % loaded</section>;
 }
