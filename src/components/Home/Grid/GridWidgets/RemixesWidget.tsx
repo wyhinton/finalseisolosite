@@ -114,7 +114,7 @@ const RemixesWidget = (): JSX.Element => {
               setIsActive(track.title === currentTrack.title);
             }, [currentTrack]);
 
-            return <TrackControl track={track} />;
+            return <TrackControl key={i} track={track} />;
           })}
         </FlexColumn>
       </div>

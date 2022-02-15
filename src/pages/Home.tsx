@@ -10,7 +10,7 @@ import "@css/react-resizable.css";
 import "@css/Body.scss";
 import { defaultLayout } from "@static/gridLayouts";
 import IntroModal from "@components/Home/Modals/IntroModal";
-import HomeWidgetGrid from "@components/Home/Grid/HomeWidgetGrid";
+import HomePanel from "@components/Home/Grid/HomePanel";
 import ReturnButton from "@components/ReturnButton";
 import appConfig from "@static/appConfig";
 import ViolinWidget from "@components/Home/Grid/GridWidgets/ViolinWidget";
@@ -22,6 +22,19 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "@components/ErrorBoundary";
 import FlexRow from "@components/UI/FlexRow";
 import { motion, Variant, Variants } from "framer-motion";
+import { createContextStore } from "easy-peasy";
+import LoadingScreen from "@components/Home/LoadingScreen";
+
+type HomeContext = {
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  progress: number;
+  setProgress: React.Dispatch<React.SetStateAction<number>>;
+  isLoaded: boolean;
+  setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+};
+export const HomeContext = React.createContext<HomeContext>(null!);
+
 const Home = (): JSX.Element => {
   const {
     trackCategory,
@@ -35,8 +48,6 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     pauseCurrent();
     pauseTrack(tracks[0]);
-
-    // audio.current = new AudioContext();
   }, []);
 
   const [curLayout, setCurLayout] = useState<Layout[]>(defaultLayout);
@@ -47,55 +58,70 @@ const Home = (): JSX.Element => {
 
   const violinVariants = {
     start: {
-      opacity: 1,
-      transition: { duration: 5.1 },
+      opacity: [0, 1],
+      transition: { duration: 1.1, delay: 1 },
     },
   } as Variants;
+  const [name, setName] = React.useState("hello");
+  const [progress, setProgress] = React.useState(0.0);
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   const { isSm } = useQuery();
   return (
     // <StoreProvider store={homeStore}>
     // <
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <motion.section style={{ width: "100vw" }} className="dot-fill">
-        {appConfig.showIntro && <IntroModal />}
-        {/* <AboutButton /> */}
-        {/* <TopBar /> */}
-        {/* <MediaControls /> */}
-        {/* <ReturnButton /> */}
-        <InfoPopup />
-        <FlexRow id="panel-canvas" style={{ border: "5px solid #3e3e3e" }}>
-          <HomeWidgetGrid />
-          <motion.div
-            id="violin-widget-container"
-            variants={violinVariants}
-            style={{
-              height: "100vh",
-              width: "100vw",
-              // height: "100%",
-              // width: "90vmin",
-              // width: "50%",
-              position: "absolute",
-              top: "0%",
-              // top: "0%",
-              right: "0%",
-              zIndex: infoDisplayMode !== undefined ? -1 : 0,
-              pointerEvents: isSm ? "none" : "all",
-              border: "1px solid red",
-              // zIndex: infoDisplayMode !== undefined ? -1 : 10,
-              // border: "1px solid red",
-              opacity: 0,
-            }}
-            initial={"start"}
-          >
-            <ViolinWidget track={currentTrack} />
-          </motion.div>
-        </FlexRow>
-        <Nav />
-        <AppBar />
+      <HomeContext.Provider
+        value={{
+          name: name,
+          setName,
+          progress,
+          setProgress,
+          isLoaded,
+          setIsLoaded,
+        }}
+      >
+        <LoadingScreen />
 
-        {/* <WaveformWidget /> */}
-      </motion.section>
+        <motion.section style={{ width: "100vw" }} className="dot-fill">
+          {appConfig.showIntro && <IntroModal />}
+          {/* <AboutButton /> */}
+          {/* <TopBar /> */}
+          {/* <MediaControls /> */}
+          {/* <ReturnButton /> */}
+          <InfoPopup />
+          <FlexRow id="panel-canvas" style={{ border: "5px solid #3e3e3e" }}>
+            <HomePanel />
+            <motion.div
+              id="violin-widget-container"
+              variants={violinVariants}
+              style={{
+                height: "100vh",
+                width: "100vw",
+                position: "absolute",
+                top: "0%",
+                right: "0%",
+                zIndex: infoDisplayMode !== undefined ? -1 : 0,
+                pointerEvents: isSm ? "none" : "all",
+                border: "1px solid red",
+                opacity: 0,
+              }}
+              animate={isLoaded ? "start" : ""}
+              initial={false}
+            >
+              {/* <HomeContext.Provider
+              value={{ name: name, setName, progress, setProgress }}
+            > */}
+              <ViolinWidget track={currentTrack} />
+              {/* </HomeContext.Provider> */}
+            </motion.div>
+          </FlexRow>
+          <Nav />
+          <AppBar />
+
+          {/* <WaveformWidget /> */}
+        </motion.section>
+      </HomeContext.Provider>
     </ErrorBoundary>
     // </StoreProvider>
   );

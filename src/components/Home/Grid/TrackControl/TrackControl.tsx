@@ -28,10 +28,11 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
   //   const pauseTr
 
   useEffect(() => {
-    if (track.category === "remix") {
+    if (track.category === "remix" && audioRef.current) {
       audioRef.current = document.getElementById(
         "audio_" + track.title
       ) as HTMLMediaElement;
+
       audioRef.current.addEventListener("play", () => {
         console.log("PUASED", track.title);
         setPaused(false);
@@ -49,46 +50,48 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
       });
       //   console.log(audioRef.current);
     } else {
-      console.log(
-        document.getElementById(
+      if (audioRef.current) {
+        console.log(
+          document.getElementById(
+            "video_" + track.title
+            // "recital_video"
+          ) as HTMLMediaElement
+        );
+        // setTimeout
+        audioRef.current = document.getElementById(
           "video_" + track.title
           // "recital_video"
-        ) as HTMLMediaElement
-      );
-      // setTimeout
-      audioRef.current = document.getElementById(
-        "video_" + track.title
-        // "recital_video"
-      ) as HTMLMediaElement;
+        ) as HTMLMediaElement;
 
-      audioRef.current.addEventListener("play", () => {
-        setPaused(false);
-        // if (track.title === currentTrack.title) {
-        //   setPaused(false);
-        // } else {
-        //   setPaused(true);
-        // }
-      });
-      audioRef.current.addEventListener("timeupdate", (e) => {
-        // setProgress(e);
-        // console.log(e);
-        const el = e.target as HTMLAudioElement;
-        setProgress(el.currentTime);
+        audioRef.current.addEventListener("play", () => {
+          setPaused(false);
+          // if (track.title === currentTrack.title) {
+          //   setPaused(false);
+          // } else {
+          //   setPaused(true);
+          // }
+        });
+        audioRef.current.addEventListener("timeupdate", (e) => {
+          // setProgress(e);
+          // console.log(e);
+          const el = e.target as HTMLAudioElement;
+          setProgress(el.currentTime);
 
-        // if (track.title === currentTrack.title) {
-        //   setProgress(el.currentTime);
-        // } else {
-        //   // setPaused(true)
-        // }
-      });
-      audioRef.current.addEventListener("pause", (e) => {
-        setPaused(true);
-        // if (track.title === currentTrack.title) {
-        //   setPaused(true);
-        // } else {
-        //   setPaused(true);
-        // }
-      });
+          // if (track.title === currentTrack.title) {
+          //   setProgress(el.currentTime);
+          // } else {
+          //   // setPaused(true)
+          // }
+        });
+        audioRef.current.addEventListener("pause", (e) => {
+          setPaused(true);
+          // if (track.title === currentTrack.title) {
+          //   setPaused(true);
+          // } else {
+          //   setPaused(true);
+          // }
+        });
+      }
     }
   }, [track.title]);
 
