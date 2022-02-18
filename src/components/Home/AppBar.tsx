@@ -49,17 +49,18 @@ const AppBar = ({}: {}): JSX.Element => {
   return (
     <motion.div
       variants={variants}
+      id="app-bar-container"
       animate={isLoaded ? "in" : ""}
       style={{
         position: "fixed",
-        zIndex: 10000,
+        zIndex: 1000000,
         display: "flex",
-        bottom: "0",
-        left: "0%",
+        // bottom: "0",
+        // left: "0%",
         borderTop: `1px solid ${theme.secondary}`,
         height: isSm ? theme.appBarHeightMobile : theme.appBarHeight,
         backgroundColor: theme.primary,
-        borderBottom: "1px solid black",
+        // borderBottom: "1px solid black",
         width: "100vw",
         fontSize: "6vmin",
         overflow: "visible",

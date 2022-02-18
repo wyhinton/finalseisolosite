@@ -8,7 +8,7 @@ const TitleIcon = (): JSX.Element => {
 
   return (
     <FlexColumn id="title-container" style={{ margin: "auto" }}>
-      <svg>
+      <svg viewBox="0 0 0 0">
         <g>
           <path
             fill={theme.secondary}

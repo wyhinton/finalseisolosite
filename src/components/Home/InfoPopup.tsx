@@ -34,6 +34,7 @@ const InfoPopup = () => {
   const duration = 0.5;
   const topHeight = "23vh";
   const bottomHeight = theme.aboutBarHeight;
+  // const bottomHeight = theme.aboutBarHeight;
   const middleheight = "70vh";
   //7+23 = 30
   //7-
@@ -94,9 +95,10 @@ const InfoPopup = () => {
 
           width: "100vw",
           height: isSm ? "0vh" : "63vh",
+          // bottom:
           // top: "20%",
-          bottom: addVh(theme.appBarHeight, bottomHeight),
-          zIndex: 110,
+          // bottom: addVh(theme.appBarHeight, bottomHeight),
+          zIndex: 1,
           // backgroundColor: "red",
           backgroundColor: isMd ? theme.primaryDark : "red",
           // backgroundColor: theme.primaryDark,
@@ -116,7 +118,8 @@ const InfoPopup = () => {
           color: "black",
           zIndex: 10,
           position: "absolute",
-          bottom: theme.appBarHeight,
+          bottom: 0,
+          // bottom: theme.appBarHeight,
           // padding: "1em",
           overflow: "visible",
           width: "100vw",

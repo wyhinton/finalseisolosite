@@ -79,7 +79,7 @@ const HomePanel = (): JSX.Element => {
         // width: isSm ? "100vw" : "25vw",
         height: "100vh",
         maxHeight: "100vh",
-        overflowY: "scroll",
+        // overflowY: "scroll",
         // overflowY: isSm ? "scroll" : "hidden",
         paddingBottom: isSm ? "30em" : "",
         // border: "1px solid black",
