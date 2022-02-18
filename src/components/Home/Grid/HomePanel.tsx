@@ -35,6 +35,7 @@ const HomePanel = (): JSX.Element => {
     },
     start: {
       x: "0%",
+      y: "0%",
       opacity: 1,
       // x: [-500, 0],
       transition: {
@@ -73,7 +74,9 @@ const HomePanel = (): JSX.Element => {
       animate={animation}
       id="home-body"
       style={{
-        width: "30vw",
+        // padding: "4vmin",
+        width: isSm ? "100vw" : "50vh",
+        // width: isSm ? "100vw" : "25vw",
         height: "100vh",
         maxHeight: "100vh",
         overflowY: "scroll",
@@ -82,19 +85,19 @@ const HomePanel = (): JSX.Element => {
         // border: "1px solid black",
         backgroundColor: theme.primary,
         display: "flex",
-        x: "-100%",
+        // x: "-100%",
+        y: "10%",
         opacity: 0,
         flexDirection: "column",
-
         // backgroundColor: "red",
       }}
       initial={false}
       // animate={isLoaded ? "start" : ""}
     >
       <TitleIcon key="title" />
-      <OneRecitalTextWidget key="oneRecitalText" />
+      {/* <OneRecitalTextWidget key="oneRecitalText" /> */}
       <RecitalWidgets key="recitalTracks" />
-      <ThreeRemixes key="threeRemixes" />
+      {/* <ThreeRemixes key="threeRemixes" /> */}
       <RemixesWidget key="remixes" />
     </motion.section>
   );

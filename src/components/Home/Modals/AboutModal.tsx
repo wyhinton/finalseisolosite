@@ -12,7 +12,7 @@ import FlexBreak from "@components/UI/FlexBreak";
 
 const AboutModal = (): JSX.Element => {
   const { appMode } = useApp();
-
+  console.log(appMode);
   const variants = {
     visible: {
       opacity: 1,
@@ -68,30 +68,39 @@ const AboutModal = (): JSX.Element => {
       animate={appMode === "projectInfo" ? "visible" : "hidden"}
       style={containerStyle}
     >
-      <FlexColumn className="about-inner-container" style={textStyle} justifyContent="flex-start">
+      <FlexColumn
+        className="about-inner-container"
+        style={textStyle}
+        justifyContent="flex-start"
+      >
         {/* <h1
           style={{ fontSize: theme.bigFont, borderBottom: "1px solid black" }}
         >
           About
         </h1> */}
         <Header>About</Header>
-        <div>
+        <motion.div
+          style={{
+            fontSize: theme.aboutTextSize,
+            maxWidth: "42ch",
+            lineHeight: "auto",
+          }}
+        >
           SeiSolo.io is a multimedia web installation exploring classical and
           electronic music, aiming to create a unique and accessible way of
           engaging with both. It features a recorded solo violin recital, three
           commissioned remixes of the recital repertoire, and a web-based
           software for users to remix on their own (coming soon!)
-        </div>
+        </motion.div>
         <br></br>
-        <div>
+        <motion.div>
           Thanks to our donors, the Awesome Foundation of Raleigh, and Fractured
           Atlas for providing fiscal support. Additional thanks to Drew Atz for
           mixing/mastering the violin audio and Victor Lepri for editing the
           Videos.
-        </div>
+        </motion.div>
         <Header>Artists</Header>
         <div>
-
           <FlexRow style={{ flexFlow: "wrap" }}>
             {artists.map((artist, i) => {
               return <ArtistBlock artist={artist} key={i} />;
@@ -126,8 +135,6 @@ const renderText = (txt: string) => {
     )
   );
 };
-
-
 
 const ArtistBlock = ({ artist }: { artist: Artist }): JSX.Element => {
   const { photo, link, name, role, bio } = artist;

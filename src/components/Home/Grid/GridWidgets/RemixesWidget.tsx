@@ -14,6 +14,7 @@ import FlexBreak from "@components/UI/FlexBreak";
 import ReactAudioPlayer from "react-audio-player";
 import TrackControl from "../TrackControl/TrackControl";
 import FlexColumn from "@components/UI/FlexColumn";
+import TrackAudio from "@components/Home/Player/TrackAudio";
 
 const RemixesWidget = (): JSX.Element => {
   const remixParts = tracks.filter((track) => track.category === "remix");
@@ -65,13 +66,15 @@ const RemixesWidget = (): JSX.Element => {
           style={{
             display: "flex",
             width: "100%",
-            height: "40%",
-            border: "1px solid red",
+            // height: "40%",
+            // border: "1px solid red",
             flexDirection: "row",
+            justifyContent: "center",
           }}
+          id="remix-icon-container"
         >
           {remixParts
-            .filter((t) => t.title === currentTrack.title)
+            // .filter((t) => t.title === currentTrack.title)
             .map((track, i) => {
               const { currentTrack } = usePlaylist();
               const [isActive, setIsActive] = useState(
@@ -95,9 +98,25 @@ const RemixesWidget = (): JSX.Element => {
               }, [currentTrack]);
 
               return (
-                <TrackItem key={i} track={track} useBox={false}>
-                  {getShape(track)}
-                </TrackItem>
+                <>
+                  <TrackAudio track={track} />
+                  {/* {track.title === currentTrack.title && (
+                    <div
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                        borderRadius: "50%",
+                        overflow: "hidden",
+                        border: "1px solid red",
+                        padding: ".5em",
+                      }}
+                    >
+                      <TrackItem key={i} track={track} useBox={false}>
+                        {getShape(track)}
+                      </TrackItem>
+                    </div>
+                  )} */}
+                </>
               );
             })}
         </div>

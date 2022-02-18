@@ -17,6 +17,7 @@ const LoadingScreen = (): JSX.Element => {
     in: {
       //   height: "200px",
       //   width: "200px",
+
       opacity: 1,
     },
     out: {
@@ -24,6 +25,7 @@ const LoadingScreen = (): JSX.Element => {
       //   width: "0px",
       opacity: 0,
       y: -100,
+
       transition: {
         delay: 0.5,
         duration: 0.5,
@@ -42,6 +44,7 @@ const LoadingScreen = (): JSX.Element => {
         height: "100vh",
         width: "100vw",
         alignItems: "center",
+        pointerEvents: "none",
         // border: "5px solid black",
         padding: "5em",
         // border: `5px solid ${theme.secondary}`,
@@ -64,7 +67,7 @@ const LoadingScreen = (): JSX.Element => {
         <motion.div
           animate={{ y: -0, opacity: 1 }}
           style={{
-            y: -100,
+            y: 100,
             opacity: 0,
             backgroundColor: theme.primary,
             borderRadius: theme.borderRadius,

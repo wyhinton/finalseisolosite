@@ -39,6 +39,7 @@ import { GLTF as GLTFThree } from "three/examples/jsm/loaders/GLTFLoader";
 import { usePlaylist, useQuery, useTrackCategory, useWindowSize } from "@hooks";
 import { Track } from "@interfaces/Track";
 import ViolinWidgetEffects from "./ViolinWidget/ViolinWidgetEffects";
+import ViolinModel from "./ViolinWidget/ViolinModel";
 import Particles from "./ViolinWidget/Particles";
 import {
   EffectComposer,
@@ -55,6 +56,7 @@ import { MeshSurfaceSampler } from "three-stdlib";
 import { lerp } from "three/src/math/MathUtils";
 import BubbleParticles from "./ViolinWidget/BubbleParticles";
 import { HomeContext } from "../../../../pages/Home";
+
 // import { EffectComposer, DepthOfField, Bloom, Noise, Vignette } from '@react-three/postprocessing'
 
 declare module "three-stdlib" {
@@ -375,9 +377,10 @@ const ViolinWidget = ({ track }: { track: Track }): JSX.Element => {
           {/* <OrthographicCamera makeDefault zoom={15.1} position={[0, 0, 20]} /> */}
           <OrbitControls />
           {/* <Sphere /> */}
-          <Violin track={track} isPlaying={isPlaying ?? false} />
+          <ViolinModel track={track} isPlaying={isPlaying ?? false} />
+          {/* <Violin track={track} isPlaying={isPlaying ?? false} /> */}
+          
           {/* <BubbleParticles /> */}
-          <Particles count={200} />
           {/* <SkyBox /> */}
           {/* <ViolinWidgetEffects /> */}
           {!isSm && <Composer />}
