@@ -1,12 +1,28 @@
 import theme from "@static/theme";
 import FlexColumn from "@components/UI/FlexColumn";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { HomeContext } from "../../pages/Home";
 
 const LoadingScreen = (): JSX.Element => {
   const homeContext = useContext(HomeContext);
   const { progress, setIsLoaded } = homeContext;
+  const [progressDisplay, setProgressDisplay] = useState(0);
+  const val = useSpring(progress);
+
+  useEffect(() => {
+    console.log(progress);
+    val.set(progress);
+  }, [progress]);
+
+  useEffect(() => {
+    console.log();
+    val.onChange((latest) => {
+      console.log(latest);
+      setProgressDisplay(Math.round(latest));
+    });
+  }, []);
+
   useEffect(() => {
     console.log(progress);
     if (progress === 100) {
@@ -73,7 +89,8 @@ const LoadingScreen = (): JSX.Element => {
             borderRadius: theme.borderRadius,
           }}
         >
-          {`${progress}%`}
+          {`${progressDisplay}%`}
+          {/* {`${progress}%`} */}
         </motion.div>
       </FlexColumn>
     </motion.section>

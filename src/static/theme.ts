@@ -6,7 +6,8 @@ export interface Theme {
   secondaryRGBGL: [number, number, number];
   secondaryRGBCSS: string;
   primaryInactive: string;
-
+  appBarHeight: string;
+  bodyHeight: string;
   primaryMedium: string;
   secondary: string;
   secondaryRGB: number[];
@@ -91,6 +92,7 @@ const theme = {
   // navHeight: "max(5vw, 30px)",
   scale: "calc( 0.5333333333px + 0.4666666667 * ( 100vh - 480px ) / 420 )",
   appBarHeight: "max(40px, 7vmin)",
+  bodyHeight: "calc(100vh - max(40px, 7vmin))",
   appBarHeightMobile: "14vmin",
   // appBarHeight: "7vmin",
   paragraphSize: "max(12pt, 2vmin)",
@@ -99,3 +101,7 @@ const theme = {
 };
 
 export default theme;
+
+// .myclass{
+//   height: calc(100vh-max(40px, 7vmin)),
+// }

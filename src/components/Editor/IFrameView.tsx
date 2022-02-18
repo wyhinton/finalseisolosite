@@ -1,7 +1,6 @@
 import React, { useState, FC, PropsWithChildren } from "react";
 // import { Spinner, Pane } from "evergreen-ui";
 import classNames from "classnames";
-import Loader from "react-loader-spinner";
 import "../css/iframeView.css";
 import IFrameValidator from "../../IFrameValidator";
 import { useStoreState, useStoreActions } from "@hooks";
@@ -19,7 +18,7 @@ interface IFrameViewProperties {
  *  <IFrameView src = {my_url}/>
  * )
  */
-const IFrameView: FC<IFrameViewProperties> = ({card, src }) => {
+const IFrameView: FC<IFrameViewProperties> = ({ card, src }) => {
   const [active, setActive] = useState(false);
   const [valid, setIsValid] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,7 +30,7 @@ const IFrameView: FC<IFrameViewProperties> = ({card, src }) => {
     "iframe-container-hidden": !valid,
   });
   // const registerCardLoadFailure = useStoreActions((actions) => actions.appModel.registerCardLoadFailure);
-  
+
   const iframeStyle = {
     width: "100%",
     pointerEvents: "none",
@@ -53,19 +52,17 @@ const IFrameView: FC<IFrameViewProperties> = ({card, src }) => {
       className={iFrameContainerClass}
       style={{ height: "100%" }}
     >
-      <div className={iframeOverlayClass}>
-        <Loader type="Grid" color="white" height={80} width={80} />
-      </div>
+      <div className={iframeOverlayClass}></div>
       <iframe
         onLoad={(event) => {
-          const yt= "https://www.youtube.com/";
+          const yt = "https://www.youtube.com/";
           // card.validator.url = yt;
           card.validator.validate(event);
           console.log(card.validator.isValid());
-          //if the card is not valid and the card has not already been marked as failed, send a message to fail the card 
+          //if the card is not valid and the card has not already been marked as failed, send a message to fail the card
           // if (!card.validator.isValid() && !card.failed){
           //   registerCardLoadFailure(card)
-          // } 
+          // }
           setIsLoaded(true);
         }}
         // src={"https://www.youtube.com/"}
@@ -75,8 +72,6 @@ const IFrameView: FC<IFrameViewProperties> = ({card, src }) => {
     </div>
   );
 };
-
-
 
 export default React.memo(IFrameView, propertiesAreEqual);
 function propertiesAreEqual(
