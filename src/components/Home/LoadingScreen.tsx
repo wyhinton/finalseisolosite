@@ -2,7 +2,7 @@ import theme from "@static/theme";
 import FlexColumn from "@components/UI/FlexColumn";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { HomeContext } from "../../pages/Home";
+import HomeContext from "./HomeContext";
 
 const LoadingScreen = (): JSX.Element => {
   const homeContext = useContext(HomeContext);
@@ -11,12 +11,10 @@ const LoadingScreen = (): JSX.Element => {
   const val = useSpring(progress);
 
   useEffect(() => {
-    console.log(progress);
     val.set(progress);
   }, [progress]);
 
   useEffect(() => {
-    console.log();
     val.onChange((latest) => {
       console.log(latest);
       setProgressDisplay(Math.round(latest));
@@ -31,17 +29,11 @@ const LoadingScreen = (): JSX.Element => {
   }, [progress]);
   const variants = {
     in: {
-      //   height: "200px",
-      //   width: "200px",
-
       opacity: 1,
     },
     out: {
-      //   height: "0px",
-      //   width: "0px",
       opacity: 0,
       y: -100,
-
       transition: {
         delay: 0.5,
         duration: 0.5,

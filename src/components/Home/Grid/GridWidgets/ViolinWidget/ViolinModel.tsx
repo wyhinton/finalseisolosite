@@ -52,7 +52,7 @@ import { getRandomIntInclusive } from "@utils";
 import { MeshSurfaceSampler } from "three-stdlib";
 import { lerp } from "three/src/math/MathUtils";
 import BubbleParticles from "./BubbleParticles";
-import { HomeContext } from "../../../../../pages/Home";
+import HomeContext from "@components/Home/HomeContext";
 
 const Bubbles = ({ children }: { children: Group }): JSX.Element => {
   return;
@@ -62,7 +62,13 @@ function playAudio() {
   s1.play();
 }
 
-const ViolinModel = ({ track, isPlaying }: { track: Track; isPlaying: boolean }) => {
+const ViolinModel = ({
+  track,
+  isPlaying,
+}: {
+  track: Track;
+  isPlaying: boolean;
+}) => {
   const { active, progress, errors, item, loaded, total } = useProgress();
   const { isLoaded } = React.useContext(HomeContext);
 

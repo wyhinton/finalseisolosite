@@ -3,13 +3,10 @@ import theme from "@static/theme";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, useEffect, useContext } from "react";
 import ReactDOM from "react-dom";
-import { HomeContext } from "../../pages/Home";
+import HomeContext from "./HomeContext";
 
 const AboutButton = (): JSX.Element => {
-  //   const [visible, setVisible] = useState(false)
-  const [visible, toggle] = useToggle(false);
   const { setAppMode, appMode } = useApp();
-  console.log(appMode);
   const { isSm } = useQuery();
   const { isLoaded } = useContext(HomeContext);
 
@@ -74,8 +71,6 @@ const AboutButton = (): JSX.Element => {
         } else {
           setAppMode("projectInfo");
         }
-        console.log(appMode);
-        console.log("clicked about");
       }}
     >
       <AnimatePresence>

@@ -13,7 +13,7 @@ import { usePlaylist, useQuery, useWindowSize } from "@hooks";
 import { Track } from "@interfaces/Track";
 import ViolinModel from "./ViolinWidget/ViolinModel";
 import { EffectComposer } from "@react-three/postprocessing";
-import { HomeContext } from "../../../../pages/Home";
+import HomeContext from "@components/Home/HomeContext";
 
 declare module "three-stdlib" {
   export interface GLTF extends GLTFThree {

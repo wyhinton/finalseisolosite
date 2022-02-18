@@ -18,7 +18,9 @@ import { defaultLayout } from "@static/gridLayouts";
 import theme from "@static/theme";
 import FlexColumn from "@components/UI/FlexColumn";
 import TitleIcon from "./GridWidgets/TitleIcon";
-import { HomeContext } from "../../../pages/Home";
+import HomeContext from "../HomeContext";
+import TrackControl from "./TrackControl/TrackControl";
+import tracks from "@static/tracks";
 
 const HomePanel = (): JSX.Element => {
   const { infoDisplayMode } = usePlaylist();
@@ -41,6 +43,7 @@ const HomePanel = (): JSX.Element => {
       transition: {
         duration: 0.5,
         delay: 1,
+        delayChildren: 0.1,
       },
     },
   };
@@ -64,42 +67,33 @@ const HomePanel = (): JSX.Element => {
   return (
     <motion.section
       variants={variants}
-      // animate={
-      //   isLoaded
-      //     ? "start"
-      //     : infoDisplayMode !== undefined
-      //     ? "infoPopup"
-      //     : "regular"
-      // }
       animate={animation}
       id="home-body"
       className="grid-fill"
       style={{
-        // padding: "4vmin",
         width: isSm ? "100vw" : "50vh",
-        // width: isSm ? "100vw" : "25vw",
         height: "100vh",
         maxHeight: "100vh",
-        // overflowY: "scroll",
-        // overflowY: isSm ? "scroll" : "hidden",
         paddingBottom: isSm ? "30em" : "",
-        // border: "1px solid black",
         backgroundColor: theme.primary,
         display: "flex",
-        // x: "-100%",
         y: "10%",
         opacity: 0,
         flexDirection: "column",
-        // backgroundColor: "red",
       }}
       initial={false}
       // animate={isLoaded ? "start" : ""}
     >
       <TitleIcon key="title" />
       {/* <OneRecitalTextWidget key="oneRecitalText" /> */}
-      <RecitalWidgets key="recitalTracks" />
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {tracks.map((track, i) => {
+          <TrackControl key={i} track={track} />;
+        })}
+      </div>
+      {/* <RecitalWidgets key="recitalTracks" /> */}
       {/* <ThreeRemixes key="threeRemixes" /> */}
-      <RemixesWidget key="remixes" />
+      {/* <RemixesWidget key="remixes" /> */}
     </motion.section>
   );
 };

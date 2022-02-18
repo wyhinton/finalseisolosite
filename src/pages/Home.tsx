@@ -29,16 +29,7 @@ import MirrorShape from "@components/Home/Grid/GridWidgets/RemixWidgets/MirrorSh
 import FlowerShape from "@components/Home/Grid/GridWidgets/RemixWidgets/FlowerShape";
 import DiamondShape from "@components/Home/Grid/GridWidgets/RemixWidgets/DiamondShape";
 import ShapeContainer from "@components/Home/Grid/GridWidgets/RemixWidgets/ShapeContainer";
-
-type HomeContext = {
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  progress: number;
-  setProgress: React.Dispatch<React.SetStateAction<number>>;
-  isLoaded: boolean;
-  setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
-};
-export const HomeContext = React.createContext<HomeContext>(null!);
+import HomeContext from "@components/Home/HomeContext";
 
 const Home = (): JSX.Element => {
   const {

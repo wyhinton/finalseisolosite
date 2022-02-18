@@ -12,7 +12,7 @@ import { useMediaQuery } from "react-responsive";
 import timeLoop from "@canvasLoop";
 import { Surface } from "gl-react-dom";
 import { GLSL, Shaders, Uniform, Node } from "gl-react";
-import { HomeContext } from "../../pages/Home";
+import HomeContext from "./HomeContext";
 
 function formatTrackText(track: Track): string {
   return `${track.artist} - ${track.title}`;

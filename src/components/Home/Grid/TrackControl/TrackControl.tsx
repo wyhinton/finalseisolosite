@@ -1,12 +1,13 @@
 import { usePlaylist } from "@hooks";
 import { Track } from "@interfaces/Track";
 import { motion } from "framer-motion";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import PlayPauseSwitch from "./PlayPauseSwitch";
 import { Range } from "react-range";
 import theme from "@static/theme";
 import TrackTitle from "./TrackTitle";
 import RangeControls from "./RangeControls";
+import HomeContext from "@components/Home/HomeContext";
 
 const fontSize = "max(12pt, 6vmin)";
 
@@ -88,20 +89,6 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
     height: "min-content",
   } as React.CSSProperties;
 
-  const containerStyle = {
-    width: "100%",
-    height: "100%",
-    backgroundColor: `${theme.primary}`,
-    display: "flex",
-    flexDirection: "column",
-    top: "50%",
-    left: "30%",
-    zIndex: 100,
-    alignItems: "center",
-    overflow: "hidden",
-    justifyContent: "space-between",
-  } as React.CSSProperties;
-
   const cStyle = {
     // width: 50,
     height: "100%",
@@ -117,42 +104,19 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
   };
 
   const bStyle = {
-    // width: 20,
-    // height: 30,
     display: "flex",
-    // width: "40%",
     height: "40%",
-
-    // flexDirection: "column",
-
     alignItems: "center",
-    // backgroundColor: "green",
   };
 
-  const bodyVariants = {
-    rest: { x: 0, y: 0 },
-    jump: {
-      x: 20,
-      y: -100,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
   return (
-    <motion.div
-      // animate={paused ? "rest" : "jump"}
-      variants={bodyVariants}
-      style={containerStyle}
-      whileHover={{ backgroundColor: "#231f20", transition: { duration: 0.1 } }}
-    >
+    <TrackContainer track={track}>
       <motion.div style={bodyStyle}>
         <motion.div style={cStyle}>
           <div style={bStyle}>
             <PlayPauseSwitch
               onPlay={() => {
                 playTrack(track);
-                // setPaused(false);
               }}
               onPause={() => {
                 pauseTrack(track);
@@ -174,6 +138,54 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
         </motion.div>
         <RangeControls track={track} />
       </motion.div>
+    </TrackContainer>
+  );
+};
+
+const TrackContainer = ({
+  children,
+  track,
+}: {
+  track: Track;
+  children: JSX.Element | JSX.Element[];
+}): JSX.Element => {
+  const { isLoaded } = useContext(HomeContext);
+
+  const bodyVariants = {
+    in: {
+      y: 0,
+      transition: {
+        delay: track.position * 0.4,
+        duration: 0.2,
+      },
+    },
+  };
+
+  const containerStyle = {
+    width: "100%",
+    height: "100%",
+    backgroundColor: `${theme.primary}`,
+    display: "flex",
+    flexDirection: "column",
+    // top: "50%",
+    // left: "30%",
+    zIndex: 100,
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: "5vmin",
+    overflow: "hidden",
+    marginBottom: "1vmin",
+  } as React.CSSProperties;
+
+  return (
+    <motion.div
+      animate={isLoaded ? "in" : ""}
+      className="track-container"
+      whileHover={{ backgroundColor: "#231f20", transition: { duration: 0.1 } }}
+      variants={bodyVariants}
+      style={{ ...containerStyle, y: -100 }}
+    >
+      {children}
     </motion.div>
   );
 };
