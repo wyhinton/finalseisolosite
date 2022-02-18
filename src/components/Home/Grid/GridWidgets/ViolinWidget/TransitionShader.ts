@@ -1,12 +1,20 @@
-import { Mesh, OrthographicCamera, PlaneBufferGeometry, Scene, ShaderMaterial, UniformsUtils, Vector2 } from 'three'
+import {
+  Mesh,
+  OrthographicCamera,
+  PlaneBufferGeometry,
+  Scene,
+  ShaderMaterial,
+  UniformsUtils,
+  Vector2,
+} from "three";
 
 export const CrtShader = {
-    uniforms: {
-        progress: {value: 0.},
-        tDiffuse: { value: null },
-        iResolution: { type: 'vec2', value: new Vector2(1280, 1280) }
-    },
-    vertexShader: /*glsl*/ `
+  uniforms: {
+    progress: { value: 0 },
+    tDiffuse: { value: null },
+    iResolution: { type: "vec2", value: new Vector2(1280, 1280) },
+  },
+  vertexShader: /*glsl*/ `
     varying vec2 vUv;
 
 		void main() {
@@ -14,7 +22,7 @@ export const CrtShader = {
 			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 		}
   `,
-    fragmentShader: /*glsl*/ `
+  fragmentShader: /*glsl*/ `
     // #include <common>
 		uniform sampler2D tDiffuse;
 		varying vec2 vUv;
@@ -33,13 +41,6 @@ export const CrtShader = {
             float m = smoothstep(0.0, -smoothness, r - (progress * (1.0 + smoothness)));
         
             float r2 = rand(floor(vec2(size*4.) * p));
-            // vec4 fromColor = (vec3)
-            // float m2 = 1.- smoothstep(0.0, -smoothness, r - (progress * (1.0 + smoothness)));
-            // vec4 normal = mix(getFromColor(p), getToColor(p), m);
-            // vec4 white = vec4(1.0, 242./256., 0., 1.);
-            // vec4 wblend = mix(normal, white, m2);
-            // return wblend;
-            // return vec4(1.);
             return m;
             // return vec4(r2);
         }
@@ -56,9 +57,8 @@ export const CrtShader = {
   
 
 
-  `
-}
-
+  `,
+};
 
 // import { Mesh, OrthographicCamera, PlaneBufferGeometry, Scene, ShaderMaterial, UniformsUtils, Vector2 } from 'three'
 
@@ -118,7 +118,7 @@ export const CrtShader = {
 // // Display warp.
 // // 0.0 = none
 // // 1.0/8.0 = extreme
-// vec2 warp=vec2(1.0/32.0,1.0/24.0); 
+// vec2 warp=vec2(1.0/32.0,1.0/24.0);
 
 // // Amount of shadow mask.
 // float maskDark=0.5;
@@ -145,7 +145,7 @@ export const CrtShader = {
 
 // // Distance in emulated pixels to nearest texel.
 // vec2 Dist(vec2 pos){pos=pos*res;return -((pos-floor(pos))-vec2(0.5));}
-    
+
 // // 1D Gaussian.
 // float Gaus(float pos,float scale){return exp2(scale*pos*pos);}
 
@@ -198,7 +198,7 @@ export const CrtShader = {
 
 // // Distortion of scanlines, and end of screen alpha.
 // vec2 Warp(vec2 pos){
-//   pos=pos*2.0-1.0;    
+//   pos=pos*2.0-1.0;
 //   pos*=vec2(1.0+(pos.y*pos.y)*warp.x,1.0+(pos.x*pos.x)*warp.y);
 //   return pos*0.5+0.5;}
 
@@ -210,7 +210,7 @@ export const CrtShader = {
 //   if(pos.x<0.333)mask.r=maskLight;
 //   else if(pos.x<0.666)mask.g=maskLight;
 //   else mask.b=maskLight;
-//   return mask;}    
+//   return mask;}
 
 // // Draw dividing bars.
 // float Bar(float pos,float bar){pos-=bar;return pos*pos<4.0?0.0:1.0;}
@@ -223,13 +223,10 @@ export const CrtShader = {
 
 //     gl_FragColor.rgb=Tri(pos)*Mask(fragCoord.xy);
 
-//   gl_FragColor.a=1.0;  
+//   gl_FragColor.a=1.0;
 //   gl_FragColor.rgb=ToSrgb(gl_FragColor.rgb);
 
 //   }
-
-  
-
 
 //   `
 // }

@@ -29,6 +29,7 @@ export interface Theme {
   aboutBarHeight: string;
   paragraphSize: string;
   navPadding: string;
+  aboutTextSize: string;
 }
 
 const primaryDarkGL = [75, 75, 75].map((v) => v / 255);
@@ -93,6 +94,7 @@ const theme = {
   appBarHeightMobile: "14vmin",
   // appBarHeight: "7vmin",
   paragraphSize: "max(12pt, 2vmin)",
+  aboutTextSize: "max(12pt, 4vmin)",
   navPadding: "2vmin",
 };
 

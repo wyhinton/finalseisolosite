@@ -46,7 +46,8 @@ const TrackItem = ({
         // margin: "auto",
         // margin: isSm ? "0" : "1vmin",
         height: track.category === "remix" ? "100%" : 0,
-        width: "33.333%",
+        // width: "33.333%",
+        width: "100%",
         fontSize: "2rem",
         position: "relative",
         // marginRight: "2rem",
@@ -56,6 +57,7 @@ const TrackItem = ({
         flexDirection: "column",
         overflow: "visible",
         pointerEvents: "all",
+        // border: "1px solid red",
         // marg
 
         // border: "1px solid blue",

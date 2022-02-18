@@ -20,7 +20,7 @@ const ViewCard = ({
     height: "100%",
     border: `1px solid blue`,
     // border: border ? "2px solid black" : "",
-    // backgroundColor: theme.primary,
+    // backgroundColor: theme.primary,JE60NN
     overflow: overflowHidden ? "hidden" : "visible",
     // borderRadius: theme.borderRadius,
   } as React.CSSProperties;

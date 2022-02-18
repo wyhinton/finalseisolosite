@@ -7,7 +7,7 @@ const TitleIcon = (): JSX.Element => {
   const { isSm } = useQuery();
 
   return (
-    <FlexColumn id="title-container">
+    <FlexColumn id="title-container" style={{ margin: "auto" }}>
       <svg>
         <g>
           <path
