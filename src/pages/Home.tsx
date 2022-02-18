@@ -97,7 +97,7 @@ const Home = (): JSX.Element => {
           <InfoPopup />
           <FlexRow
             id="main-body-flex-container"
-            style={{ border: "2px solid blue", height: theme.bodyHeight }}
+            style={{ height: theme.bodyHeight }}
           >
             {/* <FlexRow id="panel-canvas" style={{ border: "5px solid #3e3e3e" }}> */}
             <HomePanel />

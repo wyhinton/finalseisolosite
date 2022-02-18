@@ -73,6 +73,7 @@ const HomePanel = (): JSX.Element => {
       // }
       animate={animation}
       id="home-body"
+      className="grid-fill"
       style={{
         // padding: "4vmin",
         width: isSm ? "100vw" : "50vh",
