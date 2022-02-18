@@ -155,7 +155,7 @@ const TrackContainer = ({
     in: {
       y: 0,
       transition: {
-        delay: track.position * 0.4,
+        // delay: track.position * 0.4,
         duration: 0.2,
       },
     },
@@ -163,7 +163,6 @@ const TrackContainer = ({
 
   const containerStyle = {
     width: "100%",
-    height: "100%",
     backgroundColor: `${theme.primary}`,
     display: "flex",
     flexDirection: "column",
@@ -173,7 +172,8 @@ const TrackContainer = ({
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: "5vmin",
-    overflow: "hidden",
+    // overflow: "hidden",
+    height: "fit-content",
     marginBottom: "1vmin",
   } as React.CSSProperties;
 

@@ -2,6 +2,7 @@ export interface Theme {
   padding: number;
   primary: string;
   primaryDark: string;
+  primaryDarkHex: string;
   primarDarkGL: [number, number, number];
   secondaryRGBGL: [number, number, number];
   secondaryRGBCSS: string;
@@ -39,7 +40,7 @@ const theme = {
   padding: 20,
   // primary: "#9e9e9e",
   primary: "#3d3d3d",
-  // primaryDark: "#1f1f1f",
+  primaryDarkHex: "#1f1f1f",
   primaryDark: "rgba(75, 75, 75, 255)",
   primaryDarkGL: primaryDarkGL,
   primaryMedium: "rgba(100, 100, 100, 255)",

@@ -66,22 +66,24 @@ const HomePanel = (): JSX.Element => {
 
   return (
     <motion.section
-      variants={variants}
-      animate={animation}
+      // variants={variants}
+      // animate={animation}
       id="home-body"
-      className="grid-fill"
+      // className="grid-fill"
+
       style={{
-        width: isSm ? "100vw" : "50vh",
+        width: isSm ? "100vw" : "33vw",
         height: "100vh",
         maxHeight: "100vh",
         paddingBottom: isSm ? "30em" : "",
         backgroundColor: theme.primary,
         display: "flex",
-        y: "10%",
-        opacity: 0,
+        // y: "10%",
+        // opacity: 0,
+
         flexDirection: "column",
       }}
-      initial={false}
+      // initial={false}
       // animate={isLoaded ? "start" : ""}
     >
       <TitleIcon key="title" />

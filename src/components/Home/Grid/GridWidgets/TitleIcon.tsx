@@ -8,6 +8,10 @@ const TitleIcon = (): JSX.Element => {
 
   return (
     <FlexColumn id="title-container" style={{ margin: "auto" }}>
+      <img
+        src={`${process.env.PUBLIC_URL}/SVG/TestCricles.svg`}
+        style={{ position: "absolute", width: 400, height: 400, zIndex: 0 }}
+      />
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
@@ -16,6 +20,7 @@ const TitleIcon = (): JSX.Element => {
         width="490.8px"
         height="93.3px"
         viewBox="0 0 490.8 93.3"
+        style={{ zIndex: 1 }}
       >
         <g>
           <path

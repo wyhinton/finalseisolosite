@@ -1,8 +1,8 @@
 import { Track } from "@interfaces/Track";
 import React, { useState, useEffect, useRef } from "react";
 
-const fontSize = "max(48pt, 5vmin)";
-const titleHeight = "max(52pt, 12.5vmin)";
+const fontSize = "max(48pt, 2vmin)";
+const titleHeight = "max(20pt, 6.5vmin)";
 // const fontSize = "max(48pt, 6vmin)";
 // const titleHeight = "max(52pt, 6.5vmin)";
 

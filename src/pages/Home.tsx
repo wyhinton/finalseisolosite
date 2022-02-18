@@ -30,6 +30,7 @@ import FlowerShape from "@components/Home/Grid/GridWidgets/RemixWidgets/FlowerSh
 import DiamondShape from "@components/Home/Grid/GridWidgets/RemixWidgets/DiamondShape";
 import ShapeContainer from "@components/Home/Grid/GridWidgets/RemixWidgets/ShapeContainer";
 import HomeContext from "@components/Home/HomeContext";
+import TrackControl from "@components/Home/Grid/TrackControl/TrackControl";
 
 const Home = (): JSX.Element => {
   const {
@@ -63,6 +64,19 @@ const Home = (): JSX.Element => {
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   const { isSm } = useQuery();
+
+  const mainFlexRowVariants = {
+    in: {
+      y: [-299, 0],
+      opacity: [0, 1],
+      background: [theme.primaryDarkHex, theme.primary],
+      transition: {
+        delay: 0.75,
+        ease: "circOut",
+        staggerChildren: 20.3,
+      },
+    },
+  } as Variants;
   return (
     // <StoreProvider store={homeStore}>
     // <
@@ -86,37 +100,46 @@ const Home = (): JSX.Element => {
           {/* <MediaControls /> */}
           {/* <ReturnButton /> */}
           <InfoPopup />
-          <FlexRow
+          <motion.div
             id="main-body-flex-container"
-            style={{ height: theme.bodyHeight }}
+            style={{ height: theme.bodyHeight, display: "flex" }}
+            animate={isLoaded ? "in" : ""}
+            variants={mainFlexRowVariants}
           >
-            {/* <FlexRow id="panel-canvas" style={{ border: "5px solid #3e3e3e" }}> */}
             <HomePanel />
             <motion.div
-              id="violin-widget-container"
-              className="grid-fill"
+              id="all-tracks-container"
               // className="dot-fill"
-              variants={violinVariants}
               style={{
-                // height: "100vh",
-
-                width: "75vw",
-                // position: "absolute",
+                display: "flex",
+                flexDirection: "column",
+                // border: "1px solid green",
+                width: "35vw",
+                paddingTop: "2vmin",
+                paddingBottom: "2vmin",
+                justifyContent: "center",
+              }}
+            >
+              {tracks
+                .sort((a, b) => a.position - b.position)
+                .map((track, i) => {
+                  return <TrackControl key={i} track={track} />;
+                })}
+            </motion.div>
+            <motion.div
+              variants={mainFlexRowVariants}
+              // animate={isLoaded ? "in" : ""}
+              id="violin-widget-container"
+              // className="grid-fill"
+              style={{
+                width: "45vw",
                 position: "relative",
-                top: "0%",
-                right: "0%",
                 zIndex: infoDisplayMode !== undefined ? -1 : 0,
                 pointerEvents: "none",
-                // pointerEvents: isSm ? "none" : "all",
-                // border: "4px solid red",
-                opacity: 0,
+                // opacity: 0,
               }}
-              animate={isLoaded ? "start" : ""}
-              initial={false}
+              // initial={false}
             >
-              {/* <HomeContext.Provider
-              value={{ name: name, setName, progress, setProgress }}
-            > */}
               <FlexRow
                 style={{
                   border: "1px solid red",
@@ -136,7 +159,7 @@ const Home = (): JSX.Element => {
               <ViolinWidget track={currentTrack} />
               {/* </HomeContext.Provider> */}
             </motion.div>
-          </FlexRow>
+          </motion.div>
           <Nav />
           <AppBar />
 
