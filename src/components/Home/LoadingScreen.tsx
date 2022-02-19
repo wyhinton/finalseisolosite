@@ -6,7 +6,7 @@ import HomeContext from "./HomeContext";
 
 const LoadingScreen = (): JSX.Element => {
   const homeContext = useContext(HomeContext);
-  const { progress, setIsLoaded } = homeContext;
+  const { progress, setIsLoaded, isLoaded } = homeContext;
   const [progressDisplay, setProgressDisplay] = useState(0);
   const val = useSpring(progress);
 
@@ -43,48 +43,61 @@ const LoadingScreen = (): JSX.Element => {
 
   return (
     <motion.section
-      variants={variants}
-      //   className="dot-fill"
-      id="loading-scren-section"
       style={{
-        display: "flex",
-        justifyContent: "center",
-        height: "100vh",
         width: "100vw",
-        alignItems: "center",
-        pointerEvents: "none",
-        // border: "5px solid black",
-        padding: "5em",
-        // border: `5px solid ${theme.secondary}`,
+        height: "100vh",
         position: "absolute",
-        zIndex: 10000,
-        opacity: 0,
+        zIndex: 10000000,
+        border: "1px solid red",
+        backgroundColor: theme.primary,
+        pointerEvents: "none",
       }}
-      animate={progress == 100 ? "out" : "in"}
+      animate={{ opacity: isLoaded ? 0 : 1 }}
     >
-      <FlexColumn
+      <motion.section
+        variants={variants}
+        //   className="dot-fill"
+        id="loading-scren-section"
         style={{
-          fontSize: "10vmin",
-          textAlign: "center",
-          whiteSpace: "break-spaces",
-          width: "50%",
-          margin: "0 !important",
-          height: "fit-content",
+          display: "flex",
+          justifyContent: "center",
+          height: "100vh",
+          width: "100vw",
+          alignItems: "center",
+          pointerEvents: "none",
+          // border: "5px solid black",
+          padding: "5em",
+          // border: `5px solid ${theme.secondary}`,
+          position: "absolute",
+          zIndex: 10000,
+          opacity: 0,
         }}
+        animate={progress == 100 ? "out" : "in"}
       >
-        <motion.div
-          animate={{ y: -0, opacity: 1 }}
+        <FlexColumn
           style={{
-            y: 100,
-            opacity: 0,
-            backgroundColor: theme.primary,
-            borderRadius: theme.borderRadius,
+            fontSize: "10vmin",
+            textAlign: "center",
+            whiteSpace: "break-spaces",
+            width: "50%",
+            margin: "0 !important",
+            height: "fit-content",
           }}
         >
-          {`${progressDisplay}%`}
-          {/* {`${progress}%`} */}
-        </motion.div>
-      </FlexColumn>
+          <motion.div
+            animate={{ y: -0, opacity: 1 }}
+            style={{
+              y: 100,
+              opacity: 0,
+              backgroundColor: theme.primary,
+              borderRadius: theme.borderRadius,
+            }}
+          >
+            {`${progressDisplay}%`}
+            {/* {`${progress}%`} */}
+          </motion.div>
+        </FlexColumn>
+      </motion.section>
     </motion.section>
   );
 };

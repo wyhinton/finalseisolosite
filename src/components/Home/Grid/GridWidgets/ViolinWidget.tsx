@@ -14,6 +14,7 @@ import { Track } from "@interfaces/Track";
 import ViolinModel from "./ViolinWidget/ViolinModel";
 import { EffectComposer } from "@react-three/postprocessing";
 import HomeContext from "@components/Home/HomeContext";
+import Particles from "./ViolinWidget/Particles";
 
 declare module "three-stdlib" {
   export interface GLTF extends GLTFThree {
@@ -25,7 +26,7 @@ declare module "three-stdlib" {
 const ViolinWidget = ({ track }: { track: Track }): JSX.Element => {
   const { width, height } = useWindowSize();
 
-  const zoom = Math.min(width, height) * 0.02;
+  const zoom = Math.min(width, height) * 0.015;
   const { isPlaying } = usePlaylist();
   const depthOfFieldRef = useRef<DepthOfFieldEffect>();
   const { isSm } = useQuery();
@@ -34,13 +35,14 @@ const ViolinWidget = ({ track }: { track: Track }): JSX.Element => {
     <Suspense fallback={<Loader />}>
       <Canvas className="canvas">
         <ContextBridge>
-          <OrthographicCamera makeDefault zoom={zoom} position={[0, 0, 20]} />
+          <OrthographicCamera makeDefault zoom={zoom} position={[20, 0, 30]} />
           {/* <OrthographicCamera makeDefault zoom={15.1} position={[0, 0, 20]} /> */}
           <OrbitControls />
           {/* <Sphere /> */}
           <ViolinModel track={track} isPlaying={isPlaying ?? false} />
           {/* <Violin track={track} isPlaying={isPlaying ?? false} /> */}
           {/* <BubbleParticles /> */}
+          <Particles count={200} />
           {/* <ViolinWidgetEffects /> */}
           {!isSm && <Composer />}
           {/* <EffectComposer> */}

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import React, { Component, PureComponent } from "react";
+import React, { Component, PureComponent, useEffect, useState } from "react";
+import { motion, Variant, Variants } from "framer-motion";
 
 const defaultAnchor = { x: 0.5, y: 0.5 };
 const defaultBorderColor = "#f00";
@@ -262,7 +263,7 @@ export class Curve extends PureComponent {
     // move the rendered DOM element after creation.
     return (
       <div className="react-curveto-placeholder">
-        <svg
+        <motion.svg
           className={styles.className}
           ref={(node) => (this.node = node)}
           style={{
@@ -274,7 +275,7 @@ export class Curve extends PureComponent {
           }}
         >
           <CurvePath instructions={instructions} styles={styles} />
-        </svg>
+        </motion.svg>
       </div>
     );
   }
@@ -291,17 +292,53 @@ Curve.propTypes = Object.assign(
   optionalStyleProps
 );
 
-const CurvePath = ({ instructions, styles }) => (
-  <path
-    d={instructions}
-    fill="none"
-    stroke={styles.stroke}
-    strokeWidth={styles.strokeWidth}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    strokeDasharray={styles.strokeStyle === "solid" ? "" : "5,5"}
-  />
-);
+const CurvePath = ({ instructions, styles }) => {
+  const [anim, setAnim] = useState("startPath");
+  useEffect(() => {
+    console.log("rendered curv path");
+    setAnim("startPath");
+    setAnim("path");
+  }, [instructions.length]);
+
+  const variants = {
+    path: {
+      pathLength: [0, 1],
+      // pathLength: [0, 1],
+      transition: {
+        duration: 1.4,
+        ease: "circOut",
+      },
+    },
+    startPath: {
+      pathLength: 0,
+    },
+  };
+
+  return (
+    <motion.path
+      d={instructions}
+      fill="none"
+      // animate={anim}
+      variants={variants}
+      // initial="path"
+      stroke={styles.stroke}
+      strokeWidth={styles.strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{
+        pathLength: 0,
+      }}
+      animate={{
+        pathLength: 1,
+      }}
+      transition={{
+        duration: 3,
+        ease: "easeInOut",
+      }}
+      // strokeDasharray={styles.strokeStyle === "solid" ? "" : "5,5"}
+    />
+  );
+};
 CurvePath.propTypes = Object.assign(
   {},
   {

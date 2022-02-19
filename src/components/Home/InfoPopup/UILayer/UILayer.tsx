@@ -147,7 +147,7 @@ const UILayer = ({}: {}): JSX.Element => {
         variants={variantsChromatic}
         animate={infoDisplayMode == undefined ? "hidden" : "visible"}
       >
-        <ChromaticWidget />
+        {/* <ChromaticWidget /> */}
       </motion.div>
       {/* <Beats /> */}
       <TrackStats />

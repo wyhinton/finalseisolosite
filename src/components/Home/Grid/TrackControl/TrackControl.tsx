@@ -135,10 +135,26 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
             ></div>
           </div>
           <TrackTitle track={track} />
+          <NodePoint track={track} />
         </motion.div>
         <RangeControls track={track} />
       </motion.div>
     </TrackContainer>
+  );
+};
+
+const NodePoint = ({ track }: { track: Track }): JSX.Element => {
+  return (
+    <div
+      className={track.title}
+      style={{
+        width: 20,
+        height: 20,
+        backgroundColor: theme.primary,
+        borderRadius: "50%",
+        border: `1px solid ${theme.secondary}`,
+      }}
+    ></div>
   );
 };
 
@@ -160,6 +176,8 @@ const TrackContainer = ({
       },
     },
   };
+
+  const { playTrack } = usePlaylist();
 
   const containerStyle = {
     width: "100%",
@@ -184,6 +202,9 @@ const TrackContainer = ({
       whileHover={{ backgroundColor: "#231f20", transition: { duration: 0.1 } }}
       variants={bodyVariants}
       style={{ ...containerStyle, y: -100 }}
+      onClick={(e) => {
+        playTrack(track);
+      }}
     >
       {children}
     </motion.div>

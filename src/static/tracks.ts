@@ -100,7 +100,7 @@ const tracks: Track[] = [
     samples: ["Bartók"],
     connections: [
       {
-        target: "Ysaé",
+        target: "Bartók",
         description: "Connects in this way",
       },
     ],
@@ -125,7 +125,7 @@ const tracks: Track[] = [
     samples: ["Bartók", "Ysaÿe"],
     connections: [
       {
-        target: "Ysaé",
+        target: "Ysaÿe",
         description: "Connects in this way",
       },
     ],
@@ -149,7 +149,7 @@ const tracks: Track[] = [
     playing: false,
     connections: [
       {
-        target: "Ysaé",
+        target: "Bach",
         description: "Connects in this way",
       },
     ],
@@ -179,7 +179,7 @@ const tracks: Track[] = [
     playing: false,
     connections: [
       {
-        target: "Ysaé",
+        target: "Believe",
         description: "Connects in this way",
       },
     ],
@@ -205,7 +205,6 @@ const tracks: Track[] = [
     performer: "Vivek Menon",
     title: "Bartók",
     composer: "Béla Bartók",
-    // src: bartokTrack,
     src: bartokVideo,
     audioSrc: bartokAudio,
     about: bartokAbout,
@@ -214,11 +213,10 @@ const tracks: Track[] = [
     playing: false,
     connections: [
       {
-        target: "Ysaé",
+        target: "Revolving Melody",
         description: "Connects in this way",
       },
     ],
-    //some hosting under dj05elantra
     category: "recital",
     duration: bartokLength,
     origin: "Nagyszentmiklós, Kingdom of Hungary",

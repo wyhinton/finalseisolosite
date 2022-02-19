@@ -31,6 +31,7 @@ import DiamondShape from "@components/Home/Grid/GridWidgets/RemixWidgets/Diamond
 import ShapeContainer from "@components/Home/Grid/GridWidgets/RemixWidgets/ShapeContainer";
 import HomeContext from "@components/Home/HomeContext";
 import TrackControl from "@components/Home/Grid/TrackControl/TrackControl";
+import CurveTo from "@components/CurveTo/CurveTo";
 
 const Home = (): JSX.Element => {
   const {
@@ -110,6 +111,7 @@ const Home = (): JSX.Element => {
             <motion.div
               id="all-tracks-container"
               // className="dot-fill"
+              className="all-tracks-container"
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -123,9 +125,40 @@ const Home = (): JSX.Element => {
               {tracks
                 .sort((a, b) => a.position - b.position)
                 .map((track, i) => {
-                  return <TrackControl key={i} track={track} />;
+                  const variants = {
+                    down: {
+                      // y: [-200, 0],
+                      opacity: [0, 1],
+                      transition: {
+                        delay: 1.2 + i * 0.1,
+                        ease: "circOut",
+                      },
+                    },
+                  };
+                  return (
+                    <>
+                      <motion.div
+                        variants={variants}
+                        animate={isLoaded ? "down" : ""}
+                      >
+                        <TrackControl key={i} track={track} />
+                      </motion.div>
+                    </>
+                  );
                 })}
             </motion.div>
+            <NodeConnector />
+            {/* <CurveTo
+              delay={2000}
+              from={tracks[0].title}
+              to={tracks[1].title}
+              fromAnchor="right"
+              toAnchor="right"
+              borderColor={theme.secondary}
+              // within="all-tracks-container"
+              curveFrom={[50, 0]}
+              curveTo={[50, 0]}
+            /> */}
             <motion.div
               variants={mainFlexRowVariants}
               // animate={isLoaded ? "in" : ""}
@@ -172,6 +205,35 @@ const Home = (): JSX.Element => {
 };
 
 export default Home;
+
+const NodeConnector = (): JSX.Element => {
+  const { currentTrack } = usePlaylist();
+
+  const { title, connections } = currentTrack;
+
+  useEffect(() => {
+    console.log(title);
+  }, [title]);
+
+  const distMult =
+    Math.abs(
+      currentTrack.position -
+        tracks.filter((t) => t.title === connections[0].target)[0].position
+    ) * 50;
+  return (
+    <CurveTo
+      delay={2000}
+      from={title}
+      to={connections[0].target}
+      fromAnchor="right"
+      toAnchor="right"
+      borderColor={theme.secondary}
+      // within="all-tracks-container"
+      curveFrom={[100 + distMult, 0]}
+      curveTo={[100 + distMult, 0]}
+    />
+  );
+};
 
 const WidgetContainer = (): JSX.Element => {
   return (
@@ -319,7 +381,7 @@ const SVGProcessor = ({
       {children}
       <motion.g custom="30" variants={variants} animate={isLoaded ? "in" : ""}>
         {child.map((c, i) => {
-          console.log(c);
+          // console.log(c);
           return (
             <motion.circle
               custom={c.r}

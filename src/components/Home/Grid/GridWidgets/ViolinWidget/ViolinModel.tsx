@@ -24,6 +24,7 @@ import {
   Vector3,
   Matrix4,
   Object3D,
+  EdgesGeometry,
 } from "three";
 import {
   Effects,
@@ -53,6 +54,7 @@ import { MeshSurfaceSampler } from "three-stdlib";
 import { lerp } from "three/src/math/MathUtils";
 import BubbleParticles from "./BubbleParticles";
 import HomeContext from "@components/Home/HomeContext";
+import theme from "@static/theme";
 
 const Bubbles = ({ children }: { children: Group }): JSX.Element => {
   return;
@@ -75,14 +77,27 @@ const ViolinModel = ({
   const { nodes } = useGLTF(
     `${process.env.PUBLIC_URL}/Models/realistic-violin.glb`
   );
+  console.log(nodes);
   const matcapTexture = useLoader(
     TextureLoader,
     `${process.env.PUBLIC_URL}/Textures/matpurple.png`
   );
 
   const group = useRef<Group>();
-  const target = nodes.V as unknown as Group;
-  const children = target.children as Mesh[];
+  const target = nodes.V as unknown as Mesh;
+  // const target = nodes.V as unknown as Group;
+  // const target = nodes.V as unknown as Group;
+  const outline = nodes.OUTLINE as unknown as Mesh;
+  // const lineGeo = useMemo(() => {
+  //   if (outline.geometry) {
+  //     return new EdgesGeometry(outline.geometry);
+  //   }
+  // }, []);
+  // const lines = useMemo(()=>{
+  //   const edges = new EdgesGeometry( geometry );
+  // })
+  console.log(outline);
+  // const children = target.children as Mesh[];
 
   const shaderRef = useRef<ShaderMaterial>();
   useFrame((state) => {
@@ -115,10 +130,10 @@ const ViolinModel = ({
   const samplerRef = useRef<MeshSurfaceSampler>();
 
   const sound = useRef<PositionalAudio>();
-  useMemo(() => {
-    samplerRef.current = new MeshSurfaceSampler(children[0]).build();
-    console.log(samplerRef.current);
-  }, [children.length]);
+  // useMemo(() => {
+  //   samplerRef.current = new MeshSurfaceSampler(children[0]).build();
+  //   console.log(samplerRef.current);
+  // }, [children.length]);
 
   // useEffect(() => {
   //   // setAudioInd(0);
@@ -258,85 +273,62 @@ const ViolinModel = ({
           matcap={matcapTexture}
         />
       </instancedMesh> */}
-      {children.map((c, i) => {
-        // const q = useSpring({
-        //   // const { pos } = useSpring({
-        //   from: { position: isLoaded?[2, 0, 0]:[0,0,0] },
-        //   to: { position: [5, 0, 0] },
-        // });
-        // const q = useSpring({
-        //   // const { pos } = useSpring({
-        //   position: isLoaded ? [-100, 100, -100] : [-500, 0, 0],
-        //   // position: isLoaded ? [-100, 100, -100] : [0, 0, 0],
-        // });
-        const start = getRandomIntInclusive(10, 100);
-        useEffect(() => {
-          console.log(isLoaded);
-        }, [isLoaded]);
-        const { spring } = useSpring({
-          spring: isLoaded ? 0 : 10,
-          config: config.stiff,
-          // config: {
-          //   mass: 1,
-          //   tension: 500,
-          //   friction: 0,
-          //   // precision: 0.0001,
-          //   // duration: 0,
-          //   clamp: true,
-          //   frequency: 1,
-          // },
-          // config: {
-          //   mass: 1,
-          //   tension: 500,
-          //   friction: 0,
-          //   // precision: 0.0001,
-          //   // duration: 0,
-          //   clamp: true,
-          //   frequency: 1,
-          // },
-        });
-
-        // const start = getRandomIntInclusive(50, 100);
-        // const xPos = spring.to([0, 1], [start, 0]);
-
-        // console.log(q.position);
-        return (
-          <a.mesh
-            onPointerDown={(e) => {
-              // console.log(e);
-              // if (sound.current) {
-              //   sound.current.play();
-              // }
-              // const i = getRandomIntInclusive(0, 60);
-              // setAudioInd(i);
-              // playAudio();
-            }}
-            key={i}
-            geometry={c.geometry}
-            material={c.material}
-            position-x={spring}
-            // position-x={spring}
-            // position-x={xPos}
-            // position-x={q.position[0]}
-            // position-y={q.position[1]}
-            // position-z={q.position[2]}
-            // position-x={q.position[0]}
-            // position-y={q.position[1]}
-            // position-z={q.position[2]}
-            // position={q.position}
-          >
-            <meshMatcapMaterial
-              attach="material"
-              // opacity={1.0}
-              opacity={0.5}
-              // color="yellow"
-              matcap={matcapTexture}
-            />
-            {isRemix || <shaderMaterial ref={shaderRef} args={[bravias]} />}
-          </a.mesh>
-        );
-      })}
+      {/* <line geometry={lineGeo}>
+        <lineBasicMaterial attach="material" color={"#9c88ff"} linewidth={10} />
+      </line> */}
+      <mesh geometry={outline.geometry}>
+        <meshBasicMaterial color={theme.secondary} />
+      </mesh>
+      {/* <a.mesh geometry={target.geometry}>
+        <meshMatcapMaterial
+          attach="material"
+          // opacity={1.0}
+          opacity={0.0}
+          // opacity={0.5}
+          // color="yellow"
+          matcap={matcapTexture}
+        />
+        {isRemix || <shaderMaterial ref={shaderRef} args={[bravias]} />}
+      </a.mesh> */}
     </group>
   );
 };
 export default ViolinModel;
+
+// {children.map((c, i) => {
+//   const start = getRandomIntInclusive(10, 100);
+//   useEffect(() => {
+//     console.log(isLoaded);
+//   }, [isLoaded]);
+//   const { spring } = useSpring({
+//     spring: isLoaded ? 0 : 10,
+//     config: config.stiff,
+//   });
+
+//   return (
+//     <a.mesh
+//       onPointerDown={(e) => {
+//         // console.log(e);
+//         // if (sound.current) {
+//         //   sound.current.play();
+//         // }
+//         // const i = getRandomIntInclusive(0, 60);
+//         // setAudioInd(i);
+//         // playAudio();
+//       }}
+//       key={i}
+//       geometry={c.geometry}
+//       material={c.material}
+//       position-x={spring}
+//     >
+//       <meshMatcapMaterial
+//         attach="material"
+//         // opacity={1.0}
+//         opacity={0.5}
+//         // color="yellow"
+//         matcap={matcapTexture}
+//       />
+//       {isRemix || <shaderMaterial ref={shaderRef} args={[bravias]} />}
+//     </a.mesh>
+//   );
+// })}
