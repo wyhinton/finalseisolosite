@@ -12,3 +12,4 @@ build/Videos/720/*.mp4
 build
 public/Videos/*.webm
 CLIPSMP3/*.mp3
+pubilc/Models/*.glb
