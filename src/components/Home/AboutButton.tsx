@@ -43,19 +43,20 @@ const AboutButton = (): JSX.Element => {
       whileHover={{
         backgroundColor: theme.primaryDark,
       }}
-      animate={isLoaded ? "in" : ""}
+      animate={isLoaded || isSm ? "in" : ""}
       variants={containerVariants}
       style={{
         borderRadius: "40px",
         border: `1px solid ${theme.secondary}`,
-        width: "max(10vw, 12vmin)",
-        height: "6vmin",
+        width: "max(10vw, 15vmin)",
+        height: "max(60px, 7vmin)",
+        // height: "6vmin",
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        margin: "1vh",
+        // margin: "1vh",
         color: isSm ? "black" : "white",
         fontSize: "max(17px, 3vmin)",
         opacity: 0,

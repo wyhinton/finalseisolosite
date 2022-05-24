@@ -32,6 +32,7 @@ import ShapeContainer from "@components/Home/Grid/GridWidgets/RemixWidgets/Shape
 import HomeContext from "@components/Home/HomeContext";
 import TrackControl from "@components/Home/Grid/TrackControl/TrackControl";
 import CurveTo from "@components/CurveTo/CurveTo";
+import NodeConnector from "@components/Home/NodeConnector";
 
 const Home = (): JSX.Element => {
   const {
@@ -79,8 +80,6 @@ const Home = (): JSX.Element => {
     },
   } as Variants;
   return (
-    // <StoreProvider store={homeStore}>
-    // <
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <HomeContext.Provider
         value={{
@@ -92,80 +91,30 @@ const Home = (): JSX.Element => {
           setIsLoaded,
         }}
       >
-        <LoadingScreen />
-
-        <motion.section style={{ width: "100vw" }}>
+        {!isSm && <LoadingScreen />}
+        <motion.section style={{ width: "100vw" }} id="info-popup-wrapper">
           {appConfig.showIntro && <IntroModal />}
-          {/* <AboutButton /> */}
-          {/* <TopBar /> */}
-          {/* <MediaControls /> */}
-          {/* <ReturnButton /> */}
           <InfoPopup />
           <motion.div
             id="main-body-flex-container"
-            style={{ height: theme.bodyHeight, display: "flex" }}
+            style={{
+              height: theme.bodyHeight,
+              display: "flex",
+              flexDirection: isSm ? "column" : "row",
+            }}
             animate={isLoaded ? "in" : ""}
             variants={mainFlexRowVariants}
           >
             <HomePanel />
-            <motion.div
-              id="all-tracks-container"
-              // className="dot-fill"
-              className="all-tracks-container"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                // border: "1px solid green",
-                width: "35vw",
-                paddingTop: "2vmin",
-                paddingBottom: "2vmin",
-                justifyContent: "center",
-              }}
-            >
-              {tracks
-                .sort((a, b) => a.position - b.position)
-                .map((track, i) => {
-                  const variants = {
-                    down: {
-                      // y: [-200, 0],
-                      opacity: [0, 1],
-                      transition: {
-                        delay: 1.2 + i * 0.1,
-                        ease: "circOut",
-                      },
-                    },
-                  };
-                  return (
-                    <>
-                      <motion.div
-                        variants={variants}
-                        animate={isLoaded ? "down" : ""}
-                      >
-                        <TrackControl key={i} track={track} />
-                      </motion.div>
-                    </>
-                  );
-                })}
-            </motion.div>
+            <TracksList />
             <NodeConnector />
-            {/* <CurveTo
-              delay={2000}
-              from={tracks[0].title}
-              to={tracks[1].title}
-              fromAnchor="right"
-              toAnchor="right"
-              borderColor={theme.secondary}
-              // within="all-tracks-container"
-              curveFrom={[50, 0]}
-              curveTo={[50, 0]}
-            /> */}
             <motion.div
               variants={mainFlexRowVariants}
               // animate={isLoaded ? "in" : ""}
               id="violin-widget-container"
               // className="grid-fill"
               style={{
-                width: "45vw",
+                width: "33vw",
                 position: "relative",
                 zIndex: infoDisplayMode !== undefined ? -1 : 0,
                 pointerEvents: "none",
@@ -173,7 +122,7 @@ const Home = (): JSX.Element => {
               }}
               // initial={false}
             >
-              <FlexRow
+              {/* <FlexRow
                 style={{
                   border: "1px solid red",
                   width: "100%",
@@ -188,52 +137,121 @@ const Home = (): JSX.Element => {
               >
                 <WidgetContainer />
                 <Viewer />
-              </FlexRow>
-              <ViolinWidget track={currentTrack} />
-              {/* </HomeContext.Provider> */}
+              </FlexRow> */}
+              {!isSm && <ViolinWidget track={currentTrack} />}
             </motion.div>
           </motion.div>
           <Nav />
           <AppBar />
-
-          {/* <WaveformWidget /> */}
         </motion.section>
       </HomeContext.Provider>
     </ErrorBoundary>
-    // </StoreProvider>
+  );
+};
+
+const TracksList = (): JSX.Element => {
+  const isLoaded = useContext(HomeContext);
+  const { isSm } = useQuery();
+  //
+
+  const trackGroupStyle = {
+    width: "100%",
+    margin: "1em",
+  } as React.CSSProperties;
+  return (
+    <motion.div
+      id="all-tracks-container"
+      // className="dot-fill"
+      className="all-tracks-container"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        // border: "1px solid green",
+        width: isSm ? "100vw" : "35vw",
+        paddingTop: "2vmin",
+        paddingBottom: "2vmin",
+        justifyContent: "center",
+        zIndex: 0,
+      }}
+    >
+      <div style={trackGroupStyle}>
+        {tracks
+          .slice(0, 3)
+          .sort((a, b) => a.position - b.position)
+          .map((track, i) => {
+            const variants = {
+              down: {
+                opacity: [0, 1],
+                transition: {
+                  delay: 1.2 + i * 0.1,
+                  ease: "circOut",
+                },
+              },
+            };
+            return (
+              <>
+                <motion.div
+                  style={{
+                    height: "12vmin",
+                    display: "flex",
+                    alignItems: "center",
+                    // border: "1px solid red",
+                  }}
+                  className="track-list-wrapper"
+                  variants={variants}
+                  animate={isLoaded ? "down" : ""}
+                >
+                  <TrackControl key={i} track={track} />
+                </motion.div>
+              </>
+            );
+          })}
+      </div>
+      <div
+        style={{
+          height: 1,
+          width: "20%",
+          backgroundColor: theme.secondary,
+          margin: "4vmin",
+        }}
+      ></div>
+      <div style={trackGroupStyle}>
+        {tracks
+          .slice(3, 6)
+          .sort((a, b) => a.position - b.position)
+          .map((track, i) => {
+            const variants = {
+              down: {
+                opacity: [0, 1],
+                transition: {
+                  delay: 1.2 + i * 0.1,
+                  ease: "circOut",
+                },
+              },
+            };
+            return (
+              <>
+                <motion.div
+                  style={{
+                    height: "12vmin",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  className="track-list-wrapper"
+                  variants={variants}
+                  animate={isLoaded ? "down" : ""}
+                >
+                  <TrackControl key={i} track={track} />
+                </motion.div>
+              </>
+            );
+          })}
+      </div>
+    </motion.div>
   );
 };
 
 export default Home;
-
-const NodeConnector = (): JSX.Element => {
-  const { currentTrack } = usePlaylist();
-
-  const { title, connections } = currentTrack;
-
-  useEffect(() => {
-    console.log(title);
-  }, [title]);
-
-  const distMult =
-    Math.abs(
-      currentTrack.position -
-        tracks.filter((t) => t.title === connections[0].target)[0].position
-    ) * 50;
-  return (
-    <CurveTo
-      delay={2000}
-      from={title}
-      to={connections[0].target}
-      fromAnchor="right"
-      toAnchor="right"
-      borderColor={theme.secondary}
-      // within="all-tracks-container"
-      curveFrom={[100 + distMult, 0]}
-      curveTo={[100 + distMult, 0]}
-    />
-  );
-};
 
 const WidgetContainer = (): JSX.Element => {
   return (

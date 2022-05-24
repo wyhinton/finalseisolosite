@@ -77,7 +77,7 @@ const ViolinModel = ({
   const { nodes } = useGLTF(
     `${process.env.PUBLIC_URL}/Models/realistic-violin.glb`
   );
-  console.log(nodes);
+  // console.log(nodes);
   const matcapTexture = useLoader(
     TextureLoader,
     `${process.env.PUBLIC_URL}/Textures/matpurple.png`
@@ -166,7 +166,7 @@ const ViolinModel = ({
     const points = r.map((r) => {
       return new Vector3(0, 0, 0);
     });
-    console.log(points);
+    // console.log(points);
     if (samplerRef.current) {
       points.forEach((p) => {
         samplerRef.current.sample(p);

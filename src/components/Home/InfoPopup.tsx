@@ -99,6 +99,7 @@ const InfoPopup = () => {
           // top: "20%",
           // bottom: addVh(theme.appBarHeight, bottomHeight),
           zIndex: 1,
+          // top: 0,
           // backgroundColor: "red",
           backgroundColor: isMd ? theme.primaryDark : "red",
           // backgroundColor: theme.primaryDark,
@@ -126,7 +127,8 @@ const InfoPopup = () => {
           height: isMd ? bottomHeight : "93vh",
           // height: bottomHeight,
           backgroundColor: "yellow",
-          top: isSm ? theme.navHeight : "",
+          top: isSm ? 0 : "",
+          // top: isSm ? theme.navHeight : "",
           //   border: "1px solid red",
         }}
       >

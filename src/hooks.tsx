@@ -202,6 +202,8 @@ export function usePlaylist(): UsePlaylistProps {
     //   "recital_video"
     // ) as HTMLVideoElement;
 
+    console.log(track);
+
     if (track.category === "recital") {
       allVideoElems.current.forEach((element) => {
         if (element.id === "video_" + track.title) {
@@ -222,14 +224,18 @@ export function usePlaylist(): UsePlaylistProps {
         setInfoDisplayMode("bio");
       }
     } else {
-      if (allAudioElems.current && !isSm) {
+      console.log("PLAYING NOT RECITAL");
+      // console.log(allAudioElems.current);
+      if (allAudioElems.current) {
         allAudioElems.current.forEach((element) => {
           if (element.id === "audio_" + track.title) {
             // if (track.)
-            // console.log("PLAYING MY TRACK");
+            console.log("PLAYING MY TRACK");
             if (track.category === "remix") {
               element.play();
-
+              if (isSm) {
+                setInfoDisplayMode("bio");
+              }
               // element.play().then((e) => {
 
               // }).catch((error) => {

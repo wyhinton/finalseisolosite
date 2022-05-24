@@ -50,7 +50,7 @@ const AppBar = ({}: {}): JSX.Element => {
     <motion.div
       variants={variants}
       id="app-bar-container"
-      animate={isLoaded ? "in" : ""}
+      animate={isLoaded || isSm ? "in" : ""}
       style={{
         position: "fixed",
         zIndex: 1000000,

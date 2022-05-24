@@ -2,11 +2,11 @@ import React from "react";
 import { usePlaylist } from "@hooks";
 import theme from "@static/theme";
 
-const CloseInfoPopupButton = ({ }: {}): JSX.Element => {
+const CloseInfoPopupButton = ({}: {}): JSX.Element => {
   // const {infoDisplayMode, currentTrack} = usePlaylist()
   const { setInfoDisplayMode, infoDisplayMode } = usePlaylist();
   // const closeSize = 100;
-  const closeSize = "max(20px, 3vmin)";
+  const closeSize = "max(40px, 4vmin)";
   const offset = "2vmin";
   // const offset = "1vmin";
   return (

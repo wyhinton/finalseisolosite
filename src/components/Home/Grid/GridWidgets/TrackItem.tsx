@@ -24,7 +24,7 @@ const TrackItem = ({
   // const { setCurrentTrack } = useHomeActions((actions) => actions);
 
   const isPlaying = useIsPlaying(track);
-  const { playTrack, pauseTrack } = usePlaylist();
+  // const { playTrack, pauseTrack } = usePlaylist();
   // const {trackCategory} = usePl
   const variants: Variants = {
     paused: { opacity: 1, x: 0 },

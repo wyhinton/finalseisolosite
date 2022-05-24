@@ -66,25 +66,15 @@ const HomePanel = (): JSX.Element => {
 
   return (
     <motion.section
-      // variants={variants}
-      // animate={animation}
-      id="home-body"
-      // className="grid-fill"
-
+      id="home-panel-body"
       style={{
         width: isSm ? "100vw" : "33vw",
-        height: "100vh",
+        height: isSm ? "fit-content" : "100vh",
         maxHeight: "100vh",
-        paddingBottom: isSm ? "30em" : "",
         backgroundColor: theme.primary,
         display: "flex",
-        // y: "10%",
-        // opacity: 0,
-
         flexDirection: "column",
       }}
-      // initial={false}
-      // animate={isLoaded ? "start" : ""}
     >
       <TitleIcon key="title" />
       {/* <OneRecitalTextWidget key="oneRecitalText" /> */}

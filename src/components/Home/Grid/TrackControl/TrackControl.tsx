@@ -8,6 +8,7 @@ import theme from "@static/theme";
 import TrackTitle from "./TrackTitle";
 import RangeControls from "./RangeControls";
 import HomeContext from "@components/Home/HomeContext";
+import TrackAudio from "@components/Home/Player/TrackAudio";
 
 const fontSize = "max(12pt, 6vmin)";
 
@@ -91,7 +92,8 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
 
   const cStyle = {
     // width: 50,
-    height: "100%",
+    height: "12vmin",
+    // height: "100%",
 
     width: "100%",
     // padding: "20%",
@@ -111,7 +113,7 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
 
   return (
     <TrackContainer track={track}>
-      <motion.div style={bodyStyle}>
+      <motion.div style={bodyStyle} className="track-control-body">
         <motion.div style={cStyle}>
           <div style={bStyle}>
             <PlayPauseSwitch
@@ -134,6 +136,7 @@ const TrackControl = ({ track }: { track: Track }): JSX.Element => {
               }}
             ></div>
           </div>
+          {track.category === "remix" && <TrackAudio track={track} />}
           <TrackTitle track={track} />
           <NodePoint track={track} />
         </motion.div>
@@ -169,11 +172,11 @@ const TrackContainer = ({
 
   const bodyVariants = {
     in: {
-      y: 0,
-      transition: {
-        // delay: track.position * 0.4,
-        duration: 0.2,
-      },
+      // y: 0,
+      // transition: {
+      //   // delay: track.position * 0.4,
+      //   duration: 0.2,
+      // },
     },
   };
 
@@ -184,15 +187,14 @@ const TrackContainer = ({
     backgroundColor: `${theme.primary}`,
     display: "flex",
     flexDirection: "column",
-    // top: "50%",
-    // left: "30%",
     zIndex: 100,
     alignItems: "center",
     justifyContent: "space-between",
-    borderRadius: "5vmin",
-    // overflow: "hidden",
-    height: "fit-content",
-    marginBottom: "1vmin",
+    // border: "1px solid red",
+    // borderRadius: "5vmin",
+    // height: "fit-content",
+    // marginBottom: "1vmin",
+    height: "12vmin",
   } as React.CSSProperties;
 
   return (
@@ -201,10 +203,12 @@ const TrackContainer = ({
       className="track-container"
       whileHover={{ backgroundColor: "#231f20", transition: { duration: 0.1 } }}
       variants={bodyVariants}
-      style={{ ...containerStyle, y: -100 }}
+      style={{ ...containerStyle }}
       onClick={(e) => {
+        console.log("PLAYING TRACK HERE");
         playTrack(track);
       }}
+      // className="track-cotnainer-body"
     >
       {children}
     </motion.div>
